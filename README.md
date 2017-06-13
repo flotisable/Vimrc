@@ -1,7 +1,7 @@
 # Vimrc
 for backup and share my vimrc file
 
-[Transitional Chinese README](README_zh-TW.md)
+[Traditional Chinese README](README_zh-TW.md)
 # Files
 - **.vimrc**    : settings for [vim](https://github.com/vim/vim)
 - **init.vim**  : settings for [neovim](https://github.com/neovim/neovim)
