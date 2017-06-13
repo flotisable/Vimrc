@@ -1,8 +1,8 @@
 # Vimrc
 備份跟分享 vimrc 檔
 # 檔案
-- **.vimrc**    : vim 的設定
-- **init.vim**  : neovim 的設定
+- **.vimrc**    : [vim](https://github.com/vim/vim) 的設定
+- **init.vim**  : [neovim](https://github.com/neovim/neovim) 的設定
 # 使用 vimrc
 打開 vim 輸入 **:help vimrc** 就會打開關於放置 vimrc 的說明文件
 
