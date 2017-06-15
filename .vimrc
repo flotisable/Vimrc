@@ -11,6 +11,14 @@ set expandtab         " 將 tab 鍵展開為空白鍵  expand TAB key to be spac
 set sc                " 顯示指令在狀態攔（知道自己輸入什麼）  show the command at the status bar
 " end option settings
 
+" setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題
+if has( 'gui_running' )
+  colorscheme desert  " colorscheme in gui  圖形介面顏色主題
+else
+  colorscheme elflord " colorscheme in terminal  終端機顏色主題
+endif
+" end setup colorscheme for terminal and gui
+
 " save and load view  自動讀取與儲存手動的折疊
 au BufWinLeave *.cpp,*.h,*.v,*.sp,*.m mkview
 au BufWinEnter *.cpp,*.h,*.v,*.sp,*.m silent loadview
