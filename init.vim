@@ -6,4 +6,4 @@ source ~/.vimrc
 
 colorscheme elflord       " 設定顏色主題  set colorscheme
 
-tnoremap <Esc> <C-\><C-n> " 設定 Esc 鍵離開 terminal 模式  set ESC key to exit terminal mode
+tnoremap <C-q> <C-\><C-n> " 設定 Ctrl+q 鍵離開 terminal 模式  set Ctrl+q key to exit terminal mode
