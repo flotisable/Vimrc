@@ -1,14 +1,15 @@
 " option settings  選項設定
+set encoding=utf-8    " 設定編碼  set file encoding
 set number            " 顯示行號  display line number
 set autoindent        " 自動縮排（與上一行縮排相同）  automatic indent as last line
 
 set foldmethod=manual " 手動折疊程式碼  manual fold the code
 
 set tabstop=2         " 設定 tab 鍵等於幾個空白鍵  set TAB key to be equivalent to how many spaces
-set sw=2
+set shiftwidth=2
 set expandtab         " 將 tab 鍵展開為空白鍵  expand TAB key to be spaces
 
-set sc                " 顯示指令在狀態攔（知道自己輸入什麼）  show the command at the status bar
+set showcmd           " 顯示指令在狀態攔（知道自己輸入什麼）  show the command at the status bar
 " end option settings
 
 " setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題
