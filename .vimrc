@@ -43,5 +43,5 @@ let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  
 " end neocomplcache settings
 
 " key mapping  快捷鍵設定
-noremap   <C-x> :NERDTreeToggle<Enter> " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
+noremap   <C-x> :NERDTreeToggle<Enter>| " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
 " end key mapping
