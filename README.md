@@ -41,6 +41,11 @@ to use the script
   this is the installed file name of **.vimrc** and **init.vim** respectively
 - if you don't use neovim, just comment the line ```cp ${nvimrcSourceFile} ...``` with '#' at the beginning of the line
 - type ```./installVimrc.sh``` to install **.vimrc** and **init.vim** file
+# Key Mappings
+- Ctrl+x : toggle the tree browser
+## Neovim Specific Key Mappings
+- Ctrl+s : toggle the terminal
+- Ctrl+q : exit teminal mode in neovim
 # Plugins
 - [vim-plug](https://github.com/junegunn/vim-plug)              : vim plugins manager
 - [Nerdtree](https://github.com/scrooloose/nerdtree)            : to browse the directory in a tree view
