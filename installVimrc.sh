@@ -1,7 +1,7 @@
 #!/bin/sh
 
-vimrcDir="../Settings/vim"
-nvimrcDir="../Settings/nvim"
+vimrcDir=~
+nvimrcDir=~/.config/nvim
 
 vimrcSourceFile=".vimrc"
 nvimrcSourceFile="init.vim"
