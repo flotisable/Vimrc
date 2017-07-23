@@ -28,12 +28,13 @@ au BufWinEnter * silent! loadview
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug
 call plug#begin( '~/.vim/plugged' )
 
-Plug 'scrooloose/nerdtree'      " 樹狀顯示資料夾的插件  plugin for display directory as tree view  https://github.com/scrooloose/nerdtree
-Plug 'shougo/neocomplcache.vim' " 自動補全的插件（因為 vim 版本低）  plugin for autocomplete( since 'vim' version is old )  https://github.com/shougo/neocomplcache.vim
-Plug 'majutsushi/tagbar'        " 顯示 tag 的插件（需搭配 ctags ）  plugin for display tags( depend on 'ctags' )  https://github.com/majutsushi/tagbar
-if has( 'nvim' )                " neovim 專用插件  neovim specific plugins
-  Plug 'kassio/neoterm'         " 終端機插件  terminal plugin  http://github.com/kassio/neoterm
+Plug 'scrooloose/nerdtree'              " 樹狀顯示資料夾的插件  plugin for display directory as tree view  https://github.com/scrooloose/nerdtree
+Plug 'shougo/neocomplcache.vim'         " 自動補全的插件（因為 vim 版本低）  plugin for autocomplete( since 'vim' version is old )  https://github.com/shougo/neocomplcache.vim
+Plug 'majutsushi/tagbar'                " 顯示 tag 的插件（需搭配 ctags ）  plugin for display tags( depend on 'ctags' )  https://github.com/majutsushi/tagbar
+if has( 'nvim' )                        " neovim 專用插件  neovim specific plugins
+  Plug 'kassio/neoterm'                 " 終端機插件  terminal plugin  http://github.com/kassio/neoterm
 endif
+Plug 'octol/vim-cpp-enhanced-highlight' " C++語法高亮插件  plugin for C++ highlight  http://github.com/octol/vim-cpp-enhanced-highlight
 
 call plug#end()
 " end vim-plug settings
@@ -45,3 +46,9 @@ let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  
 " key mapping  快捷鍵設定
 noremap   <C-x> :NERDTreeToggle<Enter>| " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
 " end key mapping
+
+" vim-cpp-enhanced-highlight settings
+let g:cpp_class_scope_highlight     = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight      = 1
+" end vim-cpp-enhanced-highlight settings
