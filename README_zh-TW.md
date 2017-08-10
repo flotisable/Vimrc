@@ -39,10 +39,13 @@
 - 如果你沒有使用 neovim，可以在 ```cp ${nvimrcSourceFile} ...``` 這一行的開頭加上 # 將它注解掉
 - 輸入 ```./installVimrc.sh``` 來安裝 **.vimrc** 和 **init.vim**
 # 快捷鍵設定
-- Ctrl+x : 開闔樹狀檢視器
+- Ctrl+x      : 開闔樹狀檢視器
+- <Leader> r  : 開關相對行號設定
 ## neovim 專用快捷鍵
 - Ctrl+s : 開闔終端機
 - Ctrl+q : 離開終端機模式
+# 自定義函式
+- Flotisabletogglerelativenumber() : 開關相對行號設定
 # 插件
 - [vim-plug](https://github.com/junegunn/vim-plug)              : vim 的插件管理器 
 - [Nerdtree](https://github.com/scrooloose/nerdtree)            : 在 vim 中以樹狀檢視資料夾

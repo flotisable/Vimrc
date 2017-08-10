@@ -42,10 +42,13 @@ to use the script
 - if you don't use neovim, just comment the line ```cp ${nvimrcSourceFile} ...``` with '#' at the beginning of the line
 - type ```./installVimrc.sh``` to install **.vimrc** and **init.vim** file
 # Key Mappings
-- Ctrl+x : toggle the tree browser
+- Ctrl+x      : toggle the tree browser
+- <Leader> r  : toggle relativenumber setting
 ## Neovim Specific Key Mappings
 - Ctrl+s : toggle the terminal
 - Ctrl+q : exit teminal mode in neovim
+# Self Defined Functions
+- FlotisableToggleRelativeNumber() : toggle relativenumber setting
 # Plugins
 - [vim-plug](https://github.com/junegunn/vim-plug)              : vim plugins manager
 - [Nerdtree](https://github.com/scrooloose/nerdtree)            : to browse the directory in a tree view
