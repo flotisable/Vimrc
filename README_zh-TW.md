@@ -40,7 +40,7 @@
 - 輸入 ```./installVimrc.sh``` 來安裝 **.vimrc** 和 **init.vim**
 # 快捷鍵設定
 - Ctrl+x      : 開闔樹狀檢視器
-- <Leader> r  : 開關相對行號設定
+- \<Leader> r : 開關相對行號設定
 ## neovim 專用快捷鍵
 - Ctrl+s : 開闔終端機
 - Ctrl+q : 離開終端機模式
