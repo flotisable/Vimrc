@@ -12,6 +12,22 @@ set expandtab         " 將 tab 鍵展開為空白鍵  expand TAB key to be spac
 set showcmd           " 顯示指令在狀態攔（知道自己輸入什麼）  show the command at the status bar
 " end option settings
 
+" self defined functions  自定義的函式
+
+" relativenumber settings  相對行號設定
+if !exists( '*FlotisableToggleRelativeNumber' )
+  function FlotisableToggleRelativeNumber()
+    if &relativenumber == 0
+      set relativenumber
+    else
+      set norelativenumber
+    endif
+  endfunction
+endif
+" end relativenumber settings
+
+" end self defined functions
+
 " setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題
 if has( 'gui_running' )
   colorscheme desert  " colorscheme in gui  圖形介面顏色主題
@@ -44,7 +60,8 @@ let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  
 " end neocomplcache settings
 
 " key mapping  快捷鍵設定
-noremap   <C-x> :NERDTreeToggle<Enter>| " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
+noremap <C-x>     :NERDTreeToggle<Enter>|                         " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
+noremap <Leader>r :call FlotisableToggleRelativeNumber()<Enter>|  " 設定 Leader r 鍵開關相對行號設定
 " end key mapping
 
 " vim-cpp-enhanced-highlight settings
