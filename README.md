@@ -43,7 +43,7 @@ to use the script
 - type ```./installVimrc.sh``` to install **.vimrc** and **init.vim** file
 # Key Mappings
 - Ctrl+x      : toggle the tree browser
-- <Leader> r  : toggle relativenumber setting
+- \<Leader> r : toggle relativenumber setting
 ## Neovim Specific Key Mappings
 - Ctrl+s : toggle the terminal
 - Ctrl+q : exit teminal mode in neovim
