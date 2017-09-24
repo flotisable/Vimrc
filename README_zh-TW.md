@@ -1,5 +1,21 @@
 # Vimrc
 備份跟分享 vimrc 檔
+# 索引
+- [檔案](#檔案)
+- [使用 vimrc](#使用-vimrc)
+  - [在 Linux 和 Mac 上](#在-linux-和-mac-上)
+  - [在 Windows 上](#在-windows-上)
+- [安裝](#安裝)
+  - [使用安裝腳本](#使用安裝腳本)
+    - [修改腳本](#修改腳本)
+    - [使用參數](#使用參數)
+  - [使用 makefile](#使用-makefile)
+- [快捷鍵設定](#快捷鍵設定)
+  - [neovim 專用快捷鍵](#neovim-專用快捷鍵)
+- [自定義函式](#自定義函式)
+- [插件](#插件)
+  - [neovim 專用插件](#neovim-專用插件)
+  - [關於 ctags](#關於-ctags)
 # 檔案
 - **.vimrc**          : [vim](https://github.com/vim/vim) 的設定
 - **init.vim**        : [neovim](https://github.com/neovim/neovim) 的設定
@@ -86,7 +102,7 @@ makefile 是為那些想用 **make** 來處理的人寫的
 - [neocomplcache](https://github.com/shougo/neocomplcache.vim)  : 自動補全插件( 我會用這個主要是因為我用的 vim 版本有點舊，如果你有新版本的話可以試試看 [YouCompleteMe](https://github.com/valloric/youcompleteme) 或 [neocomplete](https://github.com/shougo/neocomplete.vim) )
 - [tagbar](https://github.com/majutsushi/tagbar)                : 顯示 tag 的插件( 需要 ctags )
 - [vim-cpp-enhanced-highlight](http://github.com/octol/vim-cpp-enhanced-highlight)  : 增加一些 C++ highlight 的功能
-# neovim 專用插件
+## neovim 專用插件
 - [neoterm](https://github.com/kassio/neoterm)                  : 終端機插件
 ## 關於 ctags
 ctags 只支援 c/c++ 語言，如果要支援其他語言，可以試試看這些
