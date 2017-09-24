@@ -2,12 +2,28 @@
 for backup and share my vimrc file
 
 [Traditional Chinese README](README_zh-TW.md)
+# Indexes
+- [Files](README.md#files)
+- [To use vimrc](README.md#to-use-vimrc)
+  - [For Linux and Mac](README.md#for-linux-and-mac)
+  - [For Windows](README.md#for-windows)
+- [Install](README.md#install)
+  - [Using Install Script](README.md#using-install-script)
+    - [Modify The Script](README.md#modify-the-script)
+    - [Using Arguments](README.md#using-arguments)
+  - [Using Makefile](README.md#using-makefile)
+- [KeyBindings](README.md#key-bindings)
+  - [Neovim Specific Key Bindings](README.md#neovim-specific-key-bindings)
+- [Self Defined Functions](README.md#self-defined-functions)
+- [Plugins](README.md#plugins)
+  - [Neovim Specific Plugins](README.md#neovim-specific-plugins)
+  - [For ctags](README.md#for-ctags)
 # Files
 - **.vimrc**          : settings for [vim](https://github.com/vim/vim)
 - **init.vim**        : settings for [neovim](https://github.com/neovim/neovim)
 - **installVimrc.sh** : install script for **.vimrc** and **init.vim**
 - **makefile**        : makefile for **.vimrc** and **init.vim**
-# To use vimrc
+# To Use Vimrc
 open the vim and type **:help vimrc**, then it will show the help file about where to put vimrc
 
 if you don't use neovim, just ignore the "init.vim" file
@@ -78,7 +94,7 @@ the variables is the same as the install script
 # Key Bindings
 - Ctrl+x      : toggle the tree browser
 - \<Leader> r : toggle relativenumber setting
-## Neovim Specific Key Mappings
+## Neovim Specific Key Bindings
 - Ctrl+s : toggle the terminal
 - Ctrl+q : exit teminal mode in neovim
 # Self Defined Functions
