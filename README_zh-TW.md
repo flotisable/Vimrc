@@ -80,10 +80,10 @@ makefile 是為那些想用 **make** 來處理的人寫的
 - 預設      : 更新原始碼
 
   當 make 沒有給選項時會做的動作
-- 安裝      : 安裝 **.vimrc** 與 **init.vim**
+- install   : 安裝 **.vimrc** 與 **init.vim**
 
   實際上這會呼叫安裝腳本，因此在使用前要確認安裝腳本可以被執行
-- 解除安裝  : 解除安裝 **.vimrc** 與 **init.vim**
+- uninstall : 解除安裝 **.vimrc** 與 **init.vim**
 
 如果想要改變 **.vimrc** 和 **init.vim** 的安裝路徑與檔名，請修改 makefile 中的變數
 
