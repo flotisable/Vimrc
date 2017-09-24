@@ -20,14 +20,14 @@ I place the ".vimrc" at "$HOME/" and "init.vim" at "$HOME/.config/nvim/"
 this is the default directory of vimrc
 ## For Windows
 I place the "init.vim" at "$XDG_CONFIG_HOME\nvim\\"
-  
+
 as for ".vimrc", I don't use vim on Windows, so if you use neovim just place it to a directory and modify the **"source ~/.vimrc"** line in "init.vim" with the path you place ".vimrc"
-  
+
 for example, if you put ".vimrc" at "D:\Vim\\", then modify the source line as below
 ```
 source D:\Vim\.vimrc
 ```
-  
+
 else read the vim help file to know where to put the ".vimrc"
 # Using Install Script
 the script is written in **bash** script, so any shell support bash script can be used
