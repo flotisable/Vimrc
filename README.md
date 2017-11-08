@@ -12,6 +12,7 @@ for backup and share my vimrc file
     - [Modify The Script](#modify-the-script)
     - [Using Arguments](#using-arguments)
   - [Using Makefile](#using-makefile)
+- [Getting Start](#getting-start)
 - [KeyBindings](#key-bindings)
   - [Neovim Specific Key Bindings](#neovim-specific-key-bindings)
 - [Self Defined Functions](#self-defined-functions)
@@ -91,6 +92,20 @@ currently, the makefile support the following options
 to change the path and file name of **.vimrc** and **init.vim**, just modify the variables of makefile
 
 the variables is the same as the install script
+# Getting Start
+for using the vimrc first time, you can decide whether you want to use the plugin or not
+
+if you don't want to use the plugins, just delete the lines related to plugin settings in the vimrc
+
+if you want to use the plugins, you need to download vim-plug first( since this is the plugin manager I use )
+
+follow the link in the [Plugins](#plugins), and then follow the readme file of vim-plug to download it
+
+after downloading vim-plug, type ```:PlugInstall``` in vim
+
+it will automatically download the plugins I have mentioned in the [Plugins](#plugins)
+
+then just have fun with this vimrc
 # Key Bindings
 - Ctrl+x      : toggle the tree browser
 - \<Leader> r : toggle relativenumber setting
