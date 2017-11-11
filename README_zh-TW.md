@@ -112,13 +112,14 @@ makefile 是為那些想用 **make** 來處理的人寫的
 # 自定義函式
 - Flotisabletogglerelativenumber() : 開關相對行號設定
 # 插件
-- [vim-plug](https://github.com/junegunn/vim-plug)              : vim 的插件管理器
-- [Nerdtree](https://github.com/scrooloose/nerdtree)            : 在 vim 中以樹狀檢視資料夾
-- [neocomplcache](https://github.com/shougo/neocomplcache.vim)  : 自動補全插件( 我會用這個主要是因為我用的 vim 版本有點舊，如果你有新版本的話可以試試看 [YouCompleteMe](https://github.com/valloric/youcompleteme) 或 [neocomplete](https://github.com/shougo/neocomplete.vim) )
-- [tagbar](https://github.com/majutsushi/tagbar)                : 顯示 tag 的插件( 需要 ctags )
+- [vim-plug](https://github.com/junegunn/vim-plug)                                  : vim 的插件管理器
+- [Nerdtree](https://github.com/scrooloose/nerdtree)                                : 在 vim 中以樹狀檢視資料夾
+- [neocomplcache](https://github.com/shougo/neocomplcache.vim)                      : 自動補全插件( 我會用這個主要是因為我用的 vim 版本有點舊，如果你有新版本的話可以試試看 [YouCompleteMe](https://github.com/valloric/youcompleteme) 或 [neocomplete](https://github.com/shougo/neocomplete.vim) )
+- [tagbar](https://github.com/majutsushi/tagbar)                                    : 顯示 tag 的插件( 需要 ctags )
 - [vim-cpp-enhanced-highlight](http://github.com/octol/vim-cpp-enhanced-highlight)  : 增加一些 C++ highlight 的功能
+- [FlotisableStatusLine](https://github.com/flotisable/FlotisableStatusLine)        : 我個人使用的設定狀態列的插件
 ## neovim 專用插件
-- [neoterm](https://github.com/kassio/neoterm)                  : 終端機插件
+- [neoterm](https://github.com/kassio/neoterm)                                      : 終端機插件
 ## 關於 ctags
 ctags 只支援 c/c++ 語言，如果要支援其他語言，可以試試看這些
 - [exuberant ctags](http://ctags.sourceforge.net/)            : 支援多種語言的 ctags ( 現在好像沒在維護了 )

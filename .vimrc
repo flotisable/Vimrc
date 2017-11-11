@@ -51,6 +51,7 @@ if has( 'nvim' )                        " neovim 專用插件  neovim specific p
   Plug 'kassio/neoterm'                 " 終端機插件  terminal plugin  http://github.com/kassio/neoterm
 endif
 Plug 'octol/vim-cpp-enhanced-highlight' " C++語法高亮插件  plugin for C++ highlight  http://github.com/octol/vim-cpp-enhanced-highlight
+Plug 'flotisable/FlotisableStatusLine'  " 個人使用的狀態列設定插件  self use statusline plugin
 
 call plug#end()
 " end vim-plug settings

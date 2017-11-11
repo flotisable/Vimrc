@@ -120,6 +120,7 @@ then just have fun with this vimrc
 - [neocomplcache](https://github.com/shougo/neocomplcache.vim)                      : autocomplete plugin( I use this because my vim version is old, for newer version you can try [YouCompleteMe](https://github.com/valloric/youcompleteme) or [neocomplete](https://github.com/shougo/neocomplete.vim) )
 - [tagbar](https://github.com/majutsushi/tagbar)                                    : to display tags( depend on ctags )
 - [vim-cpp-enhanced-highlight](http://github.com/octol/vim-cpp-enhanced-highlight)  : to add some highlight feature of C++
+- [FlotisableStatusLine](https://github.com/flotisable/FlotisableStatusLine)        : a self use plugin to set up the status line
 ## Neovim Specific Plugins
 - [neoterm](https://github.com/kassio/neoterm)                  : terminal plugin
 ## For ctags
