@@ -109,6 +109,8 @@ then just have fun with this vimrc
 # Key Bindings
 - Ctrl+x      : toggle the tree browser
 - \<Leader> r : toggle relativenumber setting
+- space       : Ctrl+f
+- backspace   : Ctrl+b
 ## Neovim Specific Key Bindings
 - Ctrl+s : toggle the terminal
 - Ctrl+q : exit teminal mode in neovim

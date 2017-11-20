@@ -106,6 +106,8 @@ makefile 是為那些想用 **make** 來處理的人寫的
 # 快捷鍵設定
 - Ctrl+x      : 開闔樹狀檢視器
 - \<Leader> r : 開關相對行號設定
+- 空白鍵      : Ctrl+f
+- 退格鍵      : Ctrl+b
 ## neovim 專用快捷鍵
 - Ctrl+s : 開闔終端機
 - Ctrl+q : 離開終端機模式
