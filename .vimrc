@@ -63,6 +63,8 @@ let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  
 " key mapping  快捷鍵設定
 noremap <C-x>     :NERDTreeToggle<Enter>|                         " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
 noremap <Leader>r :call FlotisableToggleRelativeNumber()<Enter>|  " 設定 Leader r 鍵開關相對行號設定
+noremap <Space>   <C-F>
+noremap <BS>      <C-B>
 " end key mapping
 
 " vim-cpp-enhanced-highlight settings
