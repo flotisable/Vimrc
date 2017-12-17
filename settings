@@ -1,0 +1,8 @@
+vimrcDir=${HOME}
+nvimrcDir=${HOME}/.config/nvim
+
+vimrcSourceFile=.vimrc
+nvimrcSourceFile=init.vim
+
+vimrcTargetFile=.vimrc
+nvimrcTargetFile=init.vim
