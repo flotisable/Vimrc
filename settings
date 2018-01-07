@@ -6,3 +6,6 @@ nvimrcSourceFile=init.vim
 
 vimrcTargetFile=.vimrc
 nvimrcTargetFile=init.vim
+
+installPluginManager=1
+pluginManagerPath=${HOME}/.vim/autoload

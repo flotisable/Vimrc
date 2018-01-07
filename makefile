@@ -9,3 +9,4 @@ install:
 uninstall:
 	rm $(vimrcDir)/$(vimrcTargetFile)
 	rm $(nvimrcDir)/$(nvimrcTargetFile)
+	if [ -e $(pluginManagerPath)/plug.vim ]; then rm $(pluginManagerPath)/plug.vim; fi
