@@ -5,8 +5,8 @@ source ~/.vimrc
 " end include vim resource
 
 " neoterm settings  neoterm 插件設定
-let g:neoterm_size        = 999 " 設定終端機為全螢幕  set terminal size to full screen
-let g:neoterm_autoinsert  = 1   " 開啟終端機後進入終端機模式  enter terminal mode after open the terminal 
+let g:neoterm_autoinsert  = 1       " 開啟終端機後進入終端機模式  enter terminal mode after open the terminal 
+let g:neoterm_default_mod = ":tab"  " 設定以 tab 開啟終端機  open terminal in a tab
 " end neoterm settings
 
 " key mapping  快捷鍵設定
