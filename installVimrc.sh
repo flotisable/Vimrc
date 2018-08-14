@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source ./settings
+. ./settings
 
 if [ \( ${installPluginManager} -eq 1 \) -a ! -e ${pluginManagerPath}/plug.vim ]; then
   curl -fLo ${pluginManagerPath}/plug.vim --create-dirs \
