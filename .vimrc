@@ -45,7 +45,17 @@ au BufWinEnter * silent! loadview
 call plug#begin( '~/.vim/plugged' )
 
 Plug 'scrooloose/nerdtree'                                    " 樹狀顯示資料夾的插件  plugin for display directory as tree view  https://github.com/scrooloose/nerdtree
-Plug 'shougo/neocomplcache.vim'                               " 自動補全的插件（因為 vim 版本低）  plugin for autocomplete( since 'vim' version is old )  https://github.com/shougo/neocomplcache.vim
+if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
+  if has( 'nvim' )
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+else
+  Plug 'shougo/neocomplcache.vim'                               " 自動補全的插件（因為 vim 版本低）  plugin for autocomplete( since 'vim' version is old )  https://github.com/shougo/neocomplcache.vim
+endif
 Plug 'majutsushi/tagbar'                                      " 顯示 tag 的插件（需搭配 ctags ）  plugin for display tags( depend on 'ctags' )  https://github.com/majutsushi/tagbar
 if has( 'nvim' )                                              " neovim 專用插件  neovim specific plugins
   Plug 'kassio/neoterm'                                       " 終端機插件  terminal plugin  http://github.com/kassio/neoterm
@@ -53,12 +63,24 @@ endif
 Plug 'octol/vim-cpp-enhanced-highlight'                       " C++語法高亮插件  plugin for C++ highlight  http://github.com/octol/vim-cpp-enhanced-highlight
 Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " 個人使用的狀態列設定插件  self use statusline plugin
 
+if has( 'nvim' ) || v:version >= 800
+  if has( 'win32' )
+    Plug 'autozimu/LanguageClient-neovim', { 'do': 'powershell -executionpolicy bypass -File install.ps1' }
+  else
+    Plug 'autozimu/LanguageClient-neovim', { 'do': 'bash install.sh' }
+  endif
+endif
+
 call plug#end()
 " end vim-plug settings
 
-" neocomplcache settings  neocomplcache 插件設定
-let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  start 'neocomplcache' when open 'vim'
-" end neocomplcache settings
+if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
+  let g:deoplete#enable_at_startup = 1
+else
+  " neocomplcache settings  neocomplcache 插件設定
+  let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  start 'neocomplcache' when open 'vim'
+  " end neocomplcache settings
+endif
 
 " key mapping  快捷鍵設定
 noremap   <C-x>     :NERDTreeToggle<Enter>|                         " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
