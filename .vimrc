@@ -100,7 +100,7 @@ endif
 if has( 'nvim' ) || v:version >= 800
   let g:LanguageClient_serverCommands = {}
 
-  call extend( g:LanguageClient_serverCommands, { 'cpp': ['/usr/local/Cellar/llvm/7.0.1/bin/clangd'] } )
+  call extend( g:LanguageClient_serverCommands, { 'cpp': ['clangd'] } )
 endif
 " end LSP client settings
 
