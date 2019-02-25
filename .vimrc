@@ -44,7 +44,16 @@ au BufWinEnter * silent! loadview
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug
 call plug#begin( '~/.vim/plugged' )
 
-Plug 'scrooloose/nerdtree'                                    " 樹狀顯示資料夾的插件  plugin for display directory as tree view  https://github.com/scrooloose/nerdtree
+Plug 'scrooloose/nerdtree'                                    " 樹狀顯示資料夾的插件  plugin for display directory as tree view
+
+Plug 'majutsushi/tagbar'                                      " 顯示 tag 的插件（需搭配 ctags ）  plugin for display tags( depend on 'ctags' )
+if has( 'nvim' )                                              " neovim 專用插件  neovim specific plugins
+  Plug 'kassio/neoterm'                                       " 終端機插件  terminal plugin
+endif
+Plug 'octol/vim-cpp-enhanced-highlight'                       " C++語法高亮插件  plugin for C++ highlight
+Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " 個人使用的狀態列設定插件  self use statusline plugin
+
+" 自動補全的插件  plugin for autocomplete
 if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
   if has( 'nvim' )
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -53,34 +62,45 @@ if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
-else
-  Plug 'shougo/neocomplcache.vim'                               " 自動補全的插件（因為 vim 版本低）  plugin for autocomplete( since 'vim' version is old )  https://github.com/shougo/neocomplcache.vim
+else " 當 vim 版本較低時  when 'vim' version is older
+  Plug 'shougo/neocomplcache.vim'
 endif
-Plug 'majutsushi/tagbar'                                      " 顯示 tag 的插件（需搭配 ctags ）  plugin for display tags( depend on 'ctags' )  https://github.com/majutsushi/tagbar
-if has( 'nvim' )                                              " neovim 專用插件  neovim specific plugins
-  Plug 'kassio/neoterm'                                       " 終端機插件  terminal plugin  http://github.com/kassio/neoterm
-endif
-Plug 'octol/vim-cpp-enhanced-highlight'                       " C++語法高亮插件  plugin for C++ highlight  http://github.com/octol/vim-cpp-enhanced-highlight
-Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " 個人使用的狀態列設定插件  self use statusline plugin
+" end plugin for autocomplete
 
+" LSP 客戶端  language server protocal client
 if has( 'nvim' ) || v:version >= 800
   if has( 'win32' )
-    Plug 'autozimu/LanguageClient-neovim', { 'do': 'powershell -executionpolicy bypass -File install.ps1' }
+    Plug 'autozimu/LanguageClient-neovim',
+      \ { 'branch': 'next',
+        \ 'do': 'powershell -executionpolicy bypass -File install.ps1' }
   else
-    Plug 'autozimu/LanguageClient-neovim', { 'do': 'bash install.sh' }
+    Plug 'autozimu/LanguageClient-neovim',
+      \ { 'branch': 'next',
+        \ 'do': 'bash install.sh' }
   endif
 endif
+" end language server protocal client
 
 call plug#end()
 " end vim-plug settings
 
+" 補全插件設定  completion plugin settings
 if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
-  let g:deoplete#enable_at_startup = 1
+  let g:python3_host_prog           = "python3"
+  let g:deoplete#enable_at_startup  = 1 " 開啟 vim 時啟用 deoplete  start 'deoplete' when open 'vim'
 else
-  " neocomplcache settings  neocomplcache 插件設定
   let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  start 'neocomplcache' when open 'vim'
   " end neocomplcache settings
 endif
+" end completion plugin settings
+
+" LSP 客戶端設定  LSP client settings
+if has( 'nvim' ) || v:version >= 800
+  let g:LanguageClient_serverCommands = {}
+
+  call extend( g:LanguageClient_serverCommands, { 'cpp': ['/usr/local/Cellar/llvm/7.0.1/bin/clangd'] } )
+endif
+" end LSP client settings
 
 " key mapping  快捷鍵設定
 noremap   <C-x>     :NERDTreeToggle<Enter>|                         " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
