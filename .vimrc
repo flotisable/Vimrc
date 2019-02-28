@@ -1,4 +1,4 @@
-" option settings  選項設定
+" option settings  選項設定{{{
 set encoding=utf-8    " 設定編碼  set file encoding
 set number            " 顯示行號  display line number
 set autoindent        " 自動縮排（與上一行縮排相同）  automatic indent as last line
@@ -11,8 +11,8 @@ set expandtab         " 將 tab 鍵展開為空白鍵  expand TAB key to be spac
 
 set showcmd           " 顯示指令在狀態攔（知道自己輸入什麼）  show the command at the status bar
 " end option settings
-
-" self defined functions  自定義的函式
+"}}}
+" self defined functions  自定義的函式{{{
 
 " relativenumber settings  相對行號設定
 if !exists( '*FlotisableToggleRelativeNumber' )
@@ -27,21 +27,21 @@ endif
 " end relativenumber settings
 
 " end self defined functions
-
-" setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題
+"}}}
+" setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
 if has( 'gui_running' )
   colorscheme desert  " colorscheme in gui  圖形介面顏色主題
 else
   colorscheme elflord " colorscheme in terminal  終端機顏色主題
 endif
 " end setup colorscheme for terminal and gui
-
-" save and load view  自動讀取與儲存手動的折疊
+"}}}
+" save and load view  自動讀取與儲存手動的折疊{{{
 au BufWinLeave * silent! mkview
 au BufWinEnter * silent! loadview
 " end save and load view
-
-" vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug
+"}}}
+" vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
 if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 "
   let g:pluginRoot = '~/.vim/plugged'
@@ -105,26 +105,25 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 "
 endif
 " end vim-plug settings
-
-" 補全插件設定  completion plugin settings
+"}}}
+" 補全插件設定  completion plugin settings{{{
 if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
   let g:python3_host_prog           = "python3"
   let g:deoplete#enable_at_startup  = 1 " 開啟 vim 時啟用 deoplete  start 'deoplete' when open 'vim'
 else
   let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  start 'neocomplcache' when open 'vim'
-  " end neocomplcache settings
 endif
 " end completion plugin settings
-
-" LSP 客戶端設定  LSP client settings
+"}}}
+" LSP 客戶端設定  LSP client settings{{{
 if has( 'nvim' ) || v:version >= 800
   let g:LanguageClient_serverCommands = {}
 
   call extend( g:LanguageClient_serverCommands, { 'cpp': ['clangd'] } )
 endif
 " end LSP client settings
-
-" key mapping  快捷鍵設定
+"}}}
+" key mapping  快捷鍵設定{{{
 noremap   <C-x>     :NERDTreeToggle<Enter>|                         " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
 noremap   <Leader>r :call FlotisableToggleRelativeNumber()<Enter>|  " 設定 Leader r 鍵開關相對行號設定
 noremap   <Space>   <C-F>
@@ -138,9 +137,11 @@ noremap!  <C-n>     <Down>
 noremap!  <C-k>     <C-e><C-u>
 noremap!  <C-d>     <Del>
 " end key mapping
-
-" vim-cpp-enhanced-highlight settings
+"}}}
+" vim-cpp-enhanced-highlight settings{{{
 let g:cpp_class_scope_highlight     = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight      = 1
 " end vim-cpp-enhanced-highlight settings
+"}}}
+" vim: foldmethod=marker foldmarker={{{,}}}
