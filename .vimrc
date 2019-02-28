@@ -42,46 +42,68 @@ au BufWinEnter * silent! loadview
 " end save and load view
 
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug
-call plug#begin( '~/.vim/plugged' )
+if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
+"
+  let g:pluginRoot = '~/.vim/plugged'
 
-Plug 'scrooloose/nerdtree'                                    " 樹狀顯示資料夾的插件  plugin for display directory as tree view
+  call plug#begin( pluginRoot )
 
-Plug 'majutsushi/tagbar'                                      " 顯示 tag 的插件（需搭配 ctags ）  plugin for display tags( depend on 'ctags' )
-if has( 'nvim' )                                              " neovim 專用插件  neovim specific plugins
-  Plug 'kassio/neoterm'                                       " 終端機插件  terminal plugin
-endif
-Plug 'octol/vim-cpp-enhanced-highlight'                       " C++語法高亮插件  plugin for C++ highlight
-Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " 個人使用的狀態列設定插件  self use statusline plugin
+  Plug 'scrooloose/nerdtree'                                    " 樹狀顯示資料夾的插件  plugin for display directory as tree view
 
-" 自動補全的插件  plugin for autocomplete
-if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
-  if has( 'nvim' )
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
+  Plug 'majutsushi/tagbar'                                      " 顯示 tag 的插件（需搭配 ctags ）  plugin for display tags( depend on 'ctags' )
+  if has( 'nvim' )                                              " neovim 專用插件  neovim specific plugins
+  "
+    Plug 'kassio/neoterm'                                       " 終端機插件  terminal plugin
+  "
   endif
-else " 當 vim 版本較低時  when 'vim' version is older
-  Plug 'shougo/neocomplcache.vim'
-endif
-" end plugin for autocomplete
+  Plug 'octol/vim-cpp-enhanced-highlight'                       " C++語法高亮插件  plugin for C++ highlight
+  Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " 個人使用的狀態列設定插件  self use statusline plugin
 
-" LSP 客戶端  language server protocal client
-if has( 'nvim' ) || v:version >= 800
-  if has( 'win32' )
-    Plug 'autozimu/LanguageClient-neovim',
-      \ { 'branch': 'next',
-        \ 'do': 'powershell -executionpolicy bypass -File install.ps1' }
-  else
-    Plug 'autozimu/LanguageClient-neovim',
-      \ { 'branch': 'next',
-        \ 'do': 'bash install.sh' }
+  " 自動補全的插件  plugin for autocomplete
+  if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
+  "
+    if has( 'nvim' )
+    "
+      Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    "
+    else
+    "
+      Plug 'Shougo/deoplete.nvim'
+      Plug 'roxma/nvim-yarp'
+      Plug 'roxma/vim-hug-neovim-rpc'
+    "
+    endif
+  "
+  else " 當 vim 版本較低時  when 'vim' version is older
+  "
+    Plug 'shougo/neocomplcache.vim'
+  "
   endif
-endif
-" end language server protocal client
+  " end plugin for autocomplete
 
-call plug#end()
+  " LSP 客戶端  language server protocal client
+  if has( 'nvim' ) || v:version >= 800
+  "
+    if has( 'win32' )
+    "
+      Plug 'autozimu/LanguageClient-neovim',
+        \ { 'branch': 'next',
+          \ 'do': 'powershell -executionpolicy bypass -File install.ps1' }
+    "
+    else
+    "
+      Plug 'autozimu/LanguageClient-neovim',
+        \ { 'branch': 'next',
+          \ 'do': 'bash install.sh' }
+    "
+    endif
+  "
+  endif
+  " end language server protocal client
+
+  call plug#end()
+"
+endif
 " end vim-plug settings
 
 " 補全插件設定  completion plugin settings
