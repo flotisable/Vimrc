@@ -37,10 +37,8 @@ endif
 " end setup colorscheme for terminal and gui
 
 " save and load view  自動讀取與儲存手動的折疊
-if &foldmethod == 'manual'
-  au BufWinLeave * silent! mkview
-  au BufWinEnter * silent! loadview
-endif
+au BufWinLeave * silent! mkview
+au BufWinEnter * silent! loadview
 " end save and load view
 
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug
