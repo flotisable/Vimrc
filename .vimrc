@@ -49,13 +49,14 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   call plug#begin( pluginRoot )
 
   Plug 'scrooloose/nerdtree'                                    " 樹狀顯示資料夾的插件  plugin for display directory as tree view
-
   Plug 'majutsushi/tagbar'                                      " 顯示 tag 的插件（需搭配 ctags ）  plugin for display tags( depend on 'ctags' )
+
   if has( 'nvim' )                                              " neovim 專用插件  neovim specific plugins
   "
     Plug 'kassio/neoterm'                                       " 終端機插件  terminal plugin
   "
   endif
+
   Plug 'octol/vim-cpp-enhanced-highlight'                       " C++語法高亮插件  plugin for C++ highlight
   Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " 個人使用的狀態列設定插件  self use statusline plugin
 
@@ -107,24 +108,35 @@ endif
 " end vim-plug settings
 "}}}
 " 補全插件設定  completion plugin settings{{{
-if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
+if isdirectory( expand( printf( '%s/deoplete.nvim', pluginRoot ) ) )
+"
   let g:python3_host_prog           = "python3"
   let g:deoplete#enable_at_startup  = 1 " 開啟 vim 時啟用 deoplete  start 'deoplete' when open 'vim'
-else
+"
+elseif isdirectory( expand( printf( '%s/neocomplcache.vim', pluginRoot ) ) )
+"
   let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  start 'neocomplcache' when open 'vim'
+"
 endif
 " end completion plugin settings
 "}}}
 " LSP 客戶端設定  LSP client settings{{{
-if has( 'nvim' ) || v:version >= 800
+if isdirectory( expand( printf( '%s/LanguageClient-neovim', pluginRoot ) ) )
+"
   let g:LanguageClient_serverCommands = {}
 
   call extend( g:LanguageClient_serverCommands, { 'cpp': ['clangd'] } )
+"
 endif
 " end LSP client settings
 "}}}
 " key mapping  快捷鍵設定{{{
-noremap   <C-x>     :NERDTreeToggle<Enter>|                         " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
+if isdirectory( expand( printf( '%s/nerdtree', pluginRoot ) ) )
+"
+  noremap   <C-x>     :NERDTreeToggle<Enter>|                         " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
+"
+endif
+
 noremap   <Leader>r :call FlotisableToggleRelativeNumber()<Enter>|  " 設定 Leader r 鍵開關相對行號設定
 noremap   <Space>   <C-F>
 noremap   <BS>      <C-B>
@@ -139,9 +151,13 @@ noremap!  <C-d>     <Del>
 " end key mapping
 "}}}
 " vim-cpp-enhanced-highlight settings{{{
-let g:cpp_class_scope_highlight     = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight      = 1
+if isdirectory( expand( printf( '%s/vim-cpp-enhanced-highlight', pluginRoot ) ) )
+"
+  let g:cpp_class_scope_highlight     = 1
+  let g:cpp_member_variable_highlight = 1
+  let g:cpp_class_decl_highlight      = 1
+"
+endif
 " end vim-cpp-enhanced-highlight settings
 "}}}
 " vim: foldmethod=marker foldmarker={{{,}}}
