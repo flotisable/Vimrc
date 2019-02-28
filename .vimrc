@@ -16,13 +16,31 @@ set showcmd           " 顯示指令在狀態攔（知道自己輸入什麼）  
 
 " relativenumber settings  相對行號設定
 if !exists( '*FlotisableToggleRelativeNumber' )
+"
   function FlotisableToggleRelativeNumber()
+  "
     if &relativenumber == 0
+    "
       set relativenumber
+    "
     else
+    "
       set norelativenumber
+    "
     endif
+  "
   endfunction
+"
+endif
+
+if !exists( '*FlotisablePluginExists' )
+"
+  function FlotisablePluginExists( name )
+  "
+    return isdirectory( expand( printf( '%s/%s', g:pluginRoot, a:name ) ) )
+  "
+  endfunction
+"
 endif
 " end relativenumber settings
 
@@ -108,12 +126,12 @@ endif
 " end vim-plug settings
 "}}}
 " 補全插件設定  completion plugin settings{{{
-if isdirectory( expand( printf( '%s/deoplete.nvim', pluginRoot ) ) )
+if FlotisablePluginExists( 'deoplete.nvim' )
 "
   let g:python3_host_prog           = "python3"
   let g:deoplete#enable_at_startup  = 1 " 開啟 vim 時啟用 deoplete  start 'deoplete' when open 'vim'
 "
-elseif isdirectory( expand( printf( '%s/neocomplcache.vim', pluginRoot ) ) )
+elseif FlotisablePluginExists( 'neocomplcache.vim' )
 "
   let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  start 'neocomplcache' when open 'vim'
 "
@@ -121,7 +139,7 @@ endif
 " end completion plugin settings
 "}}}
 " LSP 客戶端設定  LSP client settings{{{
-if isdirectory( expand( printf( '%s/LanguageClient-neovim', pluginRoot ) ) )
+if FlotisablePluginExists( 'LanguageClient-neovim' )
 "
   let g:LanguageClient_serverCommands = {}
 
@@ -131,7 +149,7 @@ endif
 " end LSP client settings
 "}}}
 " key mapping  快捷鍵設定{{{
-if isdirectory( expand( printf( '%s/nerdtree', pluginRoot ) ) )
+if FlotisablePluginExists( 'nerdtree' )
 "
   noremap   <C-x>     :NERDTreeToggle<Enter>|                         " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
 "
@@ -151,7 +169,7 @@ noremap!  <C-d>     <Del>
 " end key mapping
 "}}}
 " vim-cpp-enhanced-highlight settings{{{
-if isdirectory( expand( printf( '%s/vim-cpp-enhanced-highlight', pluginRoot ) ) )
+if FlotisablePluginExists( 'vim-cpp-enhanced-highlight' )
 "
   let g:cpp_class_scope_highlight     = 1
   let g:cpp_member_variable_highlight = 1
