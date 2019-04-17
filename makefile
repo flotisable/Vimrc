@@ -1,5 +1,9 @@
 include settings
 
+ifeq "${nvimrcDir}" ""
+nvimrcDir := $(shell ./default.sh ${os})
+endif
+
 all: $(vimrcDir)/$(vimrcTargetFile) $(nvimrcDir)/$(nvimrcTargetFile)
 	cp $^ .
 
