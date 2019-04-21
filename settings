@@ -5,9 +5,11 @@ nvimrcDir=
 
 vimrcSourceFile=.vimrc
 nvimrcSourceFile=init.vim
+ngvimrcSourceFile=ginit.vim
 
 vimrcTargetFile=.vimrc
 nvimrcTargetFile=init.vim
+ngvimrcTargetFile=ginit.vim
 
 installPluginManager=1
 pluginManagerPath=${HOME}/.vim/autoload

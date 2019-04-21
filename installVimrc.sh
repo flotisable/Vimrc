@@ -13,3 +13,4 @@ fi
 
 cp ${vimrcSourceFile} ${vimrcDir}/${vimrcTargetFile}
 cp ${nvimrcSourceFile} ${nvimrcDir}/${nvimrcTargetFile}
+cp ${ngvimrcSourceFile} ${nvimrcDir}/${ngvimrcTargetFile}

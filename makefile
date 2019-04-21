@@ -4,13 +4,19 @@ ifeq "${nvimrcDir}" ""
 nvimrcDir := $(shell ./default.sh ${os})
 endif
 
-all: $(vimrcDir)/$(vimrcTargetFile) $(nvimrcDir)/$(nvimrcTargetFile)
+targetFiles := \
+	${vimrcDir}/${vimrcTargetFile} \
+	${nvimrcDir}/${nvimrcTargetFile} \
+	${nvimrcDir}/${ngvimrcTargetFile}
+
+all: ${targetFiles}
 	cp $^ .
 
 install:
 	./installVimrc.sh
 
 uninstall:
-	rm $(vimrcDir)/$(vimrcTargetFile)
-	rm $(nvimrcDir)/$(nvimrcTargetFile)
+	for file in ${targetFiles}; do \
+		rm $${file}; \
+	done
 	if [ -e $(pluginManagerPath)/plug.vim ]; then rm $(pluginManagerPath)/plug.vim; fi
