@@ -15,7 +15,7 @@ all: ${targetFiles}
 	cp $^ .
 
 install:
-	./installVimrc.sh
+	@./installVimrc.sh
 
 uninstall:
 	for file in ${targetFiles}; do \
