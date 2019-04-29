@@ -1,9 +1,13 @@
 #!/bin/sh
 
+if [ -z ${OS} ]; then
+  OS=$(uname -s);
+fi
+
 . ./settings
 
 if [ -z ${nvimrcDir} ]; then
-  nvimrcDir=$(./default.sh ${os});
+  nvimrcDir=$(./default.sh ${OS});
 fi
 
 if [ \( ${installPluginManager} -eq 1 \) -a ! -e ${pluginManagerPath}/plug.vim ]; then

@@ -1,7 +1,9 @@
+OS ?= $(shell uname -s)
+
 include settings
 
 ifeq "${nvimrcDir}" ""
-nvimrcDir := $(shell ./default.sh ${os})
+nvimrcDir := $(shell ./default.sh ${OS})
 endif
 
 targetFiles := \
