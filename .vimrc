@@ -10,6 +10,8 @@ set shiftwidth=2
 set expandtab         " 將 tab 鍵展開為空白鍵  expand TAB key to be spaces
 
 set showcmd           " 顯示指令在狀態攔（知道自己輸入什麼）  show the command at the status bar
+
+set errorformat^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ directory\ '%f'
 " end option settings
 "}}}
 " self defined functions  自定義的函式{{{
@@ -32,6 +34,7 @@ if !exists( '*FlotisableToggleRelativeNumber' )
   endfunction
 "
 endif
+" end relativenumber settings
 
 if !exists( '*FlotisablePluginExists' )
 "
@@ -42,7 +45,6 @@ if !exists( '*FlotisablePluginExists' )
   endfunction
 "
 endif
-" end relativenumber settings
 
 " end self defined functions
 "}}}
@@ -141,7 +143,8 @@ endif
 " LSP 客戶端設定  LSP client settings{{{
 if FlotisablePluginExists( 'LanguageClient-neovim' )
 "
-  let g:LanguageClient_serverCommands = {}
+  let g:LanguageClient_diagnosticsEnable  = 0
+  let g:LanguageClient_serverCommands     = {}
 
   call extend( g:LanguageClient_serverCommands, { 'cpp': ['clangd'] } )
 "
