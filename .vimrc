@@ -12,6 +12,20 @@ set expandtab         " 將 tab 鍵展開為空白鍵  expand TAB key to be spac
 set showcmd           " 顯示指令在狀態攔（知道自己輸入什麼）  show the command at the status bar
 
 set errorformat^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ directory\ '%f'
+
+set laststatus=2
+set hlsearch
+
+if has( "cscope" )
+"
+  if filereadable( "cscope.out" )
+  "
+    cscope add cscope.out
+  "
+  endif
+  set cscopeverbose
+"
+endif
 " end option settings
 "}}}
 " self defined functions  自定義的函式{{{
@@ -169,6 +183,19 @@ noremap!  <C-p>     <Up>
 noremap!  <C-n>     <Down>
 noremap!  <C-k>     <C-e><C-u>
 noremap!  <C-d>     <Del>
+
+if has( "cscope" )
+"
+  nnoremap <C-_>s :cscope find s <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>g :cscope find g <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>c :cscope find c <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>t :cscope find t <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>e :cscope find e <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>f :cscope find f <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>i :cscope find i <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>d :cscope find d <C-R>=expand("<cword>")<CR><CR>
+"
+endif
 " end key mapping
 "}}}
 " vim-cpp-enhanced-highlight settings{{{
