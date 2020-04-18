@@ -92,6 +92,8 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   endif
 
   Plug 'octol/vim-cpp-enhanced-highlight'                       " C++語法高亮插件  plugin for C++ highlight
+  Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }
+  Plug 'pprovost/vim-ps1'
   Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " 個人使用的狀態列設定插件  self use statusline plugin
 
   " 自動補全的插件  plugin for autocomplete
