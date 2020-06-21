@@ -138,6 +138,14 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   endif
   " end language server protocal client
 
+  " 版本控制差異插件  VCS diff plugin
+  if has( 'nvim' ) || has( 'patch-8.0.902' )
+    Plug 'mhinz/vim-signify'
+  else
+    Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+  endif
+  " end VCS diff plugin
+
   call plug#end()
 "
 endif
@@ -167,10 +175,28 @@ if FlotisablePluginExists( 'LanguageClient-neovim' )
 endif
 " end LSP client settings
 "}}}
+" 版本控制差異插件設定  VCS diff plugin settings{{{
+if FlotisablePluginExists( 'LanguageClient-neovim' )
+"
+  set updatetime=100
+
+  let g:signify_disable_by_default = 1
+"
+endif
+" end VCS diff plugin settings
+"}}}
 " key mapping  快捷鍵設定{{{
 if FlotisablePluginExists( 'nerdtree' )
 "
-  noremap   <C-x>     :NERDTreeToggle<Enter>|                         " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
+  noremap <C-x> :NERDTreeToggle<Enter>| " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
+"
+endif
+
+if FlotisablePluginExists( 'vim-signify' )
+"
+  noremap <Leader>s :SignifyToggle<Enter>
+  noremap <Leader>d :SignifyHunkDiff<Enter>
+  noremap <Leader>D :SignifyDiff<Enter>
 "
 endif
 
