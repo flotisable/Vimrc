@@ -192,6 +192,12 @@ if FlotisablePluginExists( 'nerdtree' )
 "
 endif
 
+if FlotisablePluginExists( 'tagbar' )
+"
+  noremap <Leader>t :Tagbar<Enter>
+"
+endif
+
 if FlotisablePluginExists( 'vim-signify' )
 "
   noremap <Leader>s :SignifyToggle<Enter>
