@@ -152,6 +152,8 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   Plug 'garbas/vim-snipmate'
   " end code snippet plugin
 
+  Plug 'flotisable/FlotisableVimSnippets' " 個人使用的程式碼片段  self use code snippet
+
   call plug#end()
 "
 endif
