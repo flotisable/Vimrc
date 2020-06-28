@@ -146,6 +146,12 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   endif
   " end VCS diff plugin
 
+  " 程式碼片段插件  code snippet plugin
+  Plug 'MarcWeber/vim-addon-mw-utils'
+  Plug 'tomtom/tlib_vim'
+  Plug 'garbas/vim-snipmate'
+  " end code snippet plugin
+
   call plug#end()
 "
 endif
