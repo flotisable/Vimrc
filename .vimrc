@@ -178,7 +178,7 @@ elseif FlotisablePluginExists( 'neocomplcache.vim' )
 "
   let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  start 'neocomplcache' when open 'vim'
 
-  let g:neocomplcache_omni_patterns._ = '\w\+'
+  let g:neocomplcache_omni_patterns = { '_': '\w\+' }
 "
 endif
 " end completion plugin settings
