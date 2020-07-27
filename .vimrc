@@ -71,9 +71,16 @@ endif
 " end setup colorscheme for terminal and gui
 "}}}
 " save and load view  自動讀取與儲存手動的折疊{{{
-au BufWinLeave * silent! mkview
-au BufWinEnter * silent! loadview
+autocmd BufWinLeave * silent! mkview
+autocmd BufWinEnter * silent! loadview
 " end save and load view
+"}}}
+" minimal completion base on syntax  基於語法的補全{{{
+autocmd FileType *
+  \ if &omnifunc == ""                          |
+  \   setlocal omnifunc=syntaxcomplete#Complete |
+  \ endif
+" end minimal completion base on syntax
 "}}}
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
 if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
@@ -164,10 +171,14 @@ if FlotisablePluginExists( 'deoplete.nvim' )
 "
   let g:python3_host_prog           = "python3"
   let g:deoplete#enable_at_startup  = 1 " 開啟 vim 時啟用 deoplete  start 'deoplete' when open 'vim'
+
+  call deoplete#custom#var( 'omni', 'input_patterns', { '_': '\w+' } )
 "
 elseif FlotisablePluginExists( 'neocomplcache.vim' )
 "
   let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  start 'neocomplcache' when open 'vim'
+
+  let g:neocomplcache_omni_patterns._ = '\w\+'
 "
 endif
 " end completion plugin settings
