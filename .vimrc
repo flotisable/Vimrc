@@ -169,16 +169,17 @@ endif
 " 補全插件設定  completion plugin settings{{{
 if FlotisablePluginExists( 'deoplete.nvim' )
 "
-  let g:python3_host_prog           = "python3"
-  let g:deoplete#enable_at_startup  = 1 " 開啟 vim 時啟用 deoplete  start 'deoplete' when open 'vim'
+  let g:python3_host_prog = "python3"
 
   call deoplete#custom#var( 'omni', 'input_patterns', { '_': '\w+' } )
+
+  autocmd InsertEnter * call deoplete#enable()
 "
 elseif FlotisablePluginExists( 'neocomplcache.vim' )
 "
-  let g:neocomplcache_enable_at_startup = 1 " 開啟 vim 時啟用 neocomplcache  start 'neocomplcache' when open 'vim'
-
   let g:neocomplcache_omni_patterns = { '_': '\w\+' }
+
+  autocmd InsertEnter * NeoComplCacheEnable
 "
 endif
 " end completion plugin settings
