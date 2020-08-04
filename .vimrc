@@ -30,7 +30,7 @@ endif
 "}}}
 " self defined functions  自定義的函式{{{
 
-" relativenumber settings  相對行號設定
+" relativenumber settings  相對行號設定{{{
 if !exists( '*FlotisableToggleRelativeNumber' )
 "
   function FlotisableToggleRelativeNumber()
@@ -49,7 +49,30 @@ if !exists( '*FlotisableToggleRelativeNumber' )
 "
 endif
 " end relativenumber settings
-
+"}}}
+" cursor highlight settings  游標高亮設定{{{
+if !exists(  '*FlotisableToggleCursorHighlight')
+"
+  function FlotisableToggleCursorHighlight()
+  "
+    if &cursorline == 1 || &cursorcolumn == 1
+    "
+      set nocursorline
+      set nocursorcolumn
+    "
+    else
+    "
+      set cursorline
+      set cursorcolumn
+    "
+    endif
+  "
+  endfunction
+"
+endif
+" end cursor highlight settings
+"}}}
+" test pluggin existence  檢測插件是否存在{{{
 if !exists( '*FlotisablePluginExists' )
 "
   function FlotisablePluginExists( name )
@@ -61,7 +84,8 @@ if !exists( '*FlotisablePluginExists' )
   endfunction
 "
 endif
-
+" end test pluggin existence
+"}}}
 " end self defined functions
 "}}}
 " setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
@@ -251,6 +275,7 @@ if FlotisablePluginExists( 'vim-signify' )
 endif
 
 noremap   <Leader>r :call FlotisableToggleRelativeNumber()<Enter>|  " 設定 Leader r 鍵開關相對行號設定
+noremap   <Leader>c :call FlotisableToggleCursorHighlight()<Enter>| " 設定 Leader c 鍵開關游標高亮
 noremap   <Space>   <C-F>
 noremap   <BS>      <C-B>
 noremap!  <C-a>     <Home>
