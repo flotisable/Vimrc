@@ -29,7 +29,6 @@ endif
 " end option settings
 "}}}
 " self defined functions  自定義的函式{{{
-
 " relativenumber settings  相對行號設定{{{
 if !exists( '*FlotisableToggleRelativeNumber' )
 "
@@ -191,6 +190,11 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 "
 endif
 " end vim-plug settings
+"}}}
+" highlight setup  高亮設定{{{
+highlight CursorColumn  cterm=NONE ctermbg=Grey
+highlight CursorLine    cterm=NONE ctermbg=Grey
+" end highlight setup
 "}}}
 " 補全插件設定  completion plugin settings{{{
 if FlotisablePluginExists( 'deoplete.nvim' )
