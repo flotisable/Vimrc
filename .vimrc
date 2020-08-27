@@ -315,4 +315,15 @@ if FlotisablePluginExists( 'vim-cpp-enhanced-highlight' )
 endif
 " end vim-cpp-enhanced-highlight settings
 "}}}
+" tlib_vim settings{{{
+if FlotisablePluginExists( 'tlib_vim' )
+"
+  let g:tlib_extend_keyagents_InputList_s = {
+    \ 16: 'tlib#agent#Up',
+    \ 14: 'tlib#agent#Down'
+    \ }
+"
+endif
+" end tlib_vim settings
+"}}}
 " vim: foldmethod=marker foldmarker={{{,}}}
