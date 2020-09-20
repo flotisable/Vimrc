@@ -18,7 +18,13 @@ set hlsearch
 
 if has( "cscope" )
 "
-  if filereadable( "cscope.out" )
+  if executable( "gtags-cscope" ) && filereadable( "GTAGS" )
+  "
+    set cscopeprg=gtags-cscope
+
+    cscope add GTAGS
+  "
+  elseif filereadable( "cscope.out" )
   "
     cscope add cscope.out
   "
