@@ -192,6 +192,8 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 
   Plug 'flotisable/FlotisableVimSnippets' " 個人使用的程式碼片段  self use code snippet
 
+  Plug 'AndrewRadev/bufferize.vim'
+
   call plug#end()
 "
 endif
@@ -281,6 +283,15 @@ if FlotisablePluginExists( 'vim-signify' )
   noremap <Leader>s :SignifyToggle<Enter>
   noremap <Leader>d :SignifyHunkDiff<Enter>
   noremap <Leader>D :SignifyDiff<Enter>
+"
+endif
+
+if FlotisablePluginExists( 'LanguageClient-neovim' )
+"
+  noremap <Leader>ld :call LanguageClient#textDocument_definition()<Enter>
+  noremap <Leader>lt :call LanguageClient#textDocument_typeDefinition()<Enter>
+  noremap <Leader>lr :call LanguageClient#textDocument_references()<Enter>
+  noremap <Leader>lh :call LanguageClient#textDocument_hover()<Enter>
 "
 endif
 
