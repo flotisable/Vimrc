@@ -234,7 +234,7 @@ endif
 " end LSP client settings
 "}}}
 " 版本控制差異插件設定  VCS diff plugin settings{{{
-if FlotisablePluginExists( 'LanguageClient-neovim' )
+if FlotisablePluginExists( 'vim-signify' )
 "
   set updatetime=100
 
@@ -297,8 +297,10 @@ endif
 
 noremap   <Leader>r :call FlotisableToggleRelativeNumber()<Enter>|  " 設定 Leader r 鍵開關相對行號設定
 noremap   <Leader>c :call FlotisableToggleCursorHighlight()<Enter>| " 設定 Leader c 鍵開關游標高亮
-noremap   <Space>   <C-F>
-noremap   <BS>      <C-B>
+nnoremap  <Space>   <C-F>
+nnoremap  <BS>      <C-B>
+xnoremap  <Space>   <C-F>
+xnoremap  <BS>      <C-B>
 noremap!  <C-a>     <Home>
 noremap!  <C-e>     <End>
 noremap!  <C-f>     <Right>
