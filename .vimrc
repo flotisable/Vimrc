@@ -91,6 +91,32 @@ if !exists( '*FlotisablePluginExists' )
 endif
 " end test pluggin existence
 "}}}
+" langauge diagnostics settigns  語言診斷設定{{{
+if !exists( '*FlotisableToggleLanguageDiagnostics' )
+"
+  function FlotisableToggleLanguageDiagnostics()
+  "
+    if !FlotisablePluginExists( 'LanguageClient-neovim' )
+      return
+    endif
+
+    LanguageClientStop
+    if g:LanguageClient_diagnosticsEnable == 0
+    "
+      let g:LanguageClient_diagnosticsEnable = 1
+    "
+    else
+    "
+      let g:LanguageClient_diagnosticsEnable = 0
+    "
+    endif
+    LanguageClientStart
+  "
+  endfunction
+"
+endif
+" end test pluggin existence
+"}}}
 " end self defined functions
 "}}}
 " setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
@@ -282,6 +308,7 @@ if FlotisablePluginExists( 'vim-signify' )
 "
   noremap <Leader>s :SignifyToggle<Enter>
   noremap <Leader>d :SignifyHunkDiff<Enter>
+  noremap <Leader>u :SignifyHunkUndo<Enter>
   noremap <Leader>D :SignifyDiff<Enter>
 "
 endif
@@ -292,6 +319,9 @@ if FlotisablePluginExists( 'LanguageClient-neovim' )
   noremap <Leader>lt :call LanguageClient#textDocument_typeDefinition()<Enter>
   noremap <Leader>lr :call LanguageClient#textDocument_references()<Enter>
   noremap <Leader>lh :call LanguageClient#textDocument_hover()<Enter>
+  noremap <Leader>lo :LanguageClientStart<Enter>
+  noremap <Leader>lc :LanguageClientStop<Enter>
+  noremap <Leader>ls :call FlotisableToggleLanguageDiagnostics()<Enter>
 "
 endif
 
