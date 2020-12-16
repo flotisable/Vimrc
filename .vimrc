@@ -1,15 +1,15 @@
 " option settings  選項設定{{{
-set encoding=utf-8    " 設定編碼  set file encoding
-set number            " 顯示行號  display line number
-set autoindent        " 自動縮排（與上一行縮排相同）  automatic indent as last line
+set encoding=utf-8    " set file encoding  設定編碼
+set number            " display line number  顯示行號
+set autoindent        " automatic indent as last line  自動縮排（與上一行縮排相同
 
-set foldmethod=manual " 手動折疊程式碼  manual fold the code
+set foldmethod=manual " manual fold the code  手動折疊程式碼
 
-set tabstop=2         " 設定 tab 鍵等於幾個空白鍵  set TAB key to be equivalent to how many spaces
+set tabstop=2         " set TAB key to be equivalent to how many spaces  設定 tab 鍵等於幾個空白鍵
 set shiftwidth=2
-set expandtab         " 將 tab 鍵展開為空白鍵  expand TAB key to be spaces
+set expandtab         " expand TAB key to be spaces  將 tab 鍵展開為空白鍵
 
-set showcmd           " 顯示指令在狀態攔（知道自己輸入什麼）  show the command at the status bar
+set showcmd           " show the command at the status bar  顯示指令在狀態攔（知道自己輸入什麼）
 
 set errorformat^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ directory\ '%f'
 
@@ -119,6 +119,7 @@ endif
 "}}}
 " end self defined functions
 "}}}
+" highlight setup  高亮設定{{{
 " setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
 if has( 'gui_running' )
   colorscheme desert  " colorscheme in gui  圖形介面顏色主題
@@ -126,6 +127,10 @@ else
   colorscheme elflord " colorscheme in terminal  終端機顏色主題
 endif
 " end setup colorscheme for terminal and gui
+"}}}
+highlight CursorColumn  cterm=NONE ctermbg=Grey
+highlight CursorLine    cterm=NONE ctermbg=Grey
+" end highlight setup
 "}}}
 " save and load view  自動讀取與儲存手動的折疊{{{
 autocmd BufWinLeave * silent! mkview
@@ -139,6 +144,7 @@ autocmd FileType *
   \ endif
 " end minimal completion base on syntax
 "}}}
+" plugin settings  插件設定{{{
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
 if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 "
@@ -146,21 +152,21 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 
   call plug#begin( pluginRoot )
 
-  Plug 'scrooloose/nerdtree'                                    " 樹狀顯示資料夾的插件  plugin for display directory as tree view
-  Plug 'majutsushi/tagbar'                                      " 顯示 tag 的插件（需搭配 ctags ）  plugin for display tags( depend on 'ctags' )
+  Plug 'scrooloose/nerdtree'                                    " plugin for display directory as tree view  樹狀顯示資料夾的插件
+  Plug 'majutsushi/tagbar'                                      " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
 
   if has( 'nvim' ) || has( 'terminal' )
   "
-    Plug 'kassio/neoterm'                                       " 終端機插件  terminal plugin
+    Plug 'kassio/neoterm'                                       " terminal plugin  終端機插件
   "
   endif
 
-  Plug 'octol/vim-cpp-enhanced-highlight'                       " C++語法高亮插件  plugin for C++ highlight
-  Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }
-  Plug 'pprovost/vim-ps1'
-  Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " 個人使用的狀態列設定插件  self use statusline plugin
+  Plug 'octol/vim-cpp-enhanced-highlight'                       " plugin for C++ highlight  C++ 語法高亮插件
+  Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }        " plugin for Perl highlight  Perl 語法高亮插件
+  Plug 'pprovost/vim-ps1'                                       " plugin for Powershell highlight  Powershell 語法高亮插件
+  Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " self use statusline plugin  個人使用的狀態列設定插件
 
-  " 自動補全的插件  plugin for autocomplete
+  " plugin for autocomplete  自動補全的插件{{{
   if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
   "
     if has( 'nvim' )
@@ -175,14 +181,14 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
     "
     endif
   "
-  else " 當 vim 版本較低時  when 'vim' version is older
+  else " when 'vim' version is older  當 vim 版本較低時  
   "
     Plug 'shougo/neocomplcache.vim'
   "
   endif
   " end plugin for autocomplete
-
-  " LSP 客戶端  language server protocal client
+  "}}}
+  " language server protocal client  LSP 客戶端{{{
   if has( 'nvim' ) || v:version >= 800
   "
     if has( 'win32' )
@@ -201,41 +207,36 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   "
   endif
   " end language server protocal client
-
-  " 版本控制差異插件  VCS diff plugin
+  "}}}
+  " VCS diff plugin  版本控制差異插件{{{
   if has( 'nvim' ) || has( 'patch-8.0.902' )
     Plug 'mhinz/vim-signify'
   else
     Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
   endif
   " end VCS diff plugin
-
-  " 程式碼片段插件  code snippet plugin
+  "}}}
+  " code snippet plugin  程式碼片段插件{{{
   Plug 'MarcWeber/vim-addon-mw-utils'
   Plug 'tomtom/tlib_vim'
   Plug 'garbas/vim-snipmate'
   " end code snippet plugin
+  "}}}
+  Plug 'flotisable/FlotisableVimSnippets' " self use code snippet  個人使用的程式碼片段
 
-  Plug 'flotisable/FlotisableVimSnippets' " 個人使用的程式碼片段  self use code snippet
+  Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
 
-  Plug 'AndrewRadev/bufferize.vim'
-
-  " 標記插件  mark plugin
+  " mark plugin  標記插件{{{
   Plug 'inkarkat/vim-ingo-library'
   Plug 'inkarkat/vim-mark'
   " end mark plugin
-
+  "}}}
   call plug#end()
 "
 endif
 " end vim-plug settings
 "}}}
-" highlight setup  高亮設定{{{
-highlight CursorColumn  cterm=NONE ctermbg=Grey
-highlight CursorLine    cterm=NONE ctermbg=Grey
-" end highlight setup
-"}}}
-" 補全插件設定  completion plugin settings{{{
+" completion plugin settings  補全插件設定{{{
 if FlotisablePluginExists( 'deoplete.nvim' )
 "
   let g:python3_host_prog = "python3"
@@ -253,7 +254,7 @@ elseif FlotisablePluginExists( 'neocomplcache.vim' )
 endif
 " end completion plugin settings
 "}}}
-" LSP 客戶端設定  LSP client settings{{{
+" LSP client settings  LSP 客戶端設定{{{
 if FlotisablePluginExists( 'LanguageClient-neovim' )
 "
   let g:LanguageClient_serverCommands = {
@@ -264,7 +265,7 @@ if FlotisablePluginExists( 'LanguageClient-neovim' )
 endif
 " end LSP client settings
 "}}}
-" 版本控制差異插件設定  VCS diff plugin settings{{{
+" VCS diff plugin settings  版本控制差異插件設定{{{
 if FlotisablePluginExists( 'vim-signify' )
 "
   set updatetime=100
@@ -274,7 +275,7 @@ if FlotisablePluginExists( 'vim-signify' )
 endif
 " end VCS diff plugin settings
 "}}}
-" 標記插件設定  mark plugin settings{{{
+" mark plugin settings  標記插件設定{{{
 if FlotisablePluginExists( 'vim-mark' )
 "
   let g:mwAutoLoadMarks = 1
@@ -292,60 +293,84 @@ if FlotisablePluginExists( 'neoterm' )
 endif
 " end neoterm settings
 "}}}
+" vim-cpp-enhanced-highlight settings  C++ 語法高亮插件設定{{{
+if FlotisablePluginExists( 'vim-cpp-enhanced-highlight' )
+"
+  let g:cpp_class_scope_highlight     = 1
+  let g:cpp_member_variable_highlight = 1
+  let g:cpp_class_decl_highlight      = 1
+"
+endif
+" end vim-cpp-enhanced-highlight settings
+"}}}
+" tlib_vim settings  tlib_vim 設定{{{
+if FlotisablePluginExists( 'tlib_vim' )
+"
+  " use Ctrl+n, Ctrl+p to select multiple snippet  用 Ctrl+n, Ctrl+p 選擇程式片段
+  let g:tlib_extend_keyagents_InputList_s = {
+    \ 16: 'tlib#agent#Up',
+    \ 14: 'tlib#agent#Down'
+    \ }
+"
+endif
+" end tlib_vim settings
+"}}}
+" end plugin settings
+"}}}
 " key mapping  快捷鍵設定{{{
 if has( 'nvim' ) || has( 'terminal' )
 "
-  tnoremap  <C-q> <C-\><C-n>| " 設定 Ctrl+q 鍵離開 terminal 模式  set Ctrl+q key to exit terminal mode
+  tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
 "
 endif
 
 if FlotisablePluginExists( 'neoterm' )
 "
-  noremap   <C-s> :Ttoggle<Enter>|            " 設定 Ctrl+s 鍵開闔終端機  set Ctrl+s key to toggle terminal
-  tnoremap  <C-s> <C-\><C-n>:Ttoggle<Enter>|  " 設定 Ctrl+s 鍵開闔終端機  set Ctrl+s key to toggle terminal
+  noremap   <C-s> :Ttoggle<Enter>|            " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
+  tnoremap  <C-s> <C-\><C-n>:Ttoggle<Enter>|  " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
 "
 endif
 
 if FlotisablePluginExists( 'nerdtree' )
 "
-  noremap <C-x> :NERDTreeToggle<Enter>| " 設定 Ctrl+x 鍵開闔樹狀檢視器  set Ctrl+s key to toggle tree browser
+  noremap <C-x> :NERDTreeToggle<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
 "
 endif
 
 if FlotisablePluginExists( 'tagbar' )
 "
-  noremap <Leader>t :Tagbar<Enter>
+  noremap <Leader>t :Tagbar<Enter>| " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
 "
 endif
 
 if FlotisablePluginExists( 'vim-signify' )
 "
-  noremap <Leader>s :SignifyToggle<Enter>
-  noremap <Leader>d :SignifyHunkDiff<Enter>
-  noremap <Leader>u :SignifyHunkUndo<Enter>
-  noremap <Leader>D :SignifyDiff<Enter>
+  noremap <Leader>s :SignifyToggle<Enter>|    " set \s key to toggle VCS diff  設定 \s 鍵開闔版本控制差異
+  noremap <Leader>d :SignifyHunkDiff<Enter>|  " set \d key to show hunk diff  設定 \d 鍵顯示片段差異
+  noremap <Leader>u :SignifyHunkUndo<Enter>|  " set \u key to undo hunk  設定 \u 鍵回復片段
+  noremap <Leader>D :SignifyDiff<Enter>|      " set \D key to show full diff  設定 \D 鍵顯示檔案差異
 "
 endif
 
 if FlotisablePluginExists( 'LanguageClient-neovim' )
 "
-  noremap <Leader>ld :call LanguageClient#textDocument_definition()<Enter>
-  noremap <Leader>lt :call LanguageClient#textDocument_typeDefinition()<Enter>
-  noremap <Leader>lr :call LanguageClient#textDocument_references()<Enter>
-  noremap <Leader>lh :call LanguageClient#textDocument_hover()<Enter>
-  noremap <Leader>lo :LanguageClientStart<Enter>
-  noremap <Leader>lc :LanguageClientStop<Enter>
-  noremap <Leader>ls :call FlotisableToggleLanguageDiagnostics()<Enter>
+  noremap <Leader>ld :call LanguageClient#textDocument_definition()<Enter>|     " set \ld key to go to definition  設定 \ld 鍵跳至定義
+  noremap <Leader>lt :call LanguageClient#textDocument_typeDefinition()<Enter>| " set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
+  noremap <Leader>lr :call LanguageClient#textDocument_references()<Enter>|     " set \lr key to show reference  設定 \lr 鍵顯示參照
+  noremap <Leader>lh :call LanguageClient#textDocument_hover()<Enter>|          " set \lh key to showhover  設定 \lh 鍵顯示文檔
+  noremap <Leader>lo :LanguageClientStart<Enter>|                               " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
+  noremap <Leader>lc :LanguageClientStop<Enter>|                                " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
+  noremap <Leader>ls :call FlotisableToggleLanguageDiagnostics()<Enter>|        " set \ls key to toggle diagnostics  設定 \ls 鍵開闔診斷
 "
 endif
 
 if FlotisablePluginExists( 'vim-mark' )
 "
-  nmap  <Leader>ms <Plug>MarkSet
-  xmap  <Leader>ms <Plug>MarkSet
-  nmap  <Leader>mr <Plug>MarkRegex
-  xmap  <Leader>mr <Plug>MarkRegex
-  map   <Leader>mc <Plug>MarkClear
+  nmap  <Leader>ms <Plug>MarkSet|   " set \ms key to set mark  設定 \ms 鍵設置標籤
+  xmap  <Leader>ms <Plug>MarkSet|   " set \ms key to set mark  設定 \ms 鍵設置標籤
+  nmap  <Leader>mr <Plug>MarkRegex| " set \mr key to set mark using regular expression  設定 \mr 鍵使用正規表示式設置標籤
+  xmap  <Leader>mr <Plug>MarkRegex| " set \mr key to set mark using regular expression  設定 \mr 鍵使用正規表示式設置標籤
+  map   <Leader>mc <Plug>MarkClear| " set \mc key to clear mark  設定 \mc 鍵清理標籤
 "
 endif
 
@@ -377,26 +402,5 @@ if has( "cscope" )
 "
 endif
 " end key mapping
-"}}}
-" vim-cpp-enhanced-highlight settings{{{
-if FlotisablePluginExists( 'vim-cpp-enhanced-highlight' )
-"
-  let g:cpp_class_scope_highlight     = 1
-  let g:cpp_member_variable_highlight = 1
-  let g:cpp_class_decl_highlight      = 1
-"
-endif
-" end vim-cpp-enhanced-highlight settings
-"}}}
-" tlib_vim settings{{{
-if FlotisablePluginExists( 'tlib_vim' )
-"
-  let g:tlib_extend_keyagents_InputList_s = {
-    \ 16: 'tlib#agent#Up',
-    \ 14: 'tlib#agent#Down'
-    \ }
-"
-endif
-" end tlib_vim settings
 "}}}
 " vim: foldmethod=marker foldmarker={{{,}}}
