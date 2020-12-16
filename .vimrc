@@ -220,6 +220,11 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 
   Plug 'AndrewRadev/bufferize.vim'
 
+  " 標記插件  mark plugin
+  Plug 'inkarkat/vim-ingo-library'
+  Plug 'inkarkat/vim-mark'
+  " end mark plugin
+
   call plug#end()
 "
 endif
@@ -268,6 +273,15 @@ if FlotisablePluginExists( 'vim-signify' )
 "
 endif
 " end VCS diff plugin settings
+"}}}
+" 標記插件設定  mark plugin settings{{{
+if FlotisablePluginExists( 'vim-mark' )
+"
+  let g:mwAutoLoadMarks = 1
+  let g:mw_no_mappings  = 1
+"
+endif
+" end mark plugin settings
 "}}}
 " neoterm settings  neoterm 插件設定{{{
 if FlotisablePluginExists( 'neoterm' )
@@ -322,6 +336,16 @@ if FlotisablePluginExists( 'LanguageClient-neovim' )
   noremap <Leader>lo :LanguageClientStart<Enter>
   noremap <Leader>lc :LanguageClientStop<Enter>
   noremap <Leader>ls :call FlotisableToggleLanguageDiagnostics()<Enter>
+"
+endif
+
+if FlotisablePluginExists( 'vim-mark' )
+"
+  nmap  <Leader>ms <Plug>MarkSet
+  xmap  <Leader>ms <Plug>MarkSet
+  nmap  <Leader>mr <Plug>MarkRegex
+  xmap  <Leader>mr <Plug>MarkRegex
+  map   <Leader>mc <Plug>MarkClear
 "
 endif
 
