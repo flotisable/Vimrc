@@ -256,10 +256,10 @@ endif
 " LSP 客戶端設定  LSP client settings{{{
 if FlotisablePluginExists( 'LanguageClient-neovim' )
 "
-  let g:LanguageClient_diagnosticsEnable  = 0
-  let g:LanguageClient_serverCommands     = {}
-
-  call extend( g:LanguageClient_serverCommands, { 'cpp': ['clangd'] } )
+  let g:LanguageClient_serverCommands = {
+    \ 'cpp':  ['clangd'],
+    \ 'sh':   ['bash-language-server.cmd','start']
+    \ }
 "
 endif
 " end LSP client settings
