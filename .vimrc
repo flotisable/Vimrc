@@ -35,48 +35,6 @@ endif
 " end option settings
 "}}}
 " self defined functions  自定義的函式{{{
-" relativenumber settings  相對行號設定{{{
-if !exists( '*FlotisableToggleRelativeNumber' )
-"
-  function FlotisableToggleRelativeNumber()
-  "
-    if &relativenumber == 0
-    "
-      set relativenumber
-    "
-    else
-    "
-      set norelativenumber
-    "
-    endif
-  "
-  endfunction
-"
-endif
-" end relativenumber settings
-"}}}
-" cursor highlight settings  游標高亮設定{{{
-if !exists(  '*FlotisableToggleCursorHighlight')
-"
-  function FlotisableToggleCursorHighlight()
-  "
-    if &cursorline == 1 || &cursorcolumn == 1
-    "
-      set nocursorline
-      set nocursorcolumn
-    "
-    else
-    "
-      set cursorline
-      set cursorcolumn
-    "
-    endif
-  "
-  endfunction
-"
-endif
-" end cursor highlight settings
-"}}}
 " test pluggin existence  檢測插件是否存在{{{
 if !exists( '*FlotisablePluginExists' )
 "
@@ -374,8 +332,8 @@ if FlotisablePluginExists( 'vim-mark' )
 "
 endif
 
-noremap   <Leader>r :call FlotisableToggleRelativeNumber()<Enter>|  " 設定 Leader r 鍵開關相對行號設定
-noremap   <Leader>c :call FlotisableToggleCursorHighlight()<Enter>| " 設定 Leader c 鍵開關游標高亮
+noremap   <Leader>r :set relativenumber!<Enter>|                      " 設定 Leader r 鍵開關相對行號設定
+noremap   <Leader>c :set cursorline!<Enter>:set cursorcolumn!<Enter>| " 設定 Leader c 鍵開關游標高亮
 nnoremap  <Space>   <C-F>
 nnoremap  <BS>      <C-B>
 xnoremap  <Space>   <C-F>
