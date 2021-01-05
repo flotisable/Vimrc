@@ -217,7 +217,8 @@ if FlotisablePluginExists( 'LanguageClient-neovim' )
 "
   let g:LanguageClient_serverCommands = {
     \ 'cpp':  ['clangd'],
-    \ 'sh':   ['bash-language-server.cmd','start']
+    \ 'sh':   ['bash-language-server.cmd','start'],
+    \ 'vim':  ['vim-language-server.cmd','--stdio']
     \ }
 "
 endif
