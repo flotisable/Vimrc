@@ -16,6 +16,8 @@ set errorformat^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ direct
 set laststatus=2
 set hlsearch
 
+set viewoptions=folds,cursor,curdir
+
 if has( "cscope" )
 "
   if executable( "gtags-cscope" ) && filereadable( "GTAGS" )
