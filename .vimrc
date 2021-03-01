@@ -264,6 +264,16 @@ if FlotisablePluginExists( 'vim-cpp-enhanced-highlight' )
 endif
 " end vim-cpp-enhanced-highlight settings
 "}}}
+" code snippet settings  code snippet 設定{{{
+if FlotisablePluginExists( 'vim-snipmate' )
+"
+  let g:snips_author              = "Flotisable"
+  let g:snipMate                  = {}
+  let g:snipMate.snippet_version  = 1
+"
+endif
+" end code snippet settings
+"}}}
 " tlib_vim settings  tlib_vim 設定{{{
 if FlotisablePluginExists( 'tlib_vim' )
 "
