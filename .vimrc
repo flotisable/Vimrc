@@ -112,20 +112,28 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 
   call plug#begin( pluginRoot )
 
-  Plug 'scrooloose/nerdtree'                                    " plugin for display directory as tree view  樹狀顯示資料夾的插件
-  Plug 'majutsushi/tagbar'                                      " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
+  Plug 'scrooloose/nerdtree'                        " plugin for display directory as tree view  樹狀顯示資料夾的插件
+  Plug 'majutsushi/tagbar'                          " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
+  Plug 'AndrewRadev/bufferize.vim'                  " make command output a buffer  將指令輸出變成 buffer
 
-  if has( 'nvim' ) || has( 'terminal' )
+  if has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' )
   "
-    Plug 'kassio/neoterm'                                       " terminal plugin  終端機插件
+    Plug 'liuchengxu/vim-clap'                      " plugin for interactive finder and dispatcher  互動式查詢
   "
   endif
 
+  if has( 'nvim' ) || has( 'terminal' )
+  "
+    Plug 'kassio/neoterm'                           " terminal plugin  終端機插件
+  "
+  endif
+
+  " language specific plugins  特定語言的插件{{{
   Plug 'octol/vim-cpp-enhanced-highlight'                       " plugin for C++ highlight  C++ 語法高亮插件
   Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }        " plugin for Perl highlight  Perl 語法高亮插件
   Plug 'pprovost/vim-ps1'                                       " plugin for Powershell highlight  Powershell 語法高亮插件
-  Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " self use statusline plugin  個人使用的狀態列設定插件
-
+  " end language specific plugins
+  "}}}
   " plugin for autocomplete  自動補全的插件{{{
   if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
   "
@@ -182,19 +190,27 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   Plug 'garbas/vim-snipmate'
   " end code snippet plugin
   "}}}
-  Plug 'flotisable/FlotisableVimSnippets' " self use code snippet  個人使用的程式碼片段
-
-  Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
-
   " mark plugin  標記插件{{{
   Plug 'inkarkat/vim-ingo-library'
   Plug 'inkarkat/vim-mark'
   " end mark plugin
   "}}}
+  " self use plugin  個人使用的插件{{{
+  Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " self use statusline plugin  個人使用的狀態列設定插件
+  Plug 'flotisable/FlotisableVimSnippets'                       " self use code snippet  個人使用的程式碼片段
+  " end self use plugin}}}
   call plug#end()
 "
 endif
 " end vim-plug settings
+"}}}
+" interactive finder plugin settings  互動式查詢插件設定{{{
+if FlotisablePluginExists( 'vim-clap' )
+"
+  let g:clap_theme = 'material_design_dark'
+"
+endif
+" end interactive finder plugin settings
 "}}}
 " completion plugin settings  補全插件設定{{{
 if FlotisablePluginExists( 'deoplete.nvim' )
