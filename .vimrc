@@ -361,6 +361,29 @@ if FlotisablePluginExists( 'vim-mark' )
 "
 endif
 
+if FlotisablePluginExists( 'vim-clap' )
+"
+  noremap <Leader>fp :Clap providers<Enter>|  " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
+  noremap <Leader>f/ :Clap blines<Enter>|     " set \f/ key to search in file  設定 \f/ 鍵在檔案中搜尋
+  noremap <Leader>fb :Clap buffers<Enter>|    " set \fb key to search buffer  設定 \fb 鍵搜尋 buffer
+
+  " set \ff key to search file  設定 \ff 鍵搜尋檔案
+  if executable( 'maple' )
+    noremap <Leader>ff :Clap filer
+  else
+    noremap <Leader>ff :Clap files
+  endif
+  " end set \ff key to search file  設定 \ff 鍵搜尋檔案
+
+  " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
+  if executable( 'rg' )
+  "
+    noremap <Leader>fg :Clap grep
+  "
+  endif
+"
+endif
+
 noremap   <Leader>r :set relativenumber!<Enter>|                      " 設定 Leader r 鍵開關相對行號設定
 noremap   <Leader>c :set cursorline!<Enter>:set cursorcolumn!<Enter>| " 設定 Leader c 鍵開關游標高亮
 nnoremap  <Space>   <C-F>
