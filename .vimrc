@@ -207,7 +207,14 @@ endif
 " interactive finder plugin settings  互動式查詢插件設定{{{
 if FlotisablePluginExists( 'vim-clap' )
 "
-  let g:clap_theme = 'material_design_dark'
+  let g:clap_theme  = 'material_design_dark'
+  let g:clap_layout = {
+                    \   'relative': 'editor',
+                    \   'col':      '5%',
+                    \   'row':      '10%',
+                    \   'width':    '45%',
+                    \   'height':   '80%'
+                    \ }
 "
 endif
 " end interactive finder plugin settings
