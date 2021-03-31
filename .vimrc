@@ -381,6 +381,20 @@ if FlotisablePluginExists( 'vim-clap' )
     noremap <Leader>fg :Clap grep
   "
   endif
+
+  if has( 'nvim' )
+  "
+    autocmd FileType clap_input inoremap <silent> <buffer> <C-n> <C-R>=clap#navigation#linewise( 'down' )<Enter>
+    autocmd FileType clap_input inoremap <silent> <buffer> <C-p> <C-R>=clap#navigation#linewise( 'up'   )<Enter>
+  "
+  else
+  "
+    let g:clap_popup_move_manager = {
+                                  \ "\<C-N>": "\<Down>",
+                                  \ "\<C-P>": "\<Up>",
+                                  \ }
+  "
+  endif
 "
 endif
 
