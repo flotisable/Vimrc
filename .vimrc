@@ -407,7 +407,7 @@ endif
 
 if FlotisablePluginExists( 'vim-snipmate' )
 "
-  map! <C-s> <Plug>snipMateShow| " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
+  imap <C-s> <Plug>snipMateShow| " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
 "
 endif
 
