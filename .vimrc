@@ -405,6 +405,12 @@ if FlotisablePluginExists( 'vim-clap' )
 "
 endif
 
+if FlotisablePluginExists( 'vim-snipmate' )
+"
+  map! <C-s> <Plug>snipMateShow| " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
+"
+endif
+
 noremap   <Leader>r :set relativenumber!<Enter>|                      " 設定 Leader r 鍵開關相對行號設定
 noremap   <Leader>c :set cursorline!<Enter>:set cursorcolumn!<Enter>| " 設定 Leader c 鍵開關游標高亮
 nnoremap  <Space>   <C-F>
