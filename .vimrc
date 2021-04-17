@@ -51,7 +51,7 @@ if !exists( '*FlotisablePluginExists' )
 endif
 " end test pluggin existence
 "}}}
-" langauge diagnostics settigns  語言診斷設定{{{
+" langauge diagnostics settings  語言診斷設定{{{
 if !exists( '*FlotisableToggleLanguageDiagnostics' )
 "
   function FlotisableToggleLanguageDiagnostics()
@@ -75,7 +75,35 @@ if !exists( '*FlotisableToggleLanguageDiagnostics' )
   endfunction
 "
 endif
-" end test pluggin existence
+" end language diagnostics settings
+"}}}
+" interactive fuzzy finder settings  互動式查詢設定{{{
+if !exists( '*FlotisableToggleClapPreviewDirection' )
+"
+  function FlotisableToggleClapPreviewDirection()
+  "
+    if !FlotisablePluginExists( 'vim-clap' )
+      return
+    endif
+
+    if g:clap_preview_direction == 'LR'
+    "
+      let g:clap_preview_direction  = 'UD'
+      let g:clap_layout.width       = '90%'
+      let g:clap_layout.height      = '40%'
+    "
+    else
+    "
+      let g:clap_preview_direction  = 'LR'
+      let g:clap_layout.width       = '45%'
+      let g:clap_layout.height      = '80%'
+    "
+    endif
+  "
+  endfunction
+"
+endif
+" end interactive fuzzy finder settings
 "}}}
 " end self defined functions
 "}}}
@@ -370,9 +398,10 @@ endif
 
 if FlotisablePluginExists( 'vim-clap' )
 "
-  noremap <Leader>fp :Clap providers<Enter>|  " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
-  noremap <Leader>f/ :Clap blines<Enter>|     " set \f/ key to search in file  設定 \f/ 鍵在檔案中搜尋
-  noremap <Leader>fb :Clap buffers<Enter>|    " set \fb key to search buffer  設定 \fb 鍵搜尋 buffer
+  noremap <Leader>fp :Clap providers<Enter>|                              " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
+  noremap <Leader>f/ :Clap blines<Enter>|                                 " set \f/ key to search in file  設定 \f/ 鍵在檔案中搜尋
+  noremap <Leader>fb :Clap buffers<Enter>|                                " set \fb key to search buffer  設定 \fb 鍵搜尋 buffer
+  noremap <Leader>fd :call FlotisableToggleClapPreviewDirection()<Enter>| " set \fd to toggle preview direction  設定 \fd 切換預覽方向
 
   " set \ff key to search file  設定 \ff 鍵搜尋檔案
   if executable( 'maple' )
