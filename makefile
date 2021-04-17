@@ -2,8 +2,17 @@ OS ?= $(shell uname -s)
 
 include settings
 
+empty :=
+comma := ,
+
+ifeq "${OS}" "Windows_NT"
+	defaultScript := powershell -NoProfile ./default.ps1
+else
+	defaultScript := ./default.sh
+endif
+
 ifeq "${nvimrcDir}" ""
-nvimrcDir := $(shell ./default.sh ${OS})
+nvimrcDir := $(shell ${defaultScript} ${OS})
 endif
 
 targetFiles := \
@@ -12,13 +21,22 @@ targetFiles := \
 	${nvimrcDir}/${ngvimrcTargetFile}
 
 all: ${targetFiles}
+ifeq "${OS}" "Windows_NT"
+	powershell -NoProfile -Command "Copy-Item $(subst ${empty} ${empty},${comma},$^) ."
+else
 	cp $^ .
+endif
 
 install:
-	@./installVimrc.sh
+ifeq "${OS}" "Windows_NT"
+	@powershell -NoProfile ./install.ps1
+else
+	@./install.sh
+endif
 
 uninstall:
-	for file in ${targetFiles}; do \
-		rm $${file}; \
-	done
-	if [ -e $(pluginManagerPath)/plug.vim ]; then rm $(pluginManagerPath)/plug.vim; fi
+ifeq "${OS}" "Windows_NT"
+	@powershell -NoProfile ./uninstall.ps1
+else
+	@./uninstall.sh
+endif
