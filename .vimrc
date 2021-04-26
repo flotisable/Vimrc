@@ -140,19 +140,21 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 
   call plug#begin( pluginRoot )
 
-  Plug 'scrooloose/nerdtree'                        " plugin for display directory as tree view  樹狀顯示資料夾的插件
-  Plug 'majutsushi/tagbar'                          " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
-  Plug 'AndrewRadev/bufferize.vim'                  " make command output a buffer  將指令輸出變成 buffer
+  Plug 'scrooloose/nerdtree'        " plugin for display directory as tree view  樹狀顯示資料夾的插件
+  Plug 'majutsushi/tagbar'          " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
+  Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
 
+  " plugin for interactive finder and dispatcher  互動式查詢
   if has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' )
   "
-    Plug 'liuchengxu/vim-clap'                      " plugin for interactive finder and dispatcher  互動式查詢
+    Plug 'liuchengxu/vim-clap', { 'do': { -> clap#installer#force_download() } }
   "
   endif
 
+  " terminal plugin  終端機插件
   if has( 'nvim' ) || has( 'terminal' )
   "
-    Plug 'kassio/neoterm'                           " terminal plugin  終端機插件
+    Plug 'kassio/neoterm'
   "
   endif
 
