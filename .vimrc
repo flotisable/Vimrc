@@ -159,9 +159,10 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   endif
 
   " language specific plugins  特定語言的插件{{{
-  Plug 'octol/vim-cpp-enhanced-highlight'                       " plugin for C++ highlight  C++ 語法高亮插件
-  Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }        " plugin for Perl highlight  Perl 語法高亮插件
-  Plug 'pprovost/vim-ps1'                                       " plugin for Powershell highlight  Powershell 語法高亮插件
+  Plug 'octol/vim-cpp-enhanced-highlight'
+  Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }
+  Plug 'pprovost/vim-ps1'
+  Plug 'cespare/vim-toml'
   " end language specific plugins
   "}}}
   " plugin for autocomplete  自動補全的插件{{{
