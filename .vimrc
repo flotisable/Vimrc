@@ -408,16 +408,16 @@ if FlotisablePluginExists( 'vim-clap' )
 
   " set \ff key to search file  設定 \ff 鍵搜尋檔案
   if executable( 'maple' )
-    noremap <Leader>ff :Clap filer
+    noremap <Leader>ff :Clap filer 
   else
-    noremap <Leader>ff :Clap files
+    noremap <Leader>ff :Clap files 
   endif
   " end set \ff key to search file  設定 \ff 鍵搜尋檔案
 
   " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
   if executable( 'rg' )
   "
-    noremap <Leader>fg :Clap grep
+    noremap <Leader>fg :Clap grep 
   "
   endif
 
@@ -443,8 +443,16 @@ if FlotisablePluginExists( 'vim-snipmate' )
 "
 endif
 
-noremap   <Leader>r :set relativenumber!<Enter>|                      " 設定 Leader r 鍵開關相對行號設定
-noremap   <Leader>c :set cursorline!<Enter>:set cursorcolumn!<Enter>| " 設定 Leader c 鍵開關游標高亮
+if FlotisablePluginExists( 'bufferize.vim' )
+"
+  noremap <Leader>bb :Bufferize |       " set \bb to bufferize command  設定 \bb bufferize vim 命令
+  noremap <Leader>bs :BufferizeSystem | " set \bs to bufferize system commad  設定 \bs bufferize 系統命令
+  noremap <Leader>bn :Bufferize norm |  " set \bn to bufferize normal mode command  設定 \bn bufferize vim 一般模式命令
+"
+endif
+
+noremap   <Leader>r :set relativenumber!<Enter>|                      " 設定 \r 鍵開關相對行號設定
+noremap   <Leader>c :set cursorline!<Enter>:set cursorcolumn!<Enter>| " 設定 \c 鍵開關游標高亮
 nnoremap  <Space>   <C-F>
 nnoremap  <BS>      <C-B>
 xnoremap  <Space>   <C-F>
