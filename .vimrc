@@ -107,19 +107,6 @@ endif
 "}}}
 " end self defined functions
 "}}}
-" highlight setup  高亮設定{{{
-" setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
-if has( 'gui_running' )
-  colorscheme desert  " colorscheme in gui  圖形介面顏色主題
-else
-  colorscheme elflord " colorscheme in terminal  終端機顏色主題
-endif
-" end setup colorscheme for terminal and gui
-"}}}
-highlight CursorColumn  cterm=NONE ctermbg=Grey
-highlight CursorLine    cterm=NONE ctermbg=Grey
-" end highlight setup
-"}}}
 " save and load view  自動讀取與儲存手動的折疊{{{
 autocmd BufWinLeave * silent! mkview
 autocmd BufWinEnter * silent! loadview
@@ -341,6 +328,19 @@ endif
 " end tlib_vim settings
 "}}}
 " end plugin settings
+"}}}
+" highlight setup  高亮設定{{{
+" setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
+if has( 'gui_running' )
+  colorscheme desert  " colorscheme in gui  圖形介面顏色主題
+else
+  colorscheme elflord " colorscheme in terminal  終端機顏色主題
+endif
+" end setup colorscheme for terminal and gui
+"}}}
+highlight CursorColumn  cterm=NONE ctermbg=Grey
+highlight CursorLine    cterm=NONE ctermbg=Grey
+" end highlight setup
 "}}}
 " key mapping  快捷鍵設定{{{
 if has( 'nvim' ) || has( 'terminal' )
