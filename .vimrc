@@ -56,11 +56,27 @@ if !exists( '*FlotisableToggleLanguageDiagnostics' )
 "
   function FlotisableToggleLanguageDiagnostics()
   "
-    if !FlotisablePluginExists( 'LanguageClient-neovim' )
+    if  !FlotisablePluginExists( 'LanguageClient-neovim' )
+    "
+      echo 'Plugin LanguageClient-neovim not installed'
       return
+    "
+    endif
+
+    if !LanguageClient#isServerRunning()
+    "
+      echo 'No language server running'
+      return
+    "
     endif
 
     LanguageClientStop
+    if !exists( 'g:LanguageClient_diagnosticsEnable' )
+    "
+      let g:LanguageClient_diagnosticsEnable = 1
+    "
+    endif
+
     if g:LanguageClient_diagnosticsEnable == 0
     "
       let g:LanguageClient_diagnosticsEnable = 1
@@ -83,7 +99,10 @@ if !exists( '*FlotisableToggleClapPreviewDirection' )
   function FlotisableToggleClapPreviewDirection()
   "
     if !FlotisablePluginExists( 'vim-clap' )
+    "
+      echo "Plugin vim-clap not installed"
       return
+    "
     endif
 
     if g:clap_preview_direction == 'LR'
