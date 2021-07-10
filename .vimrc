@@ -172,23 +172,31 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   " end language specific plugins
   "}}}
   " plugin for autocomplete  自動補全的插件{{{
-  if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
+  if has( 'nvim-0.5' )
   "
-    if has( 'nvim' )
+    Plug 'hrsh7th/nvim-compe'
+  "
+  else
+  "
+    if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
     "
-      Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+      if has( 'nvim' )
+      "
+        Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+      "
+      else
+      "
+        Plug 'Shougo/deoplete.nvim'
+        Plug 'roxma/nvim-yarp'
+        Plug 'roxma/vim-hug-neovim-rpc'
+      "
+      endif
     "
-    else
+    else " when 'vim' version is older  當 vim 版本較低時  
     "
-      Plug 'Shougo/deoplete.nvim'
-      Plug 'roxma/nvim-yarp'
-      Plug 'roxma/vim-hug-neovim-rpc'
+      Plug 'shougo/neocomplcache.vim'
     "
     endif
-  "
-  else " when 'vim' version is older  當 vim 版本較低時  
-  "
-    Plug 'shougo/neocomplcache.vim'
   "
   endif
   " end plugin for autocomplete
@@ -265,7 +273,18 @@ endif
 " end interactive finder plugin settings
 "}}}
 " completion plugin settings  補全插件設定{{{
-if FlotisablePluginExists( 'deoplete.nvim' )
+if FlotisablePluginExists( 'nvim-compe' )
+"
+  let g:compe = {
+              \   'source':   {
+              \     'path':     v:true,
+              \     'buffer':   v:true,
+              \     'omni':     v:true,
+              \     'nvim_lsp': v:true
+              \   }
+              \ }
+"
+elseif FlotisablePluginExists( 'deoplete.nvim' )
 "
   let g:python3_host_prog = "python3"
 
