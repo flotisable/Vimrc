@@ -196,17 +196,25 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   " language server protocal client  LSP 客戶端{{{
   if has( 'nvim' ) || v:version >= 800
   "
-    if has( 'win32' )
+    if has( 'nvim-0.5' )
     "
-      Plug 'autozimu/LanguageClient-neovim',
-        \ { 'branch': 'next',
-          \ 'do': 'powershell -executionpolicy bypass -File install.ps1' }
+      Plug 'neovim/nvim-lspconfig'
     "
     else
     "
-      Plug 'autozimu/LanguageClient-neovim',
-        \ { 'branch': 'next',
-          \ 'do': 'bash install.sh' }
+      if has( 'win32' )
+      "
+        Plug 'autozimu/LanguageClient-neovim',
+          \ { 'branch': 'next',
+            \ 'do': 'powershell -executionpolicy bypass -File install.ps1' }
+      "
+      else
+      "
+        Plug 'autozimu/LanguageClient-neovim',
+          \ { 'branch': 'next',
+            \ 'do': 'bash install.sh' }
+      "
+      endif
     "
     endif
   "
@@ -275,6 +283,16 @@ endif
 " end completion plugin settings
 "}}}
 " LSP client settings  LSP 客戶端設定{{{
+if FlotisablePluginExists( 'nvim-lspconfig' )
+"
+  lua require'lspconfig'.clangd.setup{
+      \   on_attach = function(client, buffer)
+      \                 vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+      \               end
+      \ }
+"
+endif
+
 if FlotisablePluginExists( 'LanguageClient-neovim' )
 "
   let g:LanguageClient_serverCommands = {
@@ -393,6 +411,17 @@ if FlotisablePluginExists( 'vim-signify' )
   noremap <Leader>d :SignifyHunkDiff<Enter>|  " set \d key to show hunk diff  設定 \d 鍵顯示片段差異
   noremap <Leader>u :SignifyHunkUndo<Enter>|  " set \u key to undo hunk  設定 \u 鍵回復片段
   noremap <Leader>D :SignifyDiff<Enter>|      " set \D key to show full diff  設定 \D 鍵顯示檔案差異
+"
+endif
+
+if FlotisablePluginExists( 'nvim-lspconfig' )
+"
+  noremap <Leader>ld :lua vim.lsp.buf.definition()<Enter>|                " set \ld key to go to definition  設定 \ld 鍵跳至定義
+  noremap <Leader>lt :lua vim.lsp.buf.type_definition()<Enter>|           " set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
+  noremap <Leader>lr :lua vim.lsp.buf.references()<Enter>|                " set \lr key to show reference  設定 \lr 鍵顯示參照
+  noremap <Leader>lh :lua vim.lsp.buf.hover()<Enter>|                     " set \lh key to showhover  設定 \lh 鍵顯示文檔
+  noremap <Leader>lo :LspStart<Enter>|                                    " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
+  noremap <Leader>lc :LspStop<Enter>|                                     " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 "
 endif
 

@@ -19,6 +19,7 @@ if exists( 'g:GuiLoaded' )
   endif
 
   colorscheme desert
+  highlight Pmenu gui=NONE guibg=Grey
 
   call GuiWindowMaximized( 1 )
 
