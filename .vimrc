@@ -304,6 +304,15 @@ endif
 " LSP client settings  LSP 客戶端設定{{{
 if FlotisablePluginExists( 'nvim-lspconfig' )
 "
+  call sign_define( 'LspDiagnosticsSignError',
+    \ { 'text': "✖", 'texthl': 'LspDiagnosticsSignError' } )
+  call sign_define( 'LspDiagnosticsSignWarning',
+    \ { 'text': "⚠", 'texthl': 'LspDiagnosticsSignWarning' } )
+  call sign_define( 'LspDiagnosticsSignHint',
+    \ { 'text': "➤", 'texthl': 'LspDiagnosticsSignHint' } )
+  call sign_define( 'LspDiagnosticsSignInformation',
+    \ { 'text': "ℹ", 'texthl': 'LspDiagnosticsSignInformation' } )
+
   lua require'lspconfig'.clangd.setup{
       \   on_attach = function(client, buffer)
       \                 vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -396,6 +405,11 @@ endif
 "}}}
 highlight CursorColumn  cterm=NONE ctermbg=Grey
 highlight CursorLine    cterm=NONE ctermbg=Grey
+
+highlight link LspDiagnosticsDefaultError       Error
+highlight link LspDiagnosticsDefaultWarning     Todo
+highlight link LspDiagnosticsDefaultHint        Todo
+highlight link LspDiagnosticsDefaultInformation Todo
 " end highlight setup
 "}}}
 " key mapping  快捷鍵設定{{{
