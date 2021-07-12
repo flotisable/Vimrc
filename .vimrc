@@ -313,11 +313,19 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
   call sign_define( 'LspDiagnosticsSignInformation',
     \ { 'text': "ℹ", 'texthl': 'LspDiagnosticsSignInformation' } )
 
-  lua require'lspconfig'.clangd.setup{
-      \   on_attach = function(client, buffer)
-      \                 vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-      \               end
-      \ }
+  lua require'lspconfig'.util.default_config = vim.tbl_extend(
+      \   "force",
+      \   require'lspconfig'.util.default_config,
+      \   {
+      \     on_attach = function(client, buffer)
+      \                   vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+      \                 end
+      \   }
+      \ )
+
+  lua require'lspconfig'.clangd.setup{}
+  lua require'lspconfig'.bashls.setup{}
+  lua require'lspconfig'.perlls.setup{}
 "
 endif
 
