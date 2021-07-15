@@ -192,7 +192,7 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
       "
       endif
     "
-    else " when 'vim' version is older  當 vim 版本較低時  
+    else " when 'vim' version is older  當 vim 版本較低時
     "
       Plug 'shougo/neocomplcache.vim'
     "
@@ -326,6 +326,9 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
   lua require'lspconfig'.clangd.setup{}
   lua require'lspconfig'.bashls.setup{}
   lua require'lspconfig'.perlls.setup{}
+  lua require'lspconfig'.efm.setup{
+      \   filetypes = { 'raku' }
+      \ }
 "
 endif
 
@@ -334,7 +337,8 @@ if FlotisablePluginExists( 'LanguageClient-neovim' )
   let g:LanguageClient_serverCommands = {
     \ 'cpp':  ['clangd'],
     \ 'sh':   ['bash-language-server.cmd','start'],
-    \ 'vim':  ['vim-language-server.cmd','--stdio']
+    \ 'vim':  ['vim-language-server.cmd','--stdio'],
+    \ 'raku': ['efm-langserver']
     \ }
 "
 endif
@@ -362,7 +366,7 @@ endif
 " neoterm settings  neoterm 插件設定{{{
 if FlotisablePluginExists( 'neoterm' )
 "
-  let g:neoterm_autoinsert  = 1       " 開啟終端機後進入終端機模式  enter terminal mode after open the terminal 
+  let g:neoterm_autoinsert  = 1       " 開啟終端機後進入終端機模式  enter terminal mode after open the terminal
   let g:neoterm_default_mod = ":tab"  " 設定以 tab 開啟終端機  open terminal in a tab
 "
 endif
@@ -497,16 +501,16 @@ if FlotisablePluginExists( 'vim-clap' )
 
   " set \ff key to search file  設定 \ff 鍵搜尋檔案
   if executable( 'maple' )
-    noremap <Leader>ff :Clap filer 
+    noremap <Leader>ff :Clap filer
   else
-    noremap <Leader>ff :Clap files 
+    noremap <Leader>ff :Clap files
   endif
   " end set \ff key to search file  設定 \ff 鍵搜尋檔案
 
   " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
   if executable( 'rg' )
   "
-    noremap <Leader>fg :Clap grep 
+    noremap <Leader>fg :Clap grep
   "
   endif
 
