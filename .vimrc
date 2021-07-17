@@ -416,63 +416,67 @@ highlight link LspDiagnosticsDefaultInformation Todo
 " end highlight setup
 "}}}
 " key mapping  快捷鍵設定{{{
-if has( 'nvim' ) || has( 'terminal' )
-"
-  tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
-"
-endif
-
+" neoterm key mapping{{{
 if FlotisablePluginExists( 'neoterm' )
 "
-  noremap   <C-s> :Ttoggle<Enter>|            " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
-  tnoremap  <C-s> <C-\><C-n>:Ttoggle<Enter>|  " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
+  noremap   <C-s> <Cmd>Ttoggle<Enter>| " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
+  tnoremap  <C-s> <Cmd>Ttoggle<Enter>| " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
 "
 endif
-
+" end neoterm key mapping
+"}}}
+" nerdtree key mapping{{{
 if FlotisablePluginExists( 'nerdtree' )
 "
-  noremap <C-x> :NERDTreeToggle<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
+  noremap <C-x> <Cmd>NERDTreeToggle<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
 "
 endif
-
+" end nerdtree key mapping
+"}}}
+" tagbar key mapping{{{
 if FlotisablePluginExists( 'tagbar' )
 "
-  noremap <Leader>t :Tagbar<Enter>| " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
+  noremap <Leader>t <Cmd>Tagbar<Enter>| " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
 "
 endif
-
+" end tagbar key mapping
+"}}}
+" vim-signify key mapping{{{
 if FlotisablePluginExists( 'vim-signify' )
 "
-  noremap <Leader>s :SignifyToggle<Enter>|    " set \s key to toggle VCS diff  設定 \s 鍵開闔版本控制差異
-  noremap <Leader>d :SignifyHunkDiff<Enter>|  " set \d key to show hunk diff  設定 \d 鍵顯示片段差異
-  noremap <Leader>u :SignifyHunkUndo<Enter>|  " set \u key to undo hunk  設定 \u 鍵回復片段
-  noremap <Leader>D :SignifyDiff<Enter>|      " set \D key to show full diff  設定 \D 鍵顯示檔案差異
+  noremap <Leader>s <Cmd>SignifyToggle<Enter>|    " set \s key to toggle VCS diff  設定 \s 鍵開闔版本控制差異
+  noremap <Leader>d <Cmd>SignifyHunkDiff<Enter>|  " set \d key to show hunk diff  設定 \d 鍵顯示片段差異
+  noremap <Leader>u <Cmd>SignifyHunkUndo<Enter>|  " set \u key to undo hunk  設定 \u 鍵回復片段
+  noremap <Leader>D <Cmd>SignifyDiff<Enter>|      " set \D key to show full diff  設定 \D 鍵顯示檔案差異
 "
 endif
-
+" end vim-signify key mapping
+"}}}
+" lsp key mappings{{{
 if FlotisablePluginExists( 'nvim-lspconfig' )
 "
-  noremap <Leader>ld :lua vim.lsp.buf.definition()<Enter>|                " set \ld key to go to definition  設定 \ld 鍵跳至定義
-  noremap <Leader>lt :lua vim.lsp.buf.type_definition()<Enter>|           " set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
-  noremap <Leader>lr :lua vim.lsp.buf.references()<Enter>|                " set \lr key to show reference  設定 \lr 鍵顯示參照
-  noremap <Leader>lh :lua vim.lsp.buf.hover()<Enter>|                     " set \lh key to showhover  設定 \lh 鍵顯示文檔
-  noremap <Leader>lo :LspStart<Enter>|                                    " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
-  noremap <Leader>lc :LspStop<Enter>|                                     " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
+  noremap <Leader>ld <Cmd>lua vim.lsp.buf.definition()<Enter>|      " set \ld key to go to definition  設定 \ld 鍵跳至定義
+  noremap <Leader>lt <Cmd>lua vim.lsp.buf.type_definition()<Enter>| " set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
+  noremap <Leader>lr <Cmd>lua vim.lsp.buf.references()<Enter>|      " set \lr key to show reference  設定 \lr 鍵顯示參照
+  noremap <Leader>lh <Cmd>lua vim.lsp.buf.hover()<Enter>|           " set \lh key to showhover  設定 \lh 鍵顯示文檔
+  noremap <Leader>lo <Cmd>LspStart<Enter>|                          " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
+  noremap <Leader>lc <Cmd>LspStop<Enter>|                           " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 "
 endif
 
 if FlotisablePluginExists( 'LanguageClient-neovim' )
 "
-  noremap <Leader>ld :call LanguageClient#textDocument_definition()<Enter>|     " set \ld key to go to definition  設定 \ld 鍵跳至定義
-  noremap <Leader>lt :call LanguageClient#textDocument_typeDefinition()<Enter>| " set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
-  noremap <Leader>lr :call LanguageClient#textDocument_references()<Enter>|     " set \lr key to show reference  設定 \lr 鍵顯示參照
-  noremap <Leader>lh :call LanguageClient#textDocument_hover()<Enter>|          " set \lh key to showhover  設定 \lh 鍵顯示文檔
-  noremap <Leader>lo :LanguageClientStart<Enter>|                               " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
-  noremap <Leader>lc :LanguageClientStop<Enter>|                                " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
-  noremap <Leader>ls :call FlotisableToggleLanguageDiagnostics()<Enter>|        " set \ls key to toggle diagnostics  設定 \ls 鍵開闔診斷
+  noremap <Leader>ld <Plug>(lcn-definition)|          " set \ld key to go to definition  設定 \ld 鍵跳至定義
+  noremap <Leader>lt <Plug>(lcn-type-definition)|     " set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
+  noremap <Leader>lr <Plug>(lcn-references)|          " set \lr key to show reference  設定 \lr 鍵顯示參照
+  noremap <Leader>lh <Plug>(lcn-hover)|               " set \lh key to showhover  設定 \lh 鍵顯示文檔
+  noremap <Leader>lo <Cmd>LanguageClientStart<Enter>| " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
+  noremap <Leader>lc <Cmd>LanguageClientStop<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 "
 endif
-
+" end lsp key mappings
+"}}}
+" vim-mark key mappings{{{
 if FlotisablePluginExists( 'vim-mark' )
 "
   nmap  <Leader>ms <Plug>MarkSet|   " set \ms key to set mark  設定 \ms 鍵設置標籤
@@ -482,26 +486,28 @@ if FlotisablePluginExists( 'vim-mark' )
   map   <Leader>mc <Plug>MarkClear| " set \mc key to clear mark  設定 \mc 鍵清理標籤
 "
 endif
-
+" end vim-mark key mappings
+"}}}
+" interactive finder key mappings{{{
 if FlotisablePluginExists( 'vim-clap' )
 "
-  noremap <Leader>fp :Clap providers<Enter>|                              " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
-  noremap <Leader>f/ :Clap blines<Enter>|                                 " set \f/ key to search in file  設定 \f/ 鍵在檔案中搜尋
-  noremap <Leader>fb :Clap buffers<Enter>|                                " set \fb key to search buffer  設定 \fb 鍵搜尋 buffer
-  noremap <Leader>fd :call FlotisableToggleClapPreviewDirection()<Enter>| " set \fd to toggle preview direction  設定 \fd 切換預覽方向
+  noremap <Leader>fp <Cmd>Clap providers<Enter>|                              " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
+  noremap <Leader>f/ <Cmd>Clap blines<Enter>|                                 " set \f/ key to search in file  設定 \f/ 鍵在檔案中搜尋
+  noremap <Leader>fb <Cmd>Clap buffers<Enter>|                                " set \fb key to search buffer  設定 \fb 鍵搜尋 buffer
+  noremap <Leader>fd <Cmd>call FlotisableToggleClapPreviewDirection()<Enter>| " set \fd to toggle preview direction  設定 \fd 切換預覽方向
 
   " set \ff key to search file  設定 \ff 鍵搜尋檔案
   if executable( 'maple' )
-    noremap <Leader>ff :Clap filer
+    noremap <Leader>ff :Clap filer |
   else
-    noremap <Leader>ff :Clap files
+    noremap <Leader>ff :Clap files |
   endif
   " end set \ff key to search file  設定 \ff 鍵搜尋檔案
 
   " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
   if executable( 'rg' )
   "
-    noremap <Leader>fg :Clap grep
+    noremap <Leader>fg :Clap grep |
   "
   endif
 
@@ -520,13 +526,17 @@ if FlotisablePluginExists( 'vim-clap' )
   endif
 "
 endif
-
+" end interactive finder key mappings
+"}}}
+" vim-snipmate key mappings{{{
 if FlotisablePluginExists( 'vim-snipmate' )
 "
   imap <C-s> <Plug>snipMateShow| " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
 "
 endif
-
+" end vim-snipmate key mappings
+"}}}
+" bufferize key mappings{{{
 if FlotisablePluginExists( 'bufferize.vim' )
 "
   noremap <Leader>bb :Bufferize |       " set \bb to bufferize command  設定 \bb bufferize vim 命令
@@ -534,9 +544,17 @@ if FlotisablePluginExists( 'bufferize.vim' )
   noremap <Leader>bn :Bufferize norm |  " set \bn to bufferize normal mode command  設定 \bn bufferize vim 一般模式命令
 "
 endif
+" end bufferize key mappings
+"}}}
+" basic key mappings{{{
+if has( 'nvim' ) || has( 'terminal' )
+"
+  tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
+"
+endif
 
-noremap   <Leader>r :set relativenumber!<Enter>|                      " 設定 \r 鍵開關相對行號設定
-noremap   <Leader>c :set cursorline!<Enter>:set cursorcolumn!<Enter>| " 設定 \c 鍵開關游標高亮
+noremap   <Leader>r <Cmd>set relativenumber!<Enter>|                          " 設定 \r 鍵開關相對行號設定
+noremap   <Leader>c <Cmd>set cursorline!<Enter><Cmd>set cursorcolumn!<Enter>| " 設定 \c 鍵開關游標高亮
 nnoremap  <Space>   <C-F>
 nnoremap  <BS>      <C-B>
 xnoremap  <Space>   <C-F>
@@ -552,16 +570,17 @@ noremap!  <C-d>     <Del>
 
 if has( "cscope" )
 "
-  nnoremap <C-_>s :cscope find s <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>g :cscope find g <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>c :cscope find c <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>t :cscope find t <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>e :cscope find e <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>f :cscope find f <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>i :cscope find i <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>d :cscope find d <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>s <Cmd>cscope find s <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>g <Cmd>cscope find g <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>c <Cmd>cscope find c <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>t <Cmd>cscope find t <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>e <Cmd>cscope find e <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>f <Cmd>cscope find f <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>i <Cmd>cscope find i <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>d <Cmd>cscope find d <C-R>=expand("<cword>")<CR><CR>
 "
 endif
+" end basic key mappings}}}
 " end key mapping
 "}}}
 " vim: foldmethod=marker foldmarker={{{,}}}
