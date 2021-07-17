@@ -19,7 +19,7 @@ set hlsearch
 set incsearch
 
 set viewoptions=folds,cursor,curdir
-set completeopt=menuone,noselect,noinsert
+set completeopt=menuone,noinsert
 
 if has( "cscope" )
 "
@@ -279,7 +279,8 @@ elseif FlotisablePluginExists( 'deoplete.nvim' )
 "
 elseif FlotisablePluginExists( 'neocomplcache.vim' )
 "
-  " the plugin has the issue that it can auto insert the completion
+  " the plugin has the issue that it can auto insert the completion when set
+  " noselect in completeopt
   let g:neocomplcache_omni_patterns = { '_': '\w\+' }
 
   autocmd InsertEnter * NeoComplCacheEnable
