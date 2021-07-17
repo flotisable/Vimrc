@@ -43,6 +43,13 @@ if !exists( '*FlotisablePluginExists' )
 "
   function FlotisablePluginExists( name )
   "
+    if !exists( 'g:pluginRoot' )
+    "
+      echo 'g:pluginRoot not defined'
+      return 0
+    "
+    endif
+
     let l:fullPath = expand( printf( '%s/%s', g:pluginRoot, a:name ) )
 
     return isdirectory( l:fullPath ) && count( &runtimepath, l:fullPath )
