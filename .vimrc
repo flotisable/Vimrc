@@ -300,22 +300,26 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
   call sign_define( 'LspDiagnosticsSignInformation',
     \ { 'text': "ℹ", 'texthl': 'LspDiagnosticsSignInformation' } )
 
-  lua require'lspconfig'.util.default_config = vim.tbl_extend(
-      \   "force",
-      \   require'lspconfig'.util.default_config,
-      \   {
-      \     on_attach = function(client, buffer)
-      \                   vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc')
-      \                 end
-      \   }
-      \ )
+  lua << EOF
+    local lsp = require'lspconfig'
 
-  lua require'lspconfig'.clangd.setup{}
-  lua require'lspconfig'.bashls.setup{}
-  lua require'lspconfig'.perlls.setup{}
-  lua require'lspconfig'.efm.setup{
-      \   filetypes = { 'raku' }
-      \ }
+    lsp.util.default_config = vim.tbl_extend(
+      "force",
+      lsp.util.default_config,
+      {
+        on_attach = function( client, buffer )
+                      vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc')
+                    end
+      }
+    )
+
+    lsp.clangd.setup{}
+    lsp.bashls.setup{}
+    lsp.perlls.setup{}
+    lsp.efm.setup{
+      filetypes = { 'raku' }
+    }
+EOF
 "
 endif
 
