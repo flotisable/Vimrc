@@ -2,6 +2,7 @@
 set encoding=utf-8    " set file encoding  設定編碼
 set number            " display line number  顯示行號
 set autoindent        " automatic indent as last line  自動縮排（與上一行縮排相同
+set smartindent
 
 set foldmethod=manual " manual fold the code  手動折疊程式碼
 
@@ -15,6 +16,7 @@ set errorformat^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ direct
 
 set laststatus=2
 set hlsearch
+set incsearch
 
 set viewoptions=folds,cursor,curdir
 set completeopt=menuone,noselect,noinsert
