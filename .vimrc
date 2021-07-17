@@ -21,6 +21,16 @@ set incsearch
 set viewoptions=folds,cursor,curdir
 set completeopt=menuone,noinsert
 
+if has( 'win32' )
+"
+  set shell=powershell
+  let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+  let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  set shellquote= shellxquote=
+"
+endif
+
 if has( "cscope" )
 "
   if executable( "gtags-cscope" ) && filereadable( "GTAGS" )
@@ -359,6 +369,12 @@ if FlotisablePluginExists( 'neoterm' )
 "
   let g:neoterm_autoinsert  = 1       " 開啟終端機後進入終端機模式  enter terminal mode after open the terminal
   let g:neoterm_default_mod = ":tab"  " 設定以 tab 開啟終端機  open terminal in a tab
+
+  if has( 'win32' )
+  "
+    let g:neoterm_shell = &shell .. ' #'
+  "
+  endif
 "
 endif
 " end neoterm settings
