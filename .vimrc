@@ -190,11 +190,15 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   if has( 'nvim-0.5' )
   "
     Plug 'hrsh7th/nvim-compe'
+    Plug 'tamago324/compe-necosyntax'
+    Plug 'Shougo/neco-syntax'
   "
   else
   "
     if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
     "
+      Plug 'Shougo/neco-syntax'
+
       if has( 'nvim' )
       "
         Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -290,12 +294,15 @@ endif
 " completion plugin settings  補全插件設定{{{
 if FlotisablePluginExists( 'nvim-compe' )
 "
+  " when using omni source, I find the min length of complete can not be
+  " controlled, so I use necosyntax source. The build in syntax complete and
+  " necosyntax both has some complete candidate that not shown in another.
   let g:compe = {
               \   'source':   {
-              \     'path':     v:true,
-              \     'buffer':   v:true,
-              \     'omni':     v:true,
-              \     'nvim_lsp': v:true
+              \     'path':       v:true,
+              \     'buffer':     v:true,
+              \     'nvim_lsp':   v:true,
+              \     'necosyntax': v:true
               \   }
               \ }
 "
