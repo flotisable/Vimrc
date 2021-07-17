@@ -17,6 +17,7 @@ set laststatus=2
 set hlsearch
 
 set viewoptions=folds,cursor,curdir
+set completeopt=menuone,noselect,noinsert
 
 if has( "cscope" )
 "
@@ -123,6 +124,20 @@ if !exists( '*FlotisableToggleClapPreviewDirection' )
 "
 endif
 " end interactive fuzzy finder settings
+"}}}
+" wrapper of build in lsp omnifunc  內建 lsp omnifunc 的 wrapper{{{
+if !exists( '*FlotisableBuildInLspOmniFunc' )
+"
+  " this wrapper function it to make neovim build in lsp omni function work
+  " with deoplete and neocomplcache
+  function FlotisableBuildInLspOmniFunc( findstart, base )
+  "
+    return v:lua.vim.lsp.omnifunc( a:findstart, a:base )
+  "
+  endfunction
+"
+endif
+" end wrapper of build in lsp omnifunc
 "}}}
 " end self defined functions
 "}}}
@@ -294,6 +309,7 @@ elseif FlotisablePluginExists( 'deoplete.nvim' )
 "
 elseif FlotisablePluginExists( 'neocomplcache.vim' )
 "
+  " the plugin has the issue that it can auto insert the completion
   let g:neocomplcache_omni_patterns = { '_': '\w\+' }
 
   autocmd InsertEnter * NeoComplCacheEnable
@@ -318,7 +334,7 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
       \   require'lspconfig'.util.default_config,
       \   {
       \     on_attach = function(client, buffer)
-      \                   vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+      \                   vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc')
       \                 end
       \   }
       \ )
