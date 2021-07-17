@@ -41,111 +41,65 @@ endif
 "}}}
 " self defined functions  自定義的函式{{{
 " test pluggin existence  檢測插件是否存在{{{
-if !exists( '*FlotisablePluginExists' )
+function! FlotisablePluginExists( name )
 "
-  function FlotisablePluginExists( name )
+  if !exists( 'g:pluginRoot' )
   "
-    if !exists( 'g:pluginRoot' )
-    "
-      echo 'g:pluginRoot not defined'
-      return 0
-    "
-    endif
-
-    let l:fullPath = expand( printf( '%s/%s', g:pluginRoot, a:name ) )
-
-    return isdirectory( l:fullPath ) && count( &runtimepath, l:fullPath )
+    echo 'g:pluginRoot not defined'
+    return 0
   "
-  endfunction
+  endif
+
+  let l:fullPath = expand( printf( '%s/%s', g:pluginRoot, a:name ) )
+
+  return isdirectory( l:fullPath ) && count( &runtimepath, l:fullPath )
 "
-endif
+endfunction
 " end test pluggin existence
 "}}}
-" langauge diagnostics settings  語言診斷設定{{{
-if !exists( '*FlotisableToggleLanguageDiagnostics' )
-"
-  function FlotisableToggleLanguageDiagnostics()
-  "
-    if  !FlotisablePluginExists( 'LanguageClient-neovim' )
-    "
-      echo 'Plugin LanguageClient-neovim not installed'
-      return
-    "
-    endif
-
-    if !LanguageClient#isServerRunning()
-    "
-      echo 'No language server running'
-      return
-    "
-    endif
-
-    LanguageClientStop
-    if !exists( 'g:LanguageClient_diagnosticsEnable' )
-    "
-      let g:LanguageClient_diagnosticsEnable = 1
-    "
-    endif
-
-    if g:LanguageClient_diagnosticsEnable == 0
-    "
-      let g:LanguageClient_diagnosticsEnable = 1
-    "
-    else
-    "
-      let g:LanguageClient_diagnosticsEnable = 0
-    "
-    endif
-    LanguageClientStart
-  "
-  endfunction
-"
-endif
-" end language diagnostics settings
-"}}}
 " interactive fuzzy finder settings  互動式查詢設定{{{
-if !exists( '*FlotisableToggleClapPreviewDirection' )
+function! FlotisableToggleClapPreviewDirection()
 "
-  function FlotisableToggleClapPreviewDirection()
+  if !FlotisablePluginExists( 'vim-clap' )
   "
-    if !FlotisablePluginExists( 'vim-clap' )
-    "
-      echo "Plugin vim-clap not installed"
-      return
-    "
-    endif
+    echo "Plugin vim-clap not installed"
+    return
+  "
+  endif
 
-    if g:clap_preview_direction == 'LR'
-    "
-      let g:clap_preview_direction  = 'UD'
-      let g:clap_layout.width       = '90%'
-      let g:clap_layout.height      = '40%'
-    "
-    else
-    "
-      let g:clap_preview_direction  = 'LR'
-      let g:clap_layout.width       = '45%'
-      let g:clap_layout.height      = '80%'
-    "
-    endif
+  if !exists( 'g:clap_preview_direction' )
   "
-  endfunction
+    let g:clap_preview_direction = 'LR'
+  "
+  endif
+
+  if g:clap_preview_direction == 'LR'
+  "
+    let g:clap_preview_direction  = 'UD'
+    let g:clap_layout.width       = '90%'
+    let g:clap_layout.height      = '40%'
+  "
+  else
+  "
+    let g:clap_preview_direction  = 'LR'
+    let g:clap_layout.width       = '45%'
+    let g:clap_layout.height      = '80%'
+  "
+  endif
+
+  echo "Clap preview direction changes to '" .. g:clap_preview_direction .. "'"
 "
-endif
+endfunction
 " end interactive fuzzy finder settings
 "}}}
 " wrapper of build in lsp omnifunc  內建 lsp omnifunc 的 wrapper{{{
-if !exists( '*FlotisableBuildInLspOmniFunc' )
+" this wrapper function it to make neovim build in lsp omni function work
+" with deoplete and neocomplcache
+function! FlotisableBuildInLspOmniFunc( findstart, base )
 "
-  " this wrapper function it to make neovim build in lsp omni function work
-  " with deoplete and neocomplcache
-  function FlotisableBuildInLspOmniFunc( findstart, base )
-  "
-    return v:lua.vim.lsp.omnifunc( a:findstart, a:base )
-  "
-  endfunction
+  return v:lua.vim.lsp.omnifunc( a:findstart, a:base )
 "
-endif
+endfunction
 " end wrapper of build in lsp omnifunc
 "}}}
 " end self defined functions
