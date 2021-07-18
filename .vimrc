@@ -326,6 +326,7 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
     lsp.clangd.setup{}
     lsp.bashls.setup{}
     lsp.perlls.setup{}
+    lsp.rust_analyzer.setup{}
     lsp.efm.setup{
       filetypes = { 'raku' }
     }
@@ -339,6 +340,7 @@ if FlotisablePluginExists( 'LanguageClient-neovim' )
     \ 'cpp':  ['clangd'],
     \ 'sh':   ['bash-language-server.cmd','start'],
     \ 'vim':  ['vim-language-server.cmd','--stdio'],
+    \ 'rust': ['rust-analyzer'],
     \ 'raku': ['efm-langserver']
     \ }
 "
