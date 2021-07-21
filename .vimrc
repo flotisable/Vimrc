@@ -138,20 +138,22 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   Plug 'majutsushi/tagbar'          " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
   Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
 
-  " plugin for interactive finder and dispatcher  互動式查詢
+  " plugin for interactive finder and dispatcher  互動式查詢{{{
   if has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' )
   "
     Plug 'liuchengxu/vim-clap', { 'do': { -> clap#installer#force_download() } }
   "
   endif
-
-  " terminal plugin  終端機插件
+  " end plugin for interactive finder and dispatcher  互動式查詢
+  "}}}
+  " terminal plugin  終端機插件{{{
   if has( 'nvim' ) || has( 'terminal' )
   "
     Plug 'kassio/neoterm'
   "
   endif
-
+  " end terminal plugin  終端機插件
+  "}}}
   " language specific plugins  特定語言的插件{{{
   Plug 'octol/vim-cpp-enhanced-highlight'
   Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }
