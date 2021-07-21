@@ -334,9 +334,7 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
     }
 EOF
 "
-endif
-
-if FlotisablePluginExists( 'LanguageClient-neovim' )
+elseif FlotisablePluginExists( 'LanguageClient-neovim' )
 "
   let g:LanguageClient_serverCommands = {
     \ 'cpp':  ['clangd'],
@@ -482,9 +480,7 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
   noremap <Leader>lo <Cmd>LspStart<Enter>|                          " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <Leader>lc <Cmd>LspStop<Enter>|                           " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 "
-endif
-
-if FlotisablePluginExists( 'LanguageClient-neovim' )
+elseif FlotisablePluginExists( 'LanguageClient-neovim' )
 "
   noremap <Leader>ld <Plug>(lcn-definition)|          " set \ld key to go to definition  設定 \ld 鍵跳至定義
   noremap <Leader>lt <Plug>(lcn-type-definition)|     " set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
