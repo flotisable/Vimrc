@@ -519,14 +519,7 @@ if FlotisablePluginExists( 'vim-clap' )
   noremap <Leader>f/ <Cmd>Clap blines<Enter>|                                 " set \f/ key to search in file  設定 \f/ 鍵在檔案中搜尋
   noremap <Leader>fb <Cmd>Clap buffers<Enter>|                                " set \fb key to search buffer  設定 \fb 鍵搜尋 buffer
   noremap <Leader>fd <Cmd>call FlotisableToggleClapPreviewDirection()<Enter>| " set \fd to toggle preview direction  設定 \fd 切換預覽方向
-
-  " set \ff key to search file  設定 \ff 鍵搜尋檔案
-  if executable( 'maple' )
-    noremap <Leader>ff :Clap filer |
-  else
-    noremap <Leader>ff :Clap files |
-  endif
-  " end set \ff key to search file  設定 \ff 鍵搜尋檔案
+  noremap <Leader>ff :Clap files |                                            " set \ff key to search file  設定 \ff 鍵搜尋檔案
 
   " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
   if executable( 'rg' )
