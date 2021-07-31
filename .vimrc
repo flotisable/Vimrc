@@ -262,6 +262,14 @@ if FlotisablePluginExists( 'vim-clap' )
                     \   'width':    '45%',
                     \   'height':   '80%'
                     \ }
+
+  " disable autocomplete in clap input window
+  if FlotisablePluginExists( 'nvim-compe' )
+  "
+    autocmd FileType clap_input call compe#setup({ 'enabled': v:false }, 0)
+  "
+  endif
+  " end disable autocomplete in clap input window
 "
 endif
 " end interactive finder plugin settings
