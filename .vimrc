@@ -323,6 +323,7 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
   lua << EOF
     local lsp = require'lspconfig'
 
+    -- use lsp omni function when a language server is attached
     lsp.util.default_config = vim.tbl_extend(
       "force",
       lsp.util.default_config,
@@ -332,6 +333,24 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
                     end
       }
     )
+    -- end use lsp omni function when a language server is attached
+
+    -- show diagnostics in quick fix list
+    local defaultHandler = vim.lsp.diagnostic.on_publish_diagnostics
+
+    vim.lsp.diagnostic.on_publish_diagnostics = function( error, method, result, clientId, bufnr, config )
+      defaultHandler( error, method, result, clientId, buffnr, config )
+      if result and result.diagnostics then
+        for _, v in ipairs( result.diagnostics ) do
+          v.bufnr = clientId
+          v.lnum  = v.range.start.line + 1
+          v.col   = v.range.start.character + 1
+          v.text  = v.message
+        end
+        vim.lsp.util.set_qflist( result.diagnostics )
+      end
+    end
+    -- end show diagnostics in quick fix list
 
     lsp.clangd.setup{}
     lsp.bashls.setup{}
