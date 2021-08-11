@@ -340,7 +340,7 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
 
     vim.lsp.diagnostic.on_publish_diagnostics = function( error, method, result, clientId, bufnr, config )
       defaultHandler( error, method, result, clientId, buffnr, config )
-      if result and result.diagnostics then
+      if result and #result.diagnostics ~= 0 then
         for _, v in ipairs( result.diagnostics ) do
           v.bufnr = clientId
           v.lnum  = v.range.start.line + 1
