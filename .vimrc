@@ -138,6 +138,12 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   Plug 'majutsushi/tagbar'          " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
   Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
 
+  if has( 'nvim-0.5' )
+  "
+    Plug 'nvim-treesitter/nvim-treesitter'
+  "
+  endif
+
   " plugin for interactive finder and dispatcher  互動式查詢{{{
   if has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' )
   "
@@ -439,6 +445,19 @@ if FlotisablePluginExists( 'tlib_vim' )
 "
 endif
 " end tlib_vim settings
+"}}}
+" nvim-treesitter settings  nvim-treesitter 設定{{{
+if FlotisablePluginExists( 'nvim-treesitter' )
+"
+  lua << EOF
+    require'nvim-treesitter.configs'.setup
+    {
+      highlight = { enable = true }
+    }
+EOF
+"
+endif
+" end nvim-treesitter settings
 "}}}
 " end plugin settings
 "}}}
