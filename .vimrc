@@ -365,6 +365,9 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
     lsp.efm.setup{
       filetypes = { 'raku' }
     }
+    lsp.powershell_es.setup{
+      bundle_path = '/home/flotisable/Applications/PowerShellEditorServices'
+    }
 EOF
 "
 elseif FlotisablePluginExists( 'LanguageClient-neovim' )
