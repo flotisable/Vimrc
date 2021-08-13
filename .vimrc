@@ -369,12 +369,15 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
 
     lsp.clangd.setup{}
     lsp.bashls.setup{}
+    lsp.vimls.setup{}
     lsp.perlls.setup{}
     lsp.rust_analyzer.setup{}
-    lsp.efm.setup{
+    lsp.efm.setup
+    {
       filetypes = { 'raku' }
     }
-    lsp.powershell_es.setup{
+    lsp.powershell_es.setup
+    {
       bundle_path = '/home/flotisable/Applications/PowerShellEditorServices'
     }
 EOF
