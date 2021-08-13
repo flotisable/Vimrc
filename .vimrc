@@ -330,12 +330,21 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
     local lsp = require'lspconfig'
 
     -- use lsp omni function when a language server is attached
-    lsp.util.default_config = vim.tbl_extend(
+    flotisable =
+    {
+      keybindings = {}
+    }
+
+    lsp.util.default_config = vim.tbl_extend
+    (
       "force",
       lsp.util.default_config,
       {
         on_attach = function( client, buffer )
-                      vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc')
+                      vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc' )
+                      for key, map in pairs( flotisable.keybindings ) do
+                        vim.api.nvim_buf_set_keymap( buffer, 'n', key, map, { noremap = true } )
+                      end
                     end
       }
     )
@@ -522,12 +531,18 @@ endif
 " lsp key mappings{{{
 if FlotisablePluginExists( 'nvim-lspconfig' )
 "
-  noremap <Leader>ld <Cmd>lua vim.lsp.buf.definition()<Enter>|      " set \ld key to go to definition  設定 \ld 鍵跳至定義
-  noremap <Leader>lt <Cmd>lua vim.lsp.buf.type_definition()<Enter>| " set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
-  noremap <Leader>lr <Cmd>lua vim.lsp.buf.references()<Enter>|      " set \lr key to show reference  設定 \lr 鍵顯示參照
-  noremap <Leader>lh <Cmd>lua vim.lsp.buf.hover()<Enter>|           " set \lh key to showhover  設定 \lh 鍵顯示文檔
-  noremap <Leader>lo <Cmd>LspStart<Enter>|                          " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
-  noremap <Leader>lc <Cmd>LspStop<Enter>|                           " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
+  noremap <Leader>lo <Cmd>LspStart<Enter>|  " set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
+  noremap <Leader>lc <Cmd>LspStop<Enter>|   " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
+
+  lua << EOF
+    flotisable.keybindings =
+    {
+      ['<Leader>ld'] = '<Cmd>lua vim.lsp.buf.definition()<Enter>',      -- set \ld key to go to definition  設定 \ld 鍵跳至定義
+      ['<Leader>lt'] = '<Cmd>lua vim.lsp.buf.type_definition()<Enter>', -- set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
+      ['<Leader>lr'] = '<Cmd>lua vim.lsp.buf.references()<Enter>',      -- set \lr key to show reference  設定 \lr 鍵顯示參照
+      ['<Leader>lh'] = '<Cmd>lua vim.lsp.buf.hover()<Enter>',           -- set \lh key to showhover  設定 \lh 鍵顯示文檔
+    }
+EOF
 "
 elseif FlotisablePluginExists( 'LanguageClient-neovim' )
 "
