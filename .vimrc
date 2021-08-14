@@ -134,15 +134,9 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 
   call plug#begin( pluginRoot )
 
-  Plug 'scrooloose/nerdtree'        " plugin for display directory as tree view  樹狀顯示資料夾的插件
-  Plug 'majutsushi/tagbar'          " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
-  Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
-
-  if has( 'nvim-0.5' )
-  "
-    Plug 'nvim-treesitter/nvim-treesitter'
-  "
-  endif
+  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'  } " plugin for display directory as tree view  樹狀顯示資料夾的插件
+  Plug 'majutsushi/tagbar',   { 'on': 'Tagbar'          } " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
+  Plug 'AndrewRadev/bufferize.vim'                        " make command output a buffer  將指令輸出變成 buffer
 
   " plugin for interactive finder and dispatcher  互動式查詢{{{
   if has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' )
@@ -161,10 +155,19 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   " end terminal plugin  終端機插件
   "}}}
   " language specific plugins  特定語言的插件{{{
-  Plug 'octol/vim-cpp-enhanced-highlight'
+  if has( 'nvim-0.5' ) && ( executable( 'gcc' ) || executable( 'clang' ) )
+  "
+    Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+  "
+  else
+  "
+    Plug 'octol/vim-cpp-enhanced-highlight'
+    Plug 'cespare/vim-toml'
+  "
+  endif
+
   Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }
   Plug 'pprovost/vim-ps1'
-  Plug 'cespare/vim-toml'
   " end language specific plugins
   "}}}
   " plugin for autocomplete  自動補全的插件{{{
@@ -214,13 +217,13 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
       "
         Plug 'autozimu/LanguageClient-neovim',
           \ { 'branch': 'next',
-            \ 'do': 'powershell -executionpolicy bypass -File install.ps1' }
+          \   'do': 'powershell -executionpolicy bypass -File install.ps1' }
       "
       else
       "
         Plug 'autozimu/LanguageClient-neovim',
           \ { 'branch': 'next',
-            \ 'do': 'bash install.sh' }
+          \   'do': 'bash install.sh' }
       "
       endif
     "
@@ -466,7 +469,8 @@ if FlotisablePluginExists( 'nvim-treesitter' )
   lua << EOF
     require'nvim-treesitter.configs'.setup
     {
-      highlight = { enable = true }
+      ensure_installed  = { 'cpp', 'rust', 'toml' },
+      highlight         = { enable = true }
     }
 EOF
 "
