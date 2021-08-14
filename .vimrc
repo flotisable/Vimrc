@@ -539,10 +539,9 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
   lua << EOF
     flotisable.keybindings =
     {
-      ['<Leader>ld'] = '<Cmd>lua vim.lsp.buf.definition()<Enter>',      -- set \ld key to go to definition  設定 \ld 鍵跳至定義
-      ['<Leader>lt'] = '<Cmd>lua vim.lsp.buf.type_definition()<Enter>', -- set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
-      ['<Leader>lr'] = '<Cmd>lua vim.lsp.buf.references()<Enter>',      -- set \lr key to show reference  設定 \lr 鍵顯示參照
-      ['<Leader>lh'] = '<Cmd>lua vim.lsp.buf.hover()<Enter>',           -- set \lh key to showhover  設定 \lh 鍵顯示文檔
+      gd = '<Cmd>lua vim.lsp.buf.definition()<Enter>',  -- set \ld key to go to definition  設定 \ld 鍵跳至定義
+      gr = '<Cmd>lua vim.lsp.buf.references()<Enter>',  -- set \lr key to show reference  設定 \lr 鍵顯示參照
+      K  = '<Cmd>lua vim.lsp.buf.hover()<Enter>',       -- set \lh key to showhover  設定 \lh 鍵顯示文檔
     }
 EOF
 "
@@ -551,10 +550,9 @@ elseif FlotisablePluginExists( 'LanguageClient-neovim' )
   noremap <Leader>lo <Cmd>LanguageClientStart<Enter>| " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <Leader>lc <Cmd>LanguageClientStop<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
-  autocmd User LanguageClientStarted map <buffer> <silent> <Leader>ld <Plug>(lcn-definition)|       " set \ld key to go to definition  設定 \ld 鍵跳至定義
-  autocmd User LanguageClientStarted map <buffer> <silent> <Leader>lt <Plug>(lcn-type-definition)|  " set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
-  autocmd User LanguageClientStarted map <buffer> <silent> <Leader>lr <Plug>(lcn-references)|       " set \lr key to show reference  設定 \lr 鍵顯示參照
-  autocmd User LanguageClientStarted map <buffer> <silent> <Leader>lh <Plug>(lcn-hover)|            " set \lh key to showhover  設定 \lh 鍵顯示文檔
+  autocmd User LanguageClientStarted map <buffer> <silent> gd <Plug>(lcn-definition)| " set \ld key to go to definition  設定 \ld 鍵跳至定義
+  autocmd User LanguageClientStarted map <buffer> <silent> gr <Plug>(lcn-references)| " set \lr key to show reference  設定 \lr 鍵顯示參照
+  autocmd User LanguageClientStarted map <buffer> <silent> K <Plug>(lcn-hover)|       " set \lh key to showhover  設定 \lh 鍵顯示文檔
 "
 endif
 " end lsp key mappings
