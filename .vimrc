@@ -335,8 +335,7 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
       keybindings = {}
     }
 
-    lsp.util.default_config = vim.tbl_extend
-    (
+    lsp.util.default_config = vim.tbl_extend(
       "force",
       lsp.util.default_config,
       {
@@ -386,8 +385,8 @@ elseif FlotisablePluginExists( 'LanguageClient-neovim' )
 "
   let g:LanguageClient_serverCommands = {
     \ 'cpp':  ['clangd'],
-    \ 'sh':   ['bash-language-server.cmd','start'],
-    \ 'vim':  ['vim-language-server.cmd','--stdio'],
+    \ 'sh':   ['bash-language-server','start'],
+    \ 'vim':  ['vim-language-server','--stdio'],
     \ 'rust': ['rust-analyzer'],
     \ 'raku': ['efm-langserver']
     \ }
@@ -549,12 +548,13 @@ EOF
 "
 elseif FlotisablePluginExists( 'LanguageClient-neovim' )
 "
-  noremap <Leader>ld <Plug>(lcn-definition)|          " set \ld key to go to definition  設定 \ld 鍵跳至定義
-  noremap <Leader>lt <Plug>(lcn-type-definition)|     " set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
-  noremap <Leader>lr <Plug>(lcn-references)|          " set \lr key to show reference  設定 \lr 鍵顯示參照
-  noremap <Leader>lh <Plug>(lcn-hover)|               " set \lh key to showhover  設定 \lh 鍵顯示文檔
   noremap <Leader>lo <Cmd>LanguageClientStart<Enter>| " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <Leader>lc <Cmd>LanguageClientStop<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
+
+  autocmd User LanguageClientStarted map <buffer> <silent> <Leader>ld <Plug>(lcn-definition)|       " set \ld key to go to definition  設定 \ld 鍵跳至定義
+  autocmd User LanguageClientStarted map <buffer> <silent> <Leader>lt <Plug>(lcn-type-definition)|  " set \lt key to go to type definition  設定 \lt 鍵跳至型別定義
+  autocmd User LanguageClientStarted map <buffer> <silent> <Leader>lr <Plug>(lcn-references)|       " set \lr key to show reference  設定 \lr 鍵顯示參照
+  autocmd User LanguageClientStarted map <buffer> <silent> <Leader>lh <Plug>(lcn-hover)|            " set \lh key to showhover  設定 \lh 鍵顯示文檔
 "
 endif
 " end lsp key mappings
