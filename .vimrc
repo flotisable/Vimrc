@@ -112,6 +112,42 @@ function! FlotisableBuildInLspOmniFunc( findstart, base )
 endfunction
 " end wrapper of build in lsp omnifunc
 "}}}
+" setup buffer local keybinding for LanguageClient-neovim  設定 LanguageClient-neovim buffer local 的按鍵{{{
+function! FlotisableLanguageClientNeovimMaps()
+"
+  if !exists( 'g:flotisable.keybindings.lsp' )
+  "
+    return
+  "
+  endif
+
+  if has_key( g:LanguageClient_serverCommands, &filetype )
+  "
+    if exists( 'g:flotisable.keybindings.lsp.global' )
+    "
+      for key in keys( g:flotisable.keybindings.lsp.global )
+      "
+        execute 'map <buffer> <silent> ' .. key .. ' ' .. g:flotisable.keybindings.lsp.global[key]
+      "
+      endfor
+    "
+    endif
+
+    if exists( 'g:flotisable.keybindings.lsp["' .. &filetype .. '"]' )
+    "
+      for key in keys( g:flotisable.keybindings.lsp[&filetype] )
+      "
+        execute 'map <buffer> <silent> ' .. key .. ' ' .. g:flotisable.keybindings.lsp[&filetype][key]
+      "
+      endfor
+    "
+    endif
+  "
+  endif
+"
+endfunction
+" end setup buffer local keybinding for LanguageClient-neovim
+"}}}
 " end self defined functions
 "}}}
 " save and load view  自動讀取與儲存手動的折疊{{{
@@ -335,13 +371,25 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
     -- use lsp omni function when a language server is attached
     flotisable =
     {
-      keybindings = {}
+      keybindings =
+      {
+        lsp = {}
+      }
     }
 
     local function flotisableOnAttach( client, buffer )
       vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc' )
-      for key, map in pairs( flotisable.keybindings ) do
-        vim.api.nvim_buf_set_keymap( buffer, 'n', key, map, { noremap = true } )
+      if flotisable.keybindings.lsp.global then
+        for key, map in pairs( flotisable.keybindings.lsp.global ) do
+          vim.api.nvim_buf_set_keymap( buffer, 'n', key, map, { noremap = true } )
+        end
+      end
+
+      local filetype = vim.api.nvim_buf_get_option( buffer, 'filetype' )
+      if flotisable.keybindings.lsp[filetype] then
+        for key, map in pairs( flotisable.keybindings.lsp[filetype] ) do
+          vim.api.nvim_buf_set_keymap( buffer, 'n', key, map, { noremap = true } )
+        end
       end
     end
 
@@ -545,11 +593,18 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
   noremap <Leader>lc <Cmd>LspStop<Enter>|   " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
   lua << EOF
-    flotisable.keybindings =
+    flotisable.keybindings.lsp=
     {
-      gd = '<Cmd>lua vim.lsp.buf.definition()<Enter>',  -- set gd key to go to definition  設定 gd 鍵跳至定義
-      gr = '<Cmd>lua vim.lsp.buf.references()<Enter>',  -- set gr key to show reference  設定 gr 鍵顯示參照
-      K  = '<Cmd>lua vim.lsp.buf.hover()<Enter>',       -- set K key to showhover  設定 K 鍵顯示文檔
+      global =
+      {
+        gd = '<Cmd>lua vim.lsp.buf.definition()<Enter>',  -- set gd key to go to definition  設定 gd 鍵跳至定義
+        gr = '<Cmd>lua vim.lsp.buf.references()<Enter>',  -- set gr key to show reference  設定 gr 鍵顯示參照
+        K  = '<Cmd>lua vim.lsp.buf.hover()<Enter>',       -- set K key to showhover  設定 K 鍵顯示文檔
+      },
+      cpp =
+      {
+        ['<Leader>a'] = '<Cmd>ClangdSwitchSourceHeader<Enter>'
+      }
     }
 EOF
 "
@@ -558,9 +613,26 @@ elseif FlotisablePluginExists( 'LanguageClient-neovim' )
   noremap <Leader>lo <Cmd>LanguageClientStart<Enter>| " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <Leader>lc <Cmd>LanguageClientStop<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
-  autocmd User LanguageClientStarted map <buffer> <silent> gd <Plug>(lcn-definition)| " set gd key to go to definition  設定 gd 鍵跳至定義
-  autocmd User LanguageClientStarted map <buffer> <silent> gr <Plug>(lcn-references)| " set gr key to show reference  設定 gr 鍵顯示參照
-  autocmd User LanguageClientStarted map <buffer> <silent> K <Plug>(lcn-hover)|       " set K key to showhover  設定 K 鍵顯示文檔
+
+  " set gd key to go to definition  設定 gd 鍵跳至定義
+  " set gr key to show reference  設定 gr 鍵顯示參照
+  " set K key to showhover  設定 K 鍵顯示文檔
+  let g:flotisable = {
+    \   'keybindings': {
+    \     'lsp': {
+    \       'global': {
+    \         'gd': '<Plug>(lcn-definition)',
+    \         'gr': '<Plug>(lcn-references)',
+    \         'K':  '<Plug>(lcn-hover)'
+    \       },
+    \       'cpp': {
+    \         '<Leader>a': '<Cmd>call LanguageClient#Call( "textDocument/switchSourceHeader", { "uri": expand("%") }, v:null )<Enter>'
+    \       }
+    \     }
+    \   }
+    \ }
+
+  autocmd Filetype * call FlotisableLanguageClientNeovimMaps()
 "
 endif
 " end lsp key mappings
