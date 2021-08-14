@@ -18,7 +18,7 @@ if exists( 'g:GuiLoaded' )
   "
   endif
 
-  colorscheme desert
+  colorscheme kalahari
   highlight Pmenu gui=NONE guibg=Grey
 
   highlight link LspDiagnosticsDefaultError       Error

@@ -170,6 +170,8 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 
   call plug#begin( pluginRoot )
 
+  Plug 'fabi1cazenave/kalahari.vim'
+
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'  } " plugin for display directory as tree view  樹狀顯示資料夾的插件
   Plug 'majutsushi/tagbar',   { 'on': 'Tagbar'          } " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
   Plug 'AndrewRadev/bufferize.vim'                        " make command output a buffer  將指令輸出變成 buffer
@@ -534,9 +536,9 @@ endif
 " highlight setup  高亮設定{{{
 " setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
 if has( 'gui_running' )
-  colorscheme desert  " colorscheme in gui  圖形介面顏色主題
+  colorscheme kalahari  " colorscheme in gui  圖形介面顏色主題
 else
-  colorscheme elflord " colorscheme in terminal  終端機顏色主題
+  colorscheme elflord   " colorscheme in terminal  終端機顏色主題
 endif
 " end setup colorscheme for terminal and gui
 "}}}
