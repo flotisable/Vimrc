@@ -338,16 +338,18 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
       keybindings = {}
     }
 
+    local function flotisableOnAttach( client, buffer )
+      vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc' )
+      for key, map in pairs( flotisable.keybindings ) do
+        vim.api.nvim_buf_set_keymap( buffer, 'n', key, map, { noremap = true } )
+      end
+    end
+
     lsp.util.default_config = vim.tbl_extend(
       "force",
       lsp.util.default_config,
       {
-        on_attach = function( client, buffer )
-                      vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc' )
-                      for key, map in pairs( flotisable.keybindings ) do
-                        vim.api.nvim_buf_set_keymap( buffer, 'n', key, map, { noremap = true } )
-                      end
-                    end
+        on_attach = flotisableOnAttach
       }
     )
     -- end use lsp omni function when a language server is attached
@@ -355,7 +357,7 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
     -- show diagnostics in quick fix list
     local defaultHandler = vim.lsp.diagnostic.on_publish_diagnostics
 
-    vim.lsp.diagnostic.on_publish_diagnostics = function( error, method, result, clientId, bufnr, config )
+    local function flotisableOnPublishDiagnostic( error, method, result, clientId, bufnr, config )
       defaultHandler( error, method, result, clientId, buffnr, config )
       if result and #result.diagnostics ~= 0 then
         for _, v in ipairs( result.diagnostics ) do
@@ -367,6 +369,8 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
         vim.lsp.util.set_qflist( result.diagnostics )
       end
     end
+
+    vim.lsp.diagnostic.on_publish_diagnostics = flotisableOnPublishDiagnostic
     -- end show diagnostics in quick fix list
 
     lsp.clangd.setup{}
