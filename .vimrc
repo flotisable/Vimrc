@@ -62,7 +62,7 @@ function! FlotisablePluginExists( name )
 
   let l:fullPath = expand( printf( '%s/%s', g:pluginRoot, a:name ) )
 
-  return isdirectory( l:fullPath ) && stridx( &runtimepath, l:fullPath )
+  return isdirectory( l:fullPath ) && stridx( &runtimepath, l:fullPath ) != -1
 "
 endfunction
 " end test pluggin existence
