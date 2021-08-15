@@ -51,7 +51,7 @@ endif
 "}}}
 " self defined functions  自定義的函式{{{
 " test pluggin existence  檢測插件是否存在{{{
-function! FlotisablePluginExists( name )
+function! FlotisablePluginExists( name, isCheckRtp = 1 )
 "
   if !exists( 'g:pluginRoot' )
   "
@@ -62,7 +62,7 @@ function! FlotisablePluginExists( name )
 
   let l:fullPath = expand( printf( '%s/%s', g:pluginRoot, a:name ) )
 
-  return isdirectory( l:fullPath ) && stridx( &runtimepath, l:fullPath ) != -1
+  return isdirectory( l:fullPath ) && ( !a:isCheckRtp || stridx( &runtimepath, l:fullPath ) != -1 )
 "
 endfunction
 " end test pluggin existence
@@ -562,7 +562,7 @@ endif
 " end neoterm key mapping
 "}}}
 " nerdtree key mapping{{{
-if FlotisablePluginExists( 'nerdtree' )
+if FlotisablePluginExists( 'nerdtree', 0 )
 "
   noremap <C-x> <Cmd>NERDTreeToggle<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
 "
@@ -570,7 +570,7 @@ endif
 " end nerdtree key mapping
 "}}}
 " tagbar key mapping{{{
-if FlotisablePluginExists( 'tagbar' )
+if FlotisablePluginExists( 'tagbar', 0 )
 "
   noremap <Leader>t <Cmd>Tagbar<Enter>| " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
 "
