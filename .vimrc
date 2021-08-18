@@ -19,7 +19,12 @@ set hlsearch
 set incsearch
 
 set viewoptions=folds,cursor,curdir
-set completeopt=menuone,noinsert
+
+if has( 'patch-7.4.775' )
+"
+  set completeopt=menuone,noinsert
+"
+endif
 
 if has( 'win32' )
 "
@@ -51,7 +56,14 @@ endif
 "}}}
 " self defined functions  自定義的函式{{{
 " test pluggin existence  檢測插件是否存在{{{
-function! FlotisablePluginExists( name, isCheckRtp = 1 )
+" this function is add since old vim not support optional argument
+function! FlotisablePluginExistsAndInRtp( name )
+"
+  return FlotisablePluginExists( a:name, 1 )
+"
+endfunction
+
+function! FlotisablePluginExists( name, isCheckRtp )
 "
   if !exists( 'g:pluginRoot' )
   "
@@ -70,7 +82,7 @@ endfunction
 " interactive fuzzy finder settings  互動式查詢設定{{{
 function! FlotisableToggleClapPreviewDirection()
 "
-  if !FlotisablePluginExists( 'vim-clap' )
+  if !FlotisablePluginExistsAndInRtp( 'vim-clap' )
   "
     echo "Plugin vim-clap not installed"
     return
@@ -299,7 +311,7 @@ endif
 " end vim-plug settings
 "}}}
 " interactive finder plugin settings  互動式查詢插件設定{{{
-if FlotisablePluginExists( 'vim-clap' )
+if FlotisablePluginExistsAndInRtp( 'vim-clap' )
 "
   let g:clap_theme  = 'material_design_dark'
   let g:clap_layout = {
@@ -311,7 +323,7 @@ if FlotisablePluginExists( 'vim-clap' )
                     \ }
 
   " disable autocomplete in clap input window
-  if FlotisablePluginExists( 'nvim-compe' )
+  if FlotisablePluginExistsAndInRtp( 'nvim-compe' )
   "
     autocmd FileType clap_input call compe#setup({ 'enabled': v:false }, 0)
   "
@@ -322,7 +334,7 @@ endif
 " end interactive finder plugin settings
 "}}}
 " completion plugin settings  補全插件設定{{{
-if FlotisablePluginExists( 'nvim-compe' )
+if FlotisablePluginExistsAndInRtp( 'nvim-compe' )
 "
   " when using omni source, I find the min length of complete can not be
   " controlled, so I use necosyntax source. The build in syntax complete and
@@ -336,7 +348,7 @@ if FlotisablePluginExists( 'nvim-compe' )
               \   }
               \ }
 "
-elseif FlotisablePluginExists( 'deoplete.nvim' )
+elseif FlotisablePluginExistsAndInRtp( 'deoplete.nvim' )
 "
   let g:python3_host_prog = "python3"
 
@@ -344,7 +356,7 @@ elseif FlotisablePluginExists( 'deoplete.nvim' )
 
   autocmd InsertEnter * call deoplete#enable()
 "
-elseif FlotisablePluginExists( 'neocomplcache.vim' )
+elseif FlotisablePluginExistsAndInRtp( 'neocomplcache.vim' )
 "
   " the plugin has the issue that it can auto insert the completion when set
   " noselect in completeopt
@@ -356,7 +368,7 @@ endif
 " end completion plugin settings
 "}}}
 " LSP client settings  LSP 客戶端設定{{{
-if FlotisablePluginExists( 'nvim-lspconfig' )
+if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
 "
   call sign_define( 'LspDiagnosticsSignError',
     \ { 'text': "✖", 'texthl': 'LspDiagnosticsSignError' } )
@@ -438,7 +450,7 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
     }
 EOF
 "
-elseif FlotisablePluginExists( 'LanguageClient-neovim' )
+elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
 "
   let g:LanguageClient_serverCommands = {
     \ 'cpp':  ['clangd'],
@@ -452,7 +464,7 @@ endif
 " end LSP client settings
 "}}}
 " VCS diff plugin settings  版本控制差異插件設定{{{
-if FlotisablePluginExists( 'vim-signify' )
+if FlotisablePluginExistsAndInRtp( 'vim-signify' )
 "
   set updatetime=100
 
@@ -462,7 +474,7 @@ endif
 " end VCS diff plugin settings
 "}}}
 " mark plugin settings  標記插件設定{{{
-if FlotisablePluginExists( 'vim-mark' )
+if FlotisablePluginExistsAndInRtp( 'vim-mark' )
 "
   let g:mwAutoLoadMarks = 1
   let g:mw_no_mappings  = 1
@@ -471,7 +483,7 @@ endif
 " end mark plugin settings
 "}}}
 " neoterm settings  neoterm 插件設定{{{
-if FlotisablePluginExists( 'neoterm' )
+if FlotisablePluginExistsAndInRtp( 'neoterm' )
 "
   let g:neoterm_autoinsert  = 1       " 開啟終端機後進入終端機模式  enter terminal mode after open the terminal
   let g:neoterm_default_mod = ":tab"  " 設定以 tab 開啟終端機  open terminal in a tab
@@ -486,7 +498,7 @@ endif
 " end neoterm settings
 "}}}
 " vim-cpp-enhanced-highlight settings  C++ 語法高亮插件設定{{{
-if FlotisablePluginExists( 'vim-cpp-enhanced-highlight' )
+if FlotisablePluginExistsAndInRtp( 'vim-cpp-enhanced-highlight' )
 "
   let g:cpp_class_scope_highlight     = 1
   let g:cpp_member_variable_highlight = 1
@@ -496,7 +508,7 @@ endif
 " end vim-cpp-enhanced-highlight settings
 "}}}
 " code snippet settings  code snippet 設定{{{
-if FlotisablePluginExists( 'vim-snipmate' )
+if FlotisablePluginExistsAndInRtp( 'vim-snipmate' )
 "
   let g:snips_author              = "Flotisable"
   let g:snipMate                  = {}
@@ -506,7 +518,7 @@ endif
 " end code snippet settings
 "}}}
 " tlib_vim settings  tlib_vim 設定{{{
-if FlotisablePluginExists( 'tlib_vim' )
+if FlotisablePluginExistsAndInRtp( 'tlib_vim' )
 "
   " use Ctrl+n, Ctrl+p to select multiple snippet  用 Ctrl+n, Ctrl+p 選擇程式片段
   let g:tlib_extend_keyagents_InputList_s = {
@@ -518,7 +530,7 @@ endif
 " end tlib_vim settings
 "}}}
 " nvim-treesitter settings  nvim-treesitter 設定{{{
-if FlotisablePluginExists( 'nvim-treesitter' )
+if FlotisablePluginExistsAndInRtp( 'nvim-treesitter' )
 "
   lua << EOF
     require'nvim-treesitter.configs'.setup
@@ -553,7 +565,7 @@ highlight link LspDiagnosticsDefaultInformation Todo
 "}}}
 " key mapping  快捷鍵設定{{{
 " neoterm key mapping{{{
-if FlotisablePluginExists( 'neoterm' )
+if FlotisablePluginExistsAndInRtp( 'neoterm' )
 "
   noremap   <C-s> <Cmd>Ttoggle<Enter>| " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
   tnoremap  <C-s> <Cmd>Ttoggle<Enter>| " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
@@ -578,7 +590,7 @@ endif
 " end tagbar key mapping
 "}}}
 " vim-signify key mapping{{{
-if FlotisablePluginExists( 'vim-signify' )
+if FlotisablePluginExistsAndInRtp( 'vim-signify' )
 "
   noremap <Leader>s <Cmd>SignifyToggle<Enter>|    " set \s key to toggle VCS diff  設定 \s 鍵開闔版本控制差異
   noremap <Leader>d <Cmd>SignifyHunkDiff<Enter>|  " set \d key to show hunk diff  設定 \d 鍵顯示片段差異
@@ -589,7 +601,7 @@ endif
 " end vim-signify key mapping
 "}}}
 " lsp key mappings{{{
-if FlotisablePluginExists( 'nvim-lspconfig' )
+if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
 "
   noremap <Leader>lo <Cmd>LspStart<Enter>|  " set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <Leader>lc <Cmd>LspStop<Enter>|   " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
@@ -610,7 +622,7 @@ if FlotisablePluginExists( 'nvim-lspconfig' )
     }
 EOF
 "
-elseif FlotisablePluginExists( 'LanguageClient-neovim' )
+elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
 "
   noremap <Leader>lo <Cmd>LanguageClientStart<Enter>| " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <Leader>lc <Cmd>LanguageClientStop<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
@@ -640,7 +652,7 @@ endif
 " end lsp key mappings
 "}}}
 " vim-mark key mappings{{{
-if FlotisablePluginExists( 'vim-mark' )
+if FlotisablePluginExistsAndInRtp( 'vim-mark' )
 "
   nmap  <Leader>ms <Plug>MarkSet|   " set \ms key to set mark  設定 \ms 鍵設置標籤
   xmap  <Leader>ms <Plug>MarkSet|   " set \ms key to set mark  設定 \ms 鍵設置標籤
@@ -652,7 +664,7 @@ endif
 " end vim-mark key mappings
 "}}}
 " interactive finder key mappings{{{
-if FlotisablePluginExists( 'vim-clap' )
+if FlotisablePluginExistsAndInRtp( 'vim-clap' )
 "
   noremap <Leader>fp <Cmd>Clap providers<Enter>|                              " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
   noremap <Leader>f/ <Cmd>Clap blines<Enter>|                                 " set \f/ key to search in file  設定 \f/ 鍵在檔案中搜尋
@@ -685,7 +697,7 @@ endif
 " end interactive finder key mappings
 "}}}
 " vim-snipmate key mappings{{{
-if FlotisablePluginExists( 'vim-snipmate' )
+if FlotisablePluginExistsAndInRtp( 'vim-snipmate' )
 "
   imap <C-s> <Plug>snipMateShow| " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
 "
@@ -693,7 +705,7 @@ endif
 " end vim-snipmate key mappings
 "}}}
 " bufferize key mappings{{{
-if FlotisablePluginExists( 'bufferize.vim' )
+if FlotisablePluginExistsAndInRtp( 'bufferize.vim' )
 "
   noremap <Leader>bb :Bufferize |       " set \bb to bufferize command  設定 \bb bufferize vim 命令
   noremap <Leader>bs :BufferizeSystem | " set \bs to bufferize system commad  設定 \bs bufferize 系統命令
