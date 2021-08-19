@@ -1,27 +1,40 @@
 #!/bin/sh
-. ./settings
+settingFile="./settings.toml"
 
-if [ -z ${OS} ]; then
-  OS=$(uname -s);
-fi
+. ./readSettings.sh ${settingFile}
 
-echo "detected OS: ${OS}"
+removeFile()
+{
+  local file=$1
 
-if [ -z "${nvimrcDir}" ]; then
-  nvimrcDir=$(./default.sh ${OS})
-fi
+  echo "remove $file"
+  rm $file
+}
 
-targetFiles="
-${vimrcDir}/${vimrcTargetFile}
-${nvimrcDir}/${nvimrcTargetFile}
-${nvimrcDir}/${ngvimrcTargetFile}
-"
+targetTableName=$(mapFind "settings" "target")
+dirTableName=$(mapFind "settings" "dir")
+pluginManagerTableName=$(mapFind "settings" "pluginManager")
 
-echo "uninstall rc files"
-for file in ${targetFiles}; do \
-  rm ${file}; \
+for target in $(mapKeys "$targetTableName"); do
+
+  targetFile=$(mapFind "$targetTableName" "$target")
+
+  if [ "$target" == "vimrc" ]; then
+
+    dirType="vim"
+
+  else
+
+    dirType="nvim"
+
+  fi
+
+  dir=$(mapFind "$dirTableName" "$dirType")
+
+  removeFile $dir/$targetFile
+
 done
 
-if [ -e ${pluginManagerPath}/plug.vim ]; then
-  rm ${pluginManagerPath}/plug.vim
+if [ -e "$(mapFind "$pluginManagerTableName" "path")/plug.vim" ]; then
+  removeFile "$(mapFind "$pluginManagerTableName" "path")/plug.vim"
 fi
