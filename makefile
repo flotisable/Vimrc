@@ -24,7 +24,7 @@ all: ${targetFiles}
 ifeq "${OS}" "Windows_NT"
 	powershell -NoProfile -Command "Copy-Item $(subst ${empty} ${empty},${comma},$^) ."
 else
-	cp $^ .
+	@./copy.sh
 endif
 
 install:
