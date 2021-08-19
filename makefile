@@ -1,28 +1,11 @@
 OS ?= $(shell uname -s)
 
-include settings
+.PHONY: default
+default: copy
 
-empty :=
-comma := ,
-
+copy:
 ifeq "${OS}" "Windows_NT"
-	defaultScript := powershell -NoProfile ./default.ps1
-else
-	defaultScript := ./default.sh
-endif
-
-ifeq "${nvimrcDir}" ""
-nvimrcDir := $(shell ${defaultScript} ${OS})
-endif
-
-targetFiles := \
-	${vimrcDir}/${vimrcTargetFile} \
-	${nvimrcDir}/${nvimrcTargetFile} \
-	${nvimrcDir}/${ngvimrcTargetFile}
-
-all: ${targetFiles}
-ifeq "${OS}" "Windows_NT"
-	powershell -NoProfile -Command "Copy-Item $(subst ${empty} ${empty},${comma},$^) ."
+	powershell -NoProfile ./copy.ps1
 else
 	@./copy.sh
 endif

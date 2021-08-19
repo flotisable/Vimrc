@@ -1,23 +1,27 @@
-$settingFile = "./settings"
+$settingFile = "./settings.toml"
 
 . ./readSettings.ps1 $settingFile
 
-If( $nvimrcDir -eq "" )
+Function removeFile()
 {
-  $nvimrcDir = ./default.ps1 $env:OS
+  $file = $args[0]
+
+  Write-Host "uninstall $file"
+  Remove-Item -Force -ErrorAction SilentlyContinue $file
 }
 
-$targetFiles =  "${vimrcDir}/${vimrcTargetFile}",
-                "${nvimrcDir}/${nvimrcTargetFile}",
-                "${nvimrcDir}/${ngvimrcTargetFile}"
+$pluginManagerPath = Invoke-Expression "Write-Output $($settings['pluginManager']['path'])"
 
-Write-Host "uninstall rc files"
-ForEach( $file in $targetFiles )
+ForEach( $target in $settings['target'].keys )
 {
-  Remove-Item $file
+  $targetFile = Invoke-Expression "Write-Output $($settings['target'][$target])"
+  $dirType    = ( $target -eq 'vimrc' ) ? 'vim': 'nvim'
+  $dir        = Invoke-Expression "Write-Output $($settings['dir'][$dirType])"
+
+  removeFile $dir/$targetFile 
 }
 
 If( $(Get-Item -Path "${pluginManagerPath}/plug.vim" -ErrorAction SilentlyContinue) )
 {
-  Remove-Item "${pluginManagerPath}/plug.vim" 
+  removeFile "${pluginManagerPath}/plug.vim" 
 }

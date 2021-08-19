@@ -1,19 +1,96 @@
 Param( $settingFile )
 
-ForEach( $line in Get-Content $settingFile )
+$defaultPathFile = "./defaultPath.toml"
+
+Function parseValue()
 {
-  If( $line -eq "" )
-  {
-    Continue
-  }
-  $variableName, $value = $line -split '='
+  $value = $args[0]
 
-  While( $value -match '\$\{(\w+)\}' )
+  $value = $value -replace '^\s*"', ''
+  $value = $value -replace '"\s*$', ''
+
+  If( $value -is 'String' -and $value -eq 'true'   ) { $value = $True  }
+  If( $value -is 'String' -and $value -eq 'false'  ) { $value = $False }
+
+  return $value
+}
+
+Function parseToml()
+{
+  $file = $args[0]
+
+  $toml         = @{}
+  $currentTable = $toml
+  $isParseArray = $False
+  $arrayKey     = $null
+
+  ForEach( $line in Get-Content $file )
   {
-    $substVarName   = $Matches[1]
-    $substVarValue  = Get-Variable -Name $substVarName -ValueOnly -ErrorAction SilentlyContinue
-    $value          = $value -replace "\$\{$substVarName\}", "$substVarValue"
+    If( $isParseArray )
+    {
+      If( $line -match '\]\s*$' )
+      {
+        $isParseArray = $False
+        $currentTable[$arrayKey][0] = $currentTable[$arrayKey][0] -replace '^\s*\[\s*', ''
+        $currentTable[$arrayKey][0] = $currentTable[$arrayKey][0] -replace '\s*\]\s*$', ''
+        $currentTable[$arrayKey][0] = $currentTable[$arrayKey][0] -replace '\s*,\s*', ''
+        $currentTable[$arrayKey] = -split $currentTable[$arrayKey][0]
+      }
+      Else
+      {
+        $currentTable[$arrayKey][0] += $line
+      }
+
+      Continue
+    }
+
+    If( $line -match '\[(?<tableName>\w+)\]' )
+    {
+      $toml[$Matches.tableName] = @{}
+      $currentTable             = $toml[$Matches.tableName]
+      Continue
+    }
+
+    If( $line -match '(?<key>\w+)\s*=\s*(?<value>\S+)' )
+    {
+      $key    = $Matches.key
+      $value  = $Matches.value
+
+      If( $Matches.value -match '\[[^\]]*$' )
+      {
+        $isParseArray       = $True
+        $currentTable[$key] = @( $value )
+        $arrayKey           = $key
+      }
+      Else
+      {
+        $currentTable[$key] = parseValue( $value )
+      }
+    }
   }
 
-  Set-Variable -Name $variableName -Value $value
+  return $toml
+}
+
+Function osToKey()
+{
+  $OS ??= $(uname -s)
+
+  Switch( $OS )
+  {
+    Linux       { return "linux"    }
+    Windows_NT  { return "windows"  }
+    Darwin      { return "macos"    }
+  }
+}
+
+$os = osToKey
+Write-Host "detected OS: $os"
+
+$settings     = parseToml $settingFile
+$defaultPaths = parseToml $defaultPathFile
+
+If( $settings['dir']['nvim'] -eq "" )
+{
+  $settings['dir']['nvim'] = $defaultPaths['nvimDir'][$os]
 }

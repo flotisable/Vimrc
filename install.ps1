@@ -1,13 +1,10 @@
-$settingFile = "./settings"
+$settingFile = "./settings.toml"
 
 . ./readSettings.ps1 $settingFile
 
-If( $nvimrcDir -eq "" )
-{
-  $nvimrcDir = ./default.ps1 $env:OS
-}
+$pluginManagerPath = Invoke-Expression "Write-Output $($settings['pluginManager']['path'])"
 
-If( $installPluginManager -eq 1 -and
+If( $settings['pluginManager']['install'] -and
     -not $(Get-Item -Path "${pluginManagerPath}/plug.vim" -ErrorAction SilentlyContinue) )
 {
   Write-Host "install vim-plug"
@@ -15,9 +12,13 @@ If( $installPluginManager -eq 1 -and
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
 
-Write-Host "install vimrc"
-Copy-Item $vimrcSourceFile $vimrcDir/$vimrcTargetFile
-Write-Host "install nvim init file"
-Copy-Item $nvimrcSourceFile $nvimrcDir/$nvimrcTargetFile
-Write-Host "install nvim ginit file"
-Copy-Item $ngvimrcSourceFile $nvimrcDir/$ngvimrcTargetFile
+ForEach( $target in $settings['target'].keys )
+{
+  $targetFile = Invoke-Expression "Write-Output $($settings['target'][$target])"
+  $sourceFile = Invoke-Expression "Write-Output $($settings['source'][$target])"
+  $dirType    = ( $target -eq 'vimrc' ) ? 'vim': 'nvim'
+  $dir        = Invoke-Expression "Write-Output $($settings['dir'][$dirType])"
+
+  Write-Host "install $sourceFile"
+  Copy-Item $sourceFile $dir/$targetFile 
+}
