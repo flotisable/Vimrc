@@ -1,6 +1,6 @@
 OS ?= $(shell uname -s)
 
-.PHONY: default
+.PHONY: default copy install uninstall
 default: copy
 
 copy:
