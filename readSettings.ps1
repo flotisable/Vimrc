@@ -74,9 +74,12 @@ Function parseToml()
 
 Function osToKey()
 {
-  $OS ??= $(uname -s)
+  If( $env:OS -eq $null )
+  {
+    $env:OS = $(uname -s)
+  }
 
-  Switch( $OS )
+  Switch( $env:OS )
   {
     Linux       { return "linux"    }
     Windows_NT  { return "windows"  }
