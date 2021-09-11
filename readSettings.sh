@@ -106,6 +106,12 @@ parseToml()
 
   while read line; do
   
+    if [ -n "$(echo $line | grep '^\s*#')" ]; then
+
+      continue
+
+    fi
+
     # parse array
     if [ $isParseArray -eq 1 ]; then
 

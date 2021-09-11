@@ -26,6 +26,11 @@ Function parseToml()
 
   ForEach( $line in Get-Content $file )
   {
+    If( $line -match '^\s*#' )
+    {
+      Continue
+    }
+
     If( $isParseArray )
     {
       If( $line -match '\]\s*$' )

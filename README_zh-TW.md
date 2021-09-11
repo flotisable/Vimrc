@@ -1,128 +1,231 @@
 # Vimrc
-備份跟分享 vimrc 檔
+  備份跟分享 vimrc 檔
+
 # 索引
-- [檔案](#檔案)
-- [使用 vimrc](#使用-vimrc)
-  - [在 Linux 和 Mac 上](#在-linux-和-mac-上)
-  - [在 Windows 上](#在-windows-上)
-- [安裝](#安裝)
-  - [使用安裝腳本](#使用安裝腳本)
-    - [修改腳本](#修改腳本)
-    - [使用參數](#使用參數)
-  - [使用 makefile](#使用-makefile)
-- [初次使用](#初次使用)
-- [快捷鍵設定](#快捷鍵設定)
-  - [neovim 專用快捷鍵](#neovim-專用快捷鍵)
-- [自定義函式](#自定義函式)
-- [插件](#插件)
-  - [neovim 專用插件](#neovim-專用插件)
-  - [關於 ctags](#關於-ctags)
+  - [檔案](#檔案)
+  - [使用 vimrc](#使用-vimrc)
+  - [安裝](#安裝)
+    - [設定](#設定)
+    - [使用安裝腳本](#使用安裝腳本)
+    - [使用 makefile](#使用-makefile)
+  - [初次使用](#初次使用)
+  - [快捷鍵設定](#快捷鍵設定)
+  - [自定義函式](#自定義函式)
+  - [插件](#插件)
+    - [關於 ctags](#關於-ctags)
+
 # 檔案
-- **.vimrc**          : [vim](https://github.com/vim/vim) 的設定
-- **init.vim**        : [neovim](https://github.com/neovim/neovim) 的設定
-- **installVimrc.sh** : 安裝 **.vimrc** 和 **init.vim** 的腳本
-- **makefile**        : 處理 **.vimrc** and **init.vim** 的 makefile
+  - **vim** 與 **neovim** 設定檔
+    - **.vimrc**              : [vim](https://github.com/vim/vim) 設定
+    - **init.vim**            : [neovim](https://github.com/neovim/neovim) 設定
+    - **ginit.vim**           : **neovim** 圖形介面設定
+  - 倉庫使用設定
+    - **settings.toml**       : 安裝移除設定
+    - **defaultPath.toml**    : 不同作業系統預設路徑設定
+  - 倉庫使用腳本
+    - 統一介面
+      - **makefile**          : **.vimrc** 和 **init.vim** 的 makefile
+    - 安裝腳本
+      - **install.ps1**       : Windows 用的 powershell 安裝腳本
+      - **install.sh**        : Linux 和 MacOS 用的 bash 安裝腳本
+    - 移除腳本
+      - **uninstall.ps1**     : Windows 用的 powershell 移除腳本
+      - **uninstall.sh**      : Linux 和 MacOS 用的 bash 移除腳本
+    - 複製腳本
+      - **copy.ps1**          : Windows 用的 powershell 複製腳本
+      - **copy.sh**           : Linux 和 MacOS 用的 bash 複製腳本
+    - 輔助腳本
+      - **readSettings.ps1**  : Windows 用的 powershell 輔助腳本
+      - **readSettings.sh**   : Linux 和 MacOS 用的 bash 輔助腳本
+
 # 使用 vimrc
-打開 vim 輸入 **:help vimrc** 就會打開關於放置 vimrc 的說明文件
+  打開 vim 輸入 `:help vimrc` 就會打開關於放置 vimrc 的說明文件。
+  如果你沒有使用 neovim 的話，可以直接忽略 "init.vim" 這個檔案。
+  當你將 vimrc 放到正確的資料夾之後，只要在 vim 中輸入 `:e $MYVIMRC`，
+  它就會打開 vimrc 檔，方便以後的修改
 
-如果你沒有使用 neovim 的話，可以直接忽略 "init.vim" 這個檔案
+  下面表格是我放置 vimrc 檔的位置，可以作為參考，
+  這些位置基本上是預設路徑
+  | 作業系統      | 檔案      | 路徑                      |
+  | ------------- | --------- | ------------------------- |
+  | Linux, MacOS  | .vimrc    | `$HOME/`                  |
+  |               | init.vim  | `$HOME/.config/nvim/`     |
+  | Windows       | .vimrc    | `$HOME\`                  |
+  |               | init.vim  | `$XDG_CONFIG_HOME\nvim\`  |
 
-當你將 vimrc 放到正確的資料夾之後，只要在 vim 中輸入 **:e $MYVIMRC**，它就會打開 vimrc 檔，方便以後的修改
-
-下面我會講我自己是將 vimrc 檔放在哪裡，可以作為參考
-## 在 Linux 和 Mac 上
-  我是將 ".vimrc" 放在 "$HOME/" 資料夾，而 "init.vim" 是放在 "$HOME/.config/nvim/" 這個資料夾
-
-  這也是 Linux 上 vimrc 預設的資料夾
-## 在 Windows 上
-  我是將 "init.vim" 放在 "$XDG_CONFIG_HOME\nvim\\" 這個資料夾
-
-  至於 ".vimrc" 檔，因為我在 Windows 上沒有用 vim，所以如果你和我一樣使用 neovim 的話，隨便將它放到一個資料夾，然後修改 "init.vim" 中的 **"source ~/.vimrc"** 這一行。將它改你放 ".vimrc" 的路徑
-
-  比方說你將 ".vimrc" 放在 "D:\Vim\\" 這個資料夾，那麼就將 source 那一行改成如下
+  因為我在 Windows 上沒有用 vim，
+  所以如果你和我一樣使用 neovim 的話，
+  隨便將它放到一個資料夾，
+  然後修改 "init.vim" 中的 `source ~/.vimrc` 這一行。
+  將它改成你放 ".vimrc" 的路徑。
+  比方說你將 ".vimrc" 放在 `D:\Vim\` 這個資料夾，
+  那麼就將 source 那一行改成如下
   ```
   source D:\Vim\.vimrc
   ```
 
   如果你不是用 neovim 的話，就讀一下說明文件看要將 ".vimrc" 檔放在哪
+
 # 安裝
+## 設定
+   安裝設定可以藉由修改 **settings.toml** 檔案來完成，
+   它基本上就是個一般的 [toml](https://toml.io/en/) 檔案
+
+   | 表格           | 控制設定                        |
+   | -------------- | ------------------------------- |
+   | dir            | 安裝資料夾                      |
+   | source         | 倉庫裡的檔案名稱                |
+   | target         | 安裝後檔案名稱                  |
+   | pluginManager  | 是否安裝插件管理員與其安裝位置  |
+
 ## 使用安裝腳本
-這個 script 是用 **bash** script 寫的，所以可以支援 bash script 的 shell 都可以使用
+   這些腳本是用 **bash** 和 **powershell** 寫的，
+   所以可以支援 bash 或 poweshell 腳本的 shell 都可以使用
 
-以下說明如何使用這個 script
-- 首先用 ```chmod u+x installVimrc.sh``` 來讓 sciprt 檔可以被執行
-- 視情況修改腳本中的變數
-- 如果你沒有使用 neovim，可以在 ```cp ${nvimrcSourceFile} ...``` 這一行的開頭加上 # 將它注解掉
-- 輸入 ```./installVimrc.sh``` 來安裝 **.vimrc** 和 **init.vim**
+   以下說明如何使用這些腳本
 
-有兩種方式可以設定腳本的變數
-### 修改腳本
-- **vimrcDir** 和 **nvimrcDir**
+   1. 如果使用 bash 的腳本請先跑 `chmod u+x install.sh` 來讓腳本可以被執行
+   2. 視情況修改 **settings.toml**
+   3. 如果你沒有使用 neovim，可以在 **settings.toml** 裡 **nvimrc** 和 **gnvimrc** 相關的那幾行開頭加上 # 將它注解掉
+   4. 輸入 `./install.sh` 或 `pwsh ./install.ps1` 來安裝 **.vimrc** 和 **init.vim**
 
-  這兩個變數分別設定 **.vimrc** 和 **init.vim** 的安裝資料夾
-- **vimrcTargetFile** 和 **nvimrcTargetFile**
-
-  這兩個變數分別設定 **.vimrc** 和 **init.vim** 安裝後的名稱
-### 使用參數
-安裝腳本有六個參數，如果沒給定的話，會使用預設值
-
-1. vimrcDir         : **.vimrc** 的安裝資料夾
-2. vimrcTargetFile  : **.vimrc** 安裝後的檔案名稱
-3. nvimrcDir        : **init.vim** 的安裝資料夾
-4. nvimrcTargetFile : **init.vim** 安裝後的檔案名稱
-5. vimSourceFile    : **.vimrc** 的原始碼
-6. nvimSourceFile   : **init.vim** 的原始碼
 ## 使用 makefile
-makefile 是為那些想用 **make** 來處理的人寫的
+   makefile 是為那些想用 **make** 來處理的人寫的。
+   一個原因也是因為這會讓我在更新原始碼的時候較方便。
+   它基本上是將倉庫裡的腳本多包一層來讓使用者可以用 `make <目標>` 的統一介面做事，
+   所以在使用 makefile 之前要記得確保腳本是可以被執行的
 
-一個原因也是因為這會讓我在更新原始碼的時候較方便
+   目前 makefile 提供下列的目標
+   | 目標       | 執行的動作                                                      |
+   | ---------- | --------------------------------------------------------------- |
+   | default    | 這是 copy 目標的別名，當 make 沒有給目標時的目標                |
+   | copy       | 更新原始碼                                                      |
+   | install    | 安裝 **.vimrc** 與 **init.vim**，使用前要確認安裝腳本可以被執行 |
+   | uninstall  | 移除 **.vimrc** 與 **init.vim**，使用前要確認安裝腳本可以被執行 |
 
-目前 makefile 提供下列的選項
-- 預設      : 更新原始碼
-
-  當 make 沒有給選項時會做的動作
-- install   : 安裝 **.vimrc** 與 **init.vim**
-
-  實際上這會呼叫安裝腳本，因此在使用前要確認安裝腳本可以被執行
-- uninstall : 解除安裝 **.vimrc** 與 **init.vim**
-
-如果想要改變 **.vimrc** 和 **init.vim** 的安裝路徑與檔名，請修改 makefile 中的變數
-
-這些變數和安裝腳本的變數是一樣的
 # 初次使用
-在第一次使用這個 vimrc 時，你可以先決定要不要使用插件
+  在第一次使用這個 vimrc 時
 
-如果不想用插件的話，只要將 vimrc 中插件設定相關的行數刪掉即可
+  1. 決定要不要使用插件
+     - 不想用插件
+       1. 在安裝前將 **settings.toml** 裡 **pluginManager** 表格的 **install** 改成 **false**
+       2. 刪掉 vimrc 裡插件相關的行數
 
-如果想要使用插件的話，需要先下載 vim-plug( 因為這是我所使用的插件管理器 )
+     - 想要使用插件
+       1. 安裝插件管理員
+          - 自動安裝
 
-從 [插件](#插件) 中的連結進到 vim-plug 的網站，依照 readme 的指示下載 vim-plug
+            在安裝前確認 **settings.toml** 裡 **pluginManager** 表格的 **install** 設成 **true**
 
-在下載完 vim-plug 之後，進入 vim 中輸入 ```:PlugInstall```
+          - 手動安裝
 
-這樣就會自動安裝我在 [插件](#插件) 中提到的插件
+            1. 從 [插件](#插件) 中的連結進到 vim-plug 的網站
+            2. 依照 readme 的指示下載 vim-plug
 
-接下來就好好享受這個 vimrc 吧
+       2. 進入 vim 中輸入 `:PlugInstall`
+
+          這樣就會自動安裝我在 [插件](#插件) 中提到的插件
+
+  2. 好好享受這個 vimrc 吧
+
 # 快捷鍵設定
-- Ctrl+x      : 開闔樹狀檢視器
-- \<Leader> r : 開關相對行號設定
-- 空白鍵      : Ctrl+f
-- 退格鍵      : Ctrl+b
-## neovim 專用快捷鍵
-- Ctrl+s : 開闔終端機
-- Ctrl+q : 離開終端機模式
+  | 快捷鍵        | 需要的插件                              | 其他需求        | 功能                      |
+  | ------------- | --------------------------------------- | --------------- | ------------------------- |
+  | Ctrl + s      | neoterm                                 | 內建終端機      | 開關內建終端機            |
+  | Ctrl + x      | nerdtree                                |                 | 開關樹狀檢視器            |
+  | \<Leader> t   | tagbar                                  | ctags           | 開關 tag 顯示             |
+  | \<Leader> s   | vim-signify                             |                 | 開關版本控制差異插件      |
+  | \<Leader> d   | vim-signify                             | 版本控制程式    | 顯示版本控制片段差異      |
+  | \<Leader> u   | vim-signify                             | 版本控制程式    | 回復版本控制片段          |
+  | \<Leader> D   | vim-signify                             | 版本控制程式    | 顯示版本控制差異          |
+  | \<Leader> lo  | nvim-lspconfig 或 LanguageClient-neovim |                 | 開啟 LSP 客戶端           |
+  | \<Leader> lc  | nvim-lspconfig 或 LanguageClient-neovim |                 | 關閉 LSP 客戶端           |
+  |  gd           | nvim-lspconfig 或 LanguageClient-neovim | language server | 尋找定義                  |
+  |  gr           | nvim-lspconfig 或 LanguageClient-neovim | language server | 尋找參考                  |
+  |  K            | nvim-lspconfig 或 LanguageClient-neovim | language server | 顯示文檔                  |
+  | \<Leader> a   | nvim-lspconfig 或 LanguageClient-neovim | clangd          | 切換 c++ 標頭與原始碼     |
+  | \<Leader> ms  | vim-mark                                |                 | 設置標籤高亮              |
+  | \<Leader> mr  | vim-mark                                |                 | 用正規表示式設置標籤高亮  |
+  | \<Leader> mc  | vim-mark                                |                 | 清除標籤高亮              |
+  | \<Leader> fp  | vim-clap                                |                 | 開啟模糊搜尋選單          |
+  | \<Leader> f/  | vim-clap                                |                 | 檔案內搜尋                |
+  | \<Leader> fb  | vim-clap                                |                 | 搜尋 buffer               |
+  | \<Leader> fd  | vim-clap                                |                 | 切換預覽方向              |
+  | \<Leader> ff  | vim-clap                                |                 | 搜尋檔案                  |
+  | \<Leader> fg  | vim-clap                                | ripgrep         | 搜尋檔案內容              |
+  | Ctrl + s      | vim-snipmate                            | 插入模式        | 顯示可用的程式碼片段      |
+  | \<Leader> bb  | bufferize.vim                           |                 | bufferize vim 命令        |
+  | \<Leader> bs  | bufferize.vim                           |                 | bufferize 系統命令        |
+  | \<Leader> bn  | bufferize.vim                           |                 | bufferize 一般模式命令    |
+  | Ctrl + q      |                                         | 內建終端機      | 離開終端機模式            |
+  | \<Leader> r   |                                         |                 | 切換相對行號顯示          |
+  | \<Leader> c   |                                         |                 | 切換游標高亮              |
+  | 空白鍵        |                                         |                 | 向下滾動                  |
+  | backspace 鍵  |                                         |                 | 向上滾動                  |
+  | Ctrl + a      |                                         | 插入模式        | home 鍵                   |
+  | Ctrl + e      |                                         | 插入模式        | end 鍵                    |
+  | Ctrl + f      |                                         | 插入模式        | 右方向鍵                  |
+  | Ctrl + b      |                                         | 插入模式        | 左方向鍵                  |
+  | Ctrl + p      |                                         | 插入模式        | 上方向鍵                  |
+  | Ctrl + n      |                                         | 插入模式        | 下方向鍵                  |
+  | Ctrl + k      |                                         | 插入模式        | 刪除到行尾                |
+  | Ctrl + d      |                                         | 插入模式        | delete 鍵                 |
+  | Ctrl + _ s    |                                         | cscope          | cscope 尋找 C symbol      |
+  | Ctrl + _ g    |                                         | cscope          | cscope 尋找定義           |
+  | Ctrl + _ c    |                                         | cscope          | cscope 尋找函數參考       |
+  | Ctrl + _ t    |                                         | cscope          | cscope 尋找字串           |
+  | Ctrl + _ e    |                                         | cscope          | cscope 尋找 egrep pattern |
+  | Ctrl + _ f    |                                         | cscope          | cscope 尋找檔案           |
+  | Ctrl + _ i    |                                         | cscope          | cscope 尋找 include 檔案  |
+  | Ctrl + _ d    |                                         | cscope          | cscope 尋找函數呼叫       |
+
 # 自定義函式
-- Flotisabletogglerelativenumber() : 開關相對行號設定
+  | 函數                                            | 功能                                        |
+  | ----------------------------------------------- | ------------------------------------------- |
+  | FlotisablePluginExistsAndInRtp( name )          | 檢測插件是否存在與在 runtimepath            |
+  | FlotisablePluginExists( name, isCheckRtp )      | 檢測插件是否存在                            |
+  | FlotisableToggleClapPreviewDirection()          | 切換模糊搜尋器預覽方向                      |
+  | FlotisableBuildInLspOmniFunc( findstart, base ) | 內建 lsp omni 的 wrapper                    |
+  | FlotisableLanguageClientNeovimMaps()            | LanguageClient-neovim buffer 限定快捷鍵設定 |
+
 # 插件
-- [vim-plug](https://github.com/junegunn/vim-plug)                                  : vim 的插件管理器
-- [Nerdtree](https://github.com/scrooloose/nerdtree)                                : 在 vim 中以樹狀檢視資料夾
-- [neocomplcache](https://github.com/shougo/neocomplcache.vim)                      : 自動補全插件( 我會用這個主要是因為我用的 vim 版本有點舊，如果你有新版本的話可以試試看 [YouCompleteMe](https://github.com/valloric/youcompleteme) 或 [neocomplete](https://github.com/shougo/neocomplete.vim) )
-- [tagbar](https://github.com/majutsushi/tagbar)                                    : 顯示 tag 的插件( 需要 ctags )
-- [vim-cpp-enhanced-highlight](http://github.com/octol/vim-cpp-enhanced-highlight)  : 增加一些 C++ highlight 的功能
-- [FlotisableStatusLine](https://github.com/flotisable/FlotisableStatusLine)        : 我個人使用的設定狀態列的插件
-## neovim 專用插件
-- [neoterm](https://github.com/kassio/neoterm)                                      : 終端機插件
+  | 分類          | 插件                                                                              | 用途                                                            | 需求                                                                |
+  | ------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------- |
+  | 插件管理員    | [vim-plug](https://github.com/junegunn/vim-plug)                                  | vim 插件管理員                                                  |                                                                     |
+  | 色彩方案      | [kalahari.vim](https://github.com/fabi1cazenave/kalahari.vim)                     | 暗色高對比色彩方案                                              |                                                                     |
+  | 介面          | [nerdtree](https://github.com/scrooloose/nerdtree)                                | 樹狀檢視器                                                      |                                                                     |
+  |               | [tagbar](https://github.com/majutsushi/tagbar)                                    | 顯示 tags                                                       | [ctags](#for-ctags)                                                 |
+  |               | [bufferize.vim](https://github.com/AndrewRadev/bufferize.vim)                     | 讓命令顯示在 buffer                                             |                                                                     |
+  |               | [vim-clap](https://github.com/liuchengxu/vim-clap)                                | 互動式查詢                                                      | nvim 0.4.2 or patch 8.1.2114                                        |
+  |               | [neoterm](https://github.com/kassio/neoterm)                                      | 終端機插件                                                      | 內建終端機                                                          |
+  | 語言限定插件  | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)             | treesitter 語法高亮                                             | nvim 0.5, c 編譯器                                                  |
+  |               | [vim-cpp-enhanced-highlight](http://github.com/octol/vim-cpp-enhanced-highlight)  | 增強 C++ 語法高亮                                               |                                                                     |
+  |               | [vim-toml](https://github.com/cespare/vim-toml)                                   | [toml](https://toml.io/en/) 語法高亮                            |                                                                     |
+  |               | [vim-perl](https://github.com/vim-perl/vim-perl)                                  | [perl](https://www.perl.org/) 語法高亮                          |                                                                     |
+  |               | [vim-ps1](https://github.com/pprovost/vim-ps1)                                    | [powershell](https://github.com/PowerShell/PowerShell) 語法高亮 |                                                                     |
+  | 自動補全      | [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)                                   | 自動補全插件，用來取代 nvim-compe                               | nvim 0.5                                                            |
+  |               | [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp)                           | nvim-cmp 內建 lsp 的補全來源                                    | nvim-cmp                                                            |
+  |               | [cmp-buffer](https://github.com/hrsh7th/cmp-buffer)                               | nvim-cmp buffer 的補全來源                                      | nvim-cmp                                                            |
+  |               | [cmp-path](https://github.com/hrsh7th/cmp-path)                                   | nvim-cmp 的路徑補全來源                                         | nvim-cmp                                                            |
+  |               | [nvim-compe](https://github.com/hrsh7th/nvim-compe)                               | 自動補全插件，用來取代 deoplete.nvim                            |                                                                     |
+  |               | [compe-necosyntax](https://github.com/tamago324/compe-necosyntax)                 | nvim-compe 的語法補全來源                                       | nvim-compe, neco-syntax                                             |
+  |               | [neco-syntax](https://github.com/Shougo/neco-syntax)                              | deoplete.nvim 的語法補全來源                                    | deoplete.nvim                                                       |
+  |               | [deoplete.nvim](https://github.com/Shougo/deoplete.nvim)                          | 自動補全插件，用來取代 neocomplcache                            | nvim 或 vim 8, python3, vim 8 需要 nvim-yarp 和 vim-hug-neovim-rpc  |
+  |               | [nvim-yarp](https://github.com/roxma/nvim-yarp)                                   | deoplete.nvim vim 8 的依賴                                      |                                                                     |
+  |               | [vim-hug-neovim-rpc](https://github.com/roxma/vim-hug-neovim-rpc)                 | deoplete.nvim vim 8 的依賴                                      |                                                                     |
+  |               | [neocomplcache](https://github.com/shougo/neocomplcache.vim)                      | 自動補全插件                                                    |                                                                     |
+  | LSP           | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)                        | 內建 LSP 客戶端設定                                             | nvim 0.5                                                            |
+  |               | [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim)        | LSP 客戶端                                                      |                                                                     |
+  | 版本控制      | [vim-signify](https://github.com/mhinz/vim-signify)                               | 版本控制差異插件                                                |                                                                     |
+  | 程式碼片段    | [vim-snipmate](https://github.com/garbas/vim-snipmate)                            | 程式碼片段插件                                                  | vim-addon-mw-utils, tlibs                                           |
+  |               | [vim-addon-mw-utils](https://github.com/MarcWeber/vim-addon-mw-utils)             | vim-snipmate 的依賴                                             |                                                                     |
+  |               | [tlibs](https://github.com/tomtom/tlib_vim)                                       | vim-snipmate 的依賴                                             |                                                                     |
+  | 標籤高亮      | [vim-mark](https://github.com/inkarkat/vim-mark)                                  | 標籤高亮插件                                                    | vim-ingo-library                                                    |
+  |               | [vim-ingo-library](https://github.com/inkarkat/vim-ingo-library)                  | vim-mark 的依賴                                                 |                                                                     |
+  | 自用插件      | [FlotisableStatusLine](https://github.com/flotisable/FlotisableStatusLine)        | 自用的狀態列設定                                                |                                                                     |
+  |               | [FlotisableVimSnipets](https://github.com/flotisable/FlotisableVimSnippets)       | 自用的程式碼片段                                                | vim-snipmate                                                        |
+
 ## 關於 ctags
-ctags 只支援 c/c++ 語言，如果要支援其他語言，可以試試看這些
-- [exuberant ctags](http://ctags.sourceforge.net/)            : 支援多種語言的 ctags ( 現在好像沒在維護了 )
-- [universal ctags](https://github.com/universal-ctags/ctags) : 接續 exuberant ctags 開發的 ctags
+   ctags 只支援 c/c++ 語言，如果要支援其他語言，可以試試看這些
+   - [exuberant ctags](http://ctags.sourceforge.net/)            : 支援多種語言的 ctags ( 現在好像沒在維護了 )
+   - [universal ctags](https://github.com/universal-ctags/ctags) : 接續 exuberant ctags 開發的 ctags
