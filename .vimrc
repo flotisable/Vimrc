@@ -19,6 +19,7 @@ set hlsearch
 set incsearch
 
 set viewoptions=folds,cursor,curdir
+set jumpoptions=stack
 
 if has( 'patch-7.4.775' )
 "
