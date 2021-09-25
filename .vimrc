@@ -261,25 +261,18 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   " language server protocal client  LSP 客戶端{{{
   if has( 'nvim' ) || v:version >= 800
   "
-    if has( 'nvim-0.5' )
+    if v:false && has( 'nvim-0.5' )
     "
       Plug 'neovim/nvim-lspconfig'
     "
     else
     "
-      if has( 'win32' )
-      "
-        Plug 'autozimu/LanguageClient-neovim',
-          \ { 'branch': 'next',
-          \   'do': 'powershell -executionpolicy bypass -File install.ps1' }
-      "
-      else
-      "
-        Plug 'autozimu/LanguageClient-neovim',
-          \ { 'branch': 'next',
-          \   'do': 'bash install.sh' }
-      "
-      endif
+      Plug 'autozimu/LanguageClient-neovim',
+        \ {
+        \   'branch': 'next',
+        \   'do':     has( 'win32' )  ? 'powershell -executionpolicy bypass -File install.ps1'
+        \                             : 'bash install.sh'
+        \ }
     "
     endif
   "
