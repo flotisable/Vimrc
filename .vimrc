@@ -525,7 +525,7 @@ if FlotisablePluginExistsAndInRtp( 'nvim-treesitter' )
   lua << EOF
     require'nvim-treesitter.configs'.setup
     {
-      ensure_installed  = { 'cpp', 'rust', 'toml' },
+      ensure_installed  = { 'cpp', 'rust', 'toml', 'vim', 'lua' },
       highlight         = { enable = true }
     }
 EOF
