@@ -131,33 +131,31 @@ endfunction
 " setup buffer local keybinding for LanguageClient-neovim  設定 LanguageClient-neovim buffer local 的按鍵{{{
 function! FlotisableLanguageClientNeovimMaps()
 "
-  if !exists( 'g:flotisable.keybindings.lsp' )
+  if !exists( 'g:flotisable.keybindings.lsp' ) || !has_key( g:LanguageClient_serverCommands, &filetype )
   "
     return
   "
   endif
 
-  if has_key( g:LanguageClient_serverCommands, &filetype )
-  "
-    if exists( 'g:flotisable.keybindings.lsp.global' )
-    "
-      for key in keys( g:flotisable.keybindings.lsp.global )
-      "
-        execute 'map <buffer> <silent> ' .. key .. ' ' .. g:flotisable.keybindings.lsp.global[key]
-      "
-      endfor
-    "
-    endif
+  let l:mapFormat = 'map <buffer> <silent> %s %s'
 
-    if exists( 'g:flotisable.keybindings.lsp["' .. &filetype .. '"]' )
+  if exists( 'g:flotisable.keybindings.lsp.global' )
+  "
+    for key in keys( g:flotisable.keybindings.lsp.global )
     "
-      for key in keys( g:flotisable.keybindings.lsp[&filetype] )
-      "
-        execute 'map <buffer> <silent> ' .. key .. ' ' .. g:flotisable.keybindings.lsp[&filetype][key]
-      "
-      endfor
+      execute printf( l:mapFormat, key, g:flotisable.keybindings.lsp.global[key] )
     "
-    endif
+    endfor
+  "
+  endif
+
+  if exists( 'g:flotisable.keybindings.lsp["' .. &filetype .. '"]' )
+  "
+    for key in keys( g:flotisable.keybindings.lsp[&filetype] )
+    "
+      execute printf( l:mapFormat, key, g:flotisable.keybindings.lsp[&filetype][key] )
+    "
+    endfor
   "
   endif
 "
