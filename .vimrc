@@ -225,20 +225,11 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   " plugin for autocomplete  自動補全的插件{{{
   if has( 'nvim-0.5' )
   "
-    if v:true " the nvim-cmp is intended to replace nvim-compe
-    "
-      Plug 'hrsh7th/nvim-cmp'
-      Plug 'hrsh7th/cmp-nvim-lsp'
-      Plug 'hrsh7th/cmp-buffer'
-      Plug 'hrsh7th/cmp-path'
-    "
-    else
-    "
-      Plug 'hrsh7th/nvim-compe'
-      Plug 'tamago324/compe-necosyntax'
-      Plug 'Shougo/neco-syntax'
-    "
-    endif
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'ray-x/cmp-treesitter'
   "
   else
   "
@@ -334,14 +325,6 @@ if FlotisablePluginExistsAndInRtp( 'vim-clap' )
                     \   'width':    '45%',
                     \   'height':   '80%'
                     \ }
-
-  " disable autocomplete in clap input window
-  if FlotisablePluginExistsAndInRtp( 'nvim-compe' )
-  "
-    autocmd FileType clap_input call compe#setup({ 'enabled': v:false }, 0)
-  "
-  endif
-  " end disable autocomplete in clap input window
 "
 endif
 " end interactive finder plugin settings
@@ -357,23 +340,10 @@ if FlotisablePluginExistsAndInRtp( 'nvim-cmp' )
         { name = 'nvim_lsp'   },
         { name = 'buffer'     },
         { name = 'path'       },
+        { name = 'treesitter' },
       }
     }
 EOF
-"
-elseif FlotisablePluginExistsAndInRtp( 'nvim-compe' )
-"
-  " when using omni source, I find the min length of complete can not be
-  " controlled, so I use necosyntax source. The build in syntax complete and
-  " necosyntax both has some complete candidate that not shown in another.
-  let g:compe = {
-              \   'source':   {
-              \     'path':       v:true,
-              \     'buffer':     v:true,
-              \     'nvim_lsp':   v:true,
-              \     'necosyntax': v:true
-              \   }
-              \ }
 "
 elseif FlotisablePluginExistsAndInRtp( 'deoplete.nvim' )
 "
