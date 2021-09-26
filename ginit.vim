@@ -1,22 +1,18 @@
 if exists( 'g:GuiLoaded' )
 "
-  if !exists( '*FlotisableToggleFullScreen' )
+  function! FlotisableToggleFullScreen()
   "
-    function FlotisableToggleFullScreen()
+    if g:GuiWindowFullScreen == 1
     "
-      if g:GuiWindowFullScreen == 1
-      "
-        call GuiWindowFullScreen( 0 )
-      "
-      else
-      "
-        call GuiWindowFullScreen( 1 )
-      "
-      endif
+      call GuiWindowFullScreen( 0 )
     "
-    endfunction
+    else
+    "
+      call GuiWindowFullScreen( 1 )
+    "
+    endif
   "
-  endif
+  endfunction
 
   colorscheme kalahari
   highlight Pmenu gui=NONE guibg=Grey
