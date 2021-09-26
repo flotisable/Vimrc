@@ -162,6 +162,25 @@ function! FlotisableLanguageClientNeovimMaps()
 endfunction
 " end setup buffer local keybinding for LanguageClient-neovim
 "}}}
+" customize highlight  設定圖形介面的顏色{{{
+function! FlotisableCustomHighlight()
+"
+  highlight CursorColumn  cterm=NONE ctermbg=Grey
+  highlight CursorLine    cterm=NONE ctermbg=Grey
+
+  highlight DiffAdd     cterm=bold ctermfg=Yellow ctermbg=DarkGreen gui=bold guifg='Yellow' guibg='DarkGreen'
+  highlight DiffChange  cterm=bold ctermfg=Blue   ctermbg=Yellow    gui=bold guifg='Blue'   guibg='Yellow'
+  highlight DiffText    cterm=bold ctermfg=Yellow ctermbg=Red       gui=bold guifg='Yellow' guibg='Red'
+  highlight DiffDelete                            ctermbg=Red                               guibg='Red'
+
+  highlight link LspDiagnosticsDefaultError       Error
+  highlight link LspDiagnosticsDefaultWarning     Todo
+  highlight link LspDiagnosticsDefaultHint        Todo
+  highlight link LspDiagnosticsDefaultInformation Todo
+"
+endfunction
+" end customize highlight
+"}}}
 " end self defined functions
 "}}}
 " save and load view  自動讀取與儲存手動的折疊{{{
@@ -544,13 +563,9 @@ else
 endif
 " end setup colorscheme for terminal and gui
 "}}}
-highlight CursorColumn  cterm=NONE ctermbg=Grey
-highlight CursorLine    cterm=NONE ctermbg=Grey
+call FlotisableCustomHighlight()
 
-highlight link LspDiagnosticsDefaultError       Error
-highlight link LspDiagnosticsDefaultWarning     Todo
-highlight link LspDiagnosticsDefaultHint        Todo
-highlight link LspDiagnosticsDefaultInformation Todo
+autocmd ColorScheme * call FlotisableCustomHighlight()
 " end highlight setup
 "}}}
 " key mapping  快捷鍵設定{{{

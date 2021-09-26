@@ -21,11 +21,6 @@ if exists( 'g:GuiLoaded' )
   colorscheme kalahari
   highlight Pmenu gui=NONE guibg=Grey
 
-  highlight link LspDiagnosticsDefaultError       Error
-  highlight link LspDiagnosticsDefaultWarning     Todo
-  highlight link LspDiagnosticsDefaultHint        Todo
-  highlight link LspDiagnosticsDefaultInformation Todo
-
   call GuiWindowMaximized( 1 )
 
   GuiFont Consolas:h14
