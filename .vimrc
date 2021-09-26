@@ -720,8 +720,9 @@ if has( 'nvim' ) || has( 'terminal' )
 "
 endif
 
-noremap   <Leader>r <Cmd>set relativenumber!<Enter>|                          " 設定 \r 鍵開關相對行號設定
-noremap   <Leader>c <Cmd>set cursorline!<Enter><Cmd>set cursorcolumn!<Enter>| " 設定 \c 鍵開關游標高亮
+noremap   <Leader>r <Cmd>set relativenumber!<Enter>|            " 設定 \r 鍵開關相對行號設定
+noremap   <Leader>c <Cmd>set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵開關游標高亮
+
 nnoremap  <Space>   <C-F>
 nnoremap  <BS>      <C-B>
 xnoremap  <Space>   <C-F>

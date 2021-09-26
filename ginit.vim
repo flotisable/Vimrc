@@ -26,6 +26,6 @@ if exists( 'g:GuiLoaded' )
   GuiFont Consolas:h14
   GuiTabline 0
 
-  noremap <F11> :call FlotisableToggleFullScreen()<Enter>
+  noremap <F11> <Cmd>call FlotisableToggleFullScreen()<Enter>
 "
 endif
