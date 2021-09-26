@@ -14,9 +14,6 @@ if exists( 'g:GuiLoaded' )
   "
   endfunction
 
-  colorscheme kalahari
-  highlight Pmenu gui=NONE guibg=Grey
-
   call GuiWindowMaximized( 1 )
 
   GuiFont Consolas:h14
@@ -25,3 +22,6 @@ if exists( 'g:GuiLoaded' )
   noremap <F11> <Cmd>call FlotisableToggleFullScreen()<Enter>
 "
 endif
+
+colorscheme kalahari
+autocmd ColorScheme * highlight Pmenu gui=NONE guibg=Grey
