@@ -71,14 +71,16 @@ endfunction
 
 function! FlotisablePluginExists( name, isCheckRtp )
 "
-  if !exists( 'g:plugs' )
+  if !exists( 'g:plug_home' )
   "
-    echo 'g:plugs not defined'
+    echo 'g:plug_home not defined'
     return 0
   "
   endif
 
-  return has_key( g:plugs, a:name ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
+  let l:fullPath = expand( printf( '%s/%s', g:plug_home, a:name ) )
+
+  return isdirectory( l:fullPath ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
 "
 endfunction
 " end test pluggin existence
