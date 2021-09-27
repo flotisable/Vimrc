@@ -282,7 +282,7 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   " language server protocal client  LSP 客戶端{{{
   if has( 'nvim' ) || v:version >= 800
   "
-    if v:false && has( 'nvim-0.5' )
+    if has( 'nvim-0.5' )
     "
       Plug 'neovim/nvim-lspconfig'
     "
