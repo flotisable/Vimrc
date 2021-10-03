@@ -355,8 +355,7 @@ elseif FlotisablePluginExistsAndInRtp( 'deoplete.nvim' )
 "
   let g:python3_host_prog = "python3"
 
-  call deoplete#custom#var( 'omni', 'input_patterns', { '_': '\w+' } )
-
+  autocmd InsertEnter * call deoplete#custom#var( 'omni', 'input_patterns', { '_': '\w+' } )
   autocmd InsertEnter * call deoplete#enable()
 "
 elseif FlotisablePluginExistsAndInRtp( 'neocomplcache.vim' )
