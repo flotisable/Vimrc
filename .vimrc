@@ -419,22 +419,33 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     -- end use lsp omni function when a language server is attached
 
     -- show diagnostics in quick fix list
-    local defaultHandler = vim.lsp.diagnostic.on_publish_diagnostics
+    local defaultHandler  = vim.lsp.diagnostic.on_publish_diagnostics
+    local nvimVersion     = vim.version()
 
-    local function flotisableOnPublishDiagnostic( error, method, result, clientId, bufnr, config )
-      defaultHandler( error, method, result, clientId, buffnr, config )
-      if result and #result.diagnostics ~= 0 then
-        for _, v in ipairs( result.diagnostics ) do
-          v.bufnr = clientId
-          v.lnum  = v.range.start.line + 1
-          v.col   = v.range.start.character + 1
-          v.text  = v.message
-        end
-        vim.lsp.util.set_qflist( result.diagnostics )
+    local function flotisableOnPublishDiagnosticCore( result, clientId )
+      if not result or #result.diagnostics == 0 then
+        do return end
       end
+      for _, v in ipairs( result.diagnostics ) do
+        v.bufnr = clientId
+        v.lnum  = v.range.start.line + 1
+        v.col   = v.range.start.character + 1
+        v.text  = v.message
+      end
+      vim.lsp.util.set_qflist( result.diagnostics )
     end
 
-    vim.lsp.diagnostic.on_publish_diagnostics = flotisableOnPublishDiagnostic
+    if nvimVersion.minor == 5 and nvimVersion.patch == 1 then
+      vim.lsp.diagnostic.on_publish_diagnostics = function( error, result, context, config )
+        defaultHandler( error, result, context, config )
+        flotisableOnPublishDiagnosticCore( result, context.clientId )
+      end
+    else
+      vim.lsp.diagnostic.on_publish_diagnostics = function( error, method, result, clientId, bufnr, config )
+        defaultHandler( error, method, result, clientId, buffnr, config )
+        flotisableOnPublishDiagnosticCore( result, clientId )
+      end
+    end
     -- end show diagnostics in quick fix list
 
     lsp.clangd.setup{}
