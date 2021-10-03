@@ -252,29 +252,21 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
     Plug 'hrsh7th/cmp-path'
     Plug 'ray-x/cmp-treesitter'
   "
-  else
+  elseif ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
   "
-    if ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
-    "
-      Plug 'Shougo/neco-syntax'
+    Plug 'Shougo/neco-syntax'
+    Plug 'Shougo/deoplete.nvim', has( 'nvim' ) ? { 'do': ':UpdateRemotePlugins' }: {}
 
-      if has( 'nvim' )
-      "
-        Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-      "
-      else
-      "
-        Plug 'Shougo/deoplete.nvim'
-        Plug 'roxma/nvim-yarp'
-        Plug 'roxma/vim-hug-neovim-rpc'
-      "
-      endif
+    if !has( 'nvim' )
     "
-    else " when 'vim' version is older  當 vim 版本較低時
-    "
-      Plug 'shougo/neocomplcache.vim'
+      Plug 'roxma/nvim-yarp'
+      Plug 'roxma/vim-hug-neovim-rpc'
     "
     endif
+  "
+  else " when 'vim' version is older  當 vim 版本較低時
+  "
+    Plug 'shougo/neocomplcache.vim'
   "
   endif
   " end plugin for autocomplete
