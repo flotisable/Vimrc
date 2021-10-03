@@ -130,10 +130,10 @@ function! FlotisableBuildInLspOmniFunc( findstart, base )
 endfunction
 " end wrapper of build in lsp omnifunc
 "}}}
-" setup buffer local keybinding for LanguageClient-neovim  設定 LanguageClient-neovim buffer local 的按鍵{{{
-function! FlotisableLanguageClientNeovimMaps()
+" setup buffer local keybinding for lsp  設定 lsp buffer local 的按鍵{{{
+function! FlotisableLspMaps( isNvimBuiltin )
 "
-  if !exists( 'g:flotisable.keybindings.lsp' ) || !has_key( g:LanguageClient_serverCommands, &filetype )
+  if !exists( 'g:flotisable.keybindings.lsp' ) || ( !a:isNvimBuiltin && !has_key( g:LanguageClient_serverCommands, &filetype ) )
   "
     return
   "
@@ -385,28 +385,9 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     local lsp = require'lspconfig'
 
     -- use lsp omni function when a language server is attached
-    flotisable =
-    {
-      keybindings =
-      {
-        lsp = {}
-      }
-    }
-
     local function flotisableOnAttach( client, buffer )
       vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc' )
-      if flotisable.keybindings.lsp.global then
-        for key, map in pairs( flotisable.keybindings.lsp.global ) do
-          vim.api.nvim_buf_set_keymap( buffer, 'n', key, map, { noremap = true } )
-        end
-      end
-
-      local filetype = vim.api.nvim_buf_get_option( buffer, 'filetype' )
-      if flotisable.keybindings.lsp[filetype] then
-        for key, map in pairs( flotisable.keybindings.lsp[filetype] ) do
-          vim.api.nvim_buf_set_keymap( buffer, 'n', key, map, { noremap = true } )
-        end
-      end
+      vim.fn.FlotisableLspMaps( true )
     end
 
     lsp.util.default_config = vim.tbl_extend(
@@ -615,21 +596,23 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
   noremap <Leader>lo <Cmd>LspStart<Enter>|  " set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <Leader>lc <Cmd>LspStop<Enter>|   " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
-  lua << EOF
-    flotisable.keybindings.lsp=
-    {
-      global =
-      {
-        gd = '<Cmd>lua vim.lsp.buf.definition()<Enter>',  -- set gd key to go to definition  設定 gd 鍵跳至定義
-        gr = '<Cmd>lua vim.lsp.buf.references()<Enter>',  -- set gr key to show reference  設定 gr 鍵顯示參照
-        K  = '<Cmd>lua vim.lsp.buf.hover()<Enter>',       -- set K key to showhover  設定 K 鍵顯示文檔
-      },
-      cpp =
-      {
-        ['<Leader>a'] = '<Cmd>ClangdSwitchSourceHeader<Enter>'
-      }
-    }
-EOF
+  " set gd key to go to definition  設定 gd 鍵跳至定義
+  " set gr key to show reference  設定 gr 鍵顯示參照
+  " set K key to showhover  設定 K 鍵顯示文檔
+  let g:flotisable = {
+    \   'keybindings': {
+    \     'lsp': {
+    \       'global': {
+    \         'gd': '<Cmd>lua vim.lsp.buf.definition()<Enter>',
+    \         'gr': '<Cmd>lua vim.lsp.buf.references()<Enter>',
+    \         'K':  '<Cmd>lua vim.lsp.buf.hover()<Enter>'
+    \       },
+    \       'cpp': {
+    \         '<Leader>a': '<Cmd>ClangdSwitchSourceHeader<Enter>'
+    \       }
+    \     }
+    \   }
+    \ }
 "
 elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
 "
@@ -655,7 +638,7 @@ elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
     \   }
     \ }
 
-  autocmd Filetype * call FlotisableLanguageClientNeovimMaps()
+  autocmd Filetype * call FlotisableLspMaps( v:false )
 "
 endif
 " end lsp key mappings
