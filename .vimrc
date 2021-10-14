@@ -251,6 +251,7 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
     Plug 'ray-x/cmp-treesitter'
+    Plug 'hrsh7th/cmp-omni'
   "
   elseif ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
   "
@@ -347,6 +348,7 @@ if FlotisablePluginExistsAndInRtp( 'nvim-cmp' )
         { name = 'buffer'     },
         { name = 'path'       },
         { name = 'treesitter' },
+        { name = 'omni'       },
       }
     }
 EOF
