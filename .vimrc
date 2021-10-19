@@ -1,24 +1,19 @@
 " option settings  選項設定{{{
-set encoding=utf-8    " set file encoding  設定編碼
-set number            " display line number  顯示行號
-set autoindent        " automatic indent as last line  自動縮排（與上一行縮排相同
-set smartindent
+set encoding    =utf-8  " set file encoding  設定編碼
+set number              " display line number  顯示行號
+set showcmd             " show the command at the status bar  顯示指令在狀態列（知道自己輸入什麼）
+set laststatus  =2      " show the status line  顯示狀態列
+set autoindent          " automatic indent as last line  自動縮排（與上一行縮排相同
+set smartindent         " smart indent based on {}  根據大括號縮排
+set foldmethod  =manual " manual fold the code  手動折疊程式碼
+set tabstop     =2      " set TAB key to be equivalent to how many spaces  設定 tab 鍵等於幾個空白鍵
+set shiftwidth  =0      " use same number of spaces for indent as tabstop  設定縮排時用 tabstop 的空白鍵數量
+set expandtab           " expand TAB key to be spaces  將 tab 鍵展開為空白鍵
+set hlsearch            " highlight the searched pattern  高亮搜尋的 pattern
+set incsearch           " enable incremental search  開啟遞增搜尋
 
-set foldmethod=manual " manual fold the code  手動折疊程式碼
-
-set tabstop=2         " set TAB key to be equivalent to how many spaces  設定 tab 鍵等於幾個空白鍵
-set shiftwidth=2
-set expandtab         " expand TAB key to be spaces  將 tab 鍵展開為空白鍵
-
-set showcmd           " show the command at the status bar  顯示指令在狀態攔（知道自己輸入什麼）
-
-set errorformat^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ directory\ '%f'
-
-set laststatus=2
-set hlsearch
-set incsearch
-
-set viewoptions=folds,cursor,curdir
+set errorformat ^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ directory\ '%f'
+set viewoptions =folds,cursor,curdir
 
 if has( 'nvim' )
 "
@@ -34,11 +29,12 @@ endif
 
 if has( 'win32' )
 "
-  set shell=powershell
+  set shell         =powershell
   let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-  let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-  let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-  set shellquote= shellxquote=
+  let &shellredir   = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  let &shellpipe    = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  set shellquote    =
+  set shellxquote   =
 "
 endif
 
