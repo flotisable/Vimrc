@@ -138,25 +138,21 @@ function! FlotisableLspMaps( isNvimBuiltin )
 
   let l:mapFormat = 'map <buffer> <silent> %s %s'
 
-  if exists( 'g:flotisable.keybindings.lsp.global' )
+  for scope in [ "global", &filetype ]
   "
-    for key in keys( g:flotisable.keybindings.lsp.global )
+    if !exists( 'g:flotisable.keybindings.lsp["' .. scope .. '"]' )
     "
-      execute printf( l:mapFormat, key, g:flotisable.keybindings.lsp.global[key] )
+      continue
     "
-    endfor
-  "
-  endif
+    endif
 
-  if exists( 'g:flotisable.keybindings.lsp["' .. &filetype .. '"]' )
-  "
-    for key in keys( g:flotisable.keybindings.lsp[&filetype] )
+    for key in keys( g:flotisable.keybindings.lsp[scope] )
     "
-      execute printf( l:mapFormat, key, g:flotisable.keybindings.lsp[&filetype][key] )
+      execute printf( l:mapFormat, key, g:flotisable.keybindings.lsp[scope][key] )
     "
     endfor
   "
-  endif
+  endfor
 "
 endfunction
 " end setup buffer local keybinding for LanguageClient-neovim
