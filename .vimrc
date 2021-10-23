@@ -7,7 +7,7 @@ set autoindent          " automatic indent as last line  自動縮排（與上�
 set smartindent         " smart indent based on {}  根據大括號縮排
 set foldmethod  =manual " manual fold the code  手動折疊程式碼
 set tabstop     =2      " set TAB key to be equivalent to how many spaces  設定 tab 鍵等於幾個空白鍵
-set shiftwidth  =0      " use same number of spaces for indent as tabstop  設定縮排時用 tabstop 的空白鍵數量
+set shiftwidth  =2      " use same number of spaces for indent as tabstop  設定縮排時用 tabstop 的空白鍵數量
 set expandtab           " expand TAB key to be spaces  將 tab 鍵展開為空白鍵
 set hlsearch            " highlight the searched pattern  高亮搜尋的 pattern
 set incsearch           " enable incremental search  開啟遞增搜尋
@@ -130,7 +130,7 @@ endfunction
 function! FlotisableLspMaps( isNvimBuiltin )
 "
   if  !exists( 'g:flotisable.keybindings.lsp' ) ||
-      ( !a:isNvimBuiltin && !has_key( g:LanguageClient_serverCommands, &filetype ) )
+    \ ( !a:isNvimBuiltin && !has_key( g:LanguageClient_serverCommands, &filetype ) )
   "
     return
   "
