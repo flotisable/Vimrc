@@ -16,15 +16,11 @@ set errorformat ^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ direc
 set viewoptions =folds,cursor
 
 if has( 'nvim' )
-"
   set jumpoptions=stack
-"
 endif
 
 if has( 'patch-7.4.775' )
-"
   set completeopt=menuone,noinsert
-"
 endif
 
 if has( 'win32' )
@@ -47,9 +43,7 @@ if has( "cscope" )
     cscope add GTAGS
   "
   elseif filereadable( "cscope.out" )
-  "
     cscope add cscope.out
-  "
   endif
   set cscopeverbose
 "
@@ -60,9 +54,7 @@ endif
 " test pluggin existence  檢測插件是否存在{{{
 " this function is add since old vim not support optional argument
 function! FlotisablePluginExistsAndInRtp( name )
-"
   return FlotisablePluginExists( a:name, 1 )
-"
 endfunction
 
 function! FlotisablePluginExists( name, isCheckRtp )
@@ -92,9 +84,7 @@ function! FlotisableToggleClapPreviewDirection()
   endif
 
   if !exists( 'g:clap_preview_direction' )
-  "
     let g:clap_preview_direction = 'LR'
-  "
   endif
 
   if g:clap_preview_direction == 'LR'
@@ -120,9 +110,7 @@ endfunction
 " this wrapper function it to make neovim build in lsp omni function work
 " with deoplete and neocomplcache
 function! FlotisableBuildInLspOmniFunc( findstart, base )
-"
   return v:lua.vim.lsp.omnifunc( a:findstart, a:base )
-"
 endfunction
 " end wrapper of build in lsp omnifunc
 "}}}
@@ -131,9 +119,7 @@ function! FlotisableLspMaps( isNvimBuiltin )
 "
   if  !exists( 'g:flotisable.keybindings.lsp' ) ||
     \ ( !a:isNvimBuiltin && !has_key( g:LanguageClient_serverCommands, &filetype ) )
-  "
     return
-  "
   endif
 
   let l:mapFormat = 'map <buffer> <silent> %s %s'
@@ -141,15 +127,11 @@ function! FlotisableLspMaps( isNvimBuiltin )
   for scope in [ "global", &filetype ]
   "
     if !exists( 'g:flotisable.keybindings.lsp["' .. scope .. '"]' )
-    "
       continue
-    "
     endif
 
     for key in keys( g:flotisable.keybindings.lsp[scope] )
-    "
       execute printf( l:mapFormat, key, g:flotisable.keybindings.lsp[scope][key] )
-    "
     endfor
   "
   endfor
@@ -184,10 +166,7 @@ autocmd BufWinEnter * silent! loadview
 " end save and load view
 "}}}
 " minimal completion base on syntax  基於語法的補全{{{
-autocmd FileType *
-  \ if &omnifunc == ""                          |
-  \   setlocal omnifunc=syntaxcomplete#Complete |
-  \ endif
+autocmd FileType * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
 " end minimal completion base on syntax
 "}}}
 " plugin settings  插件設定{{{
@@ -206,25 +185,19 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 
   " plugin for interactive finder and dispatcher  互動式查詢{{{
   if has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' )
-  "
     Plug 'liuchengxu/vim-clap', { 'do': { -> clap#installer#force_download() } }
-  "
   endif
   " end plugin for interactive finder and dispatcher  互動式查詢
   "}}}
   " terminal plugin  終端機插件{{{
   if has( 'nvim' ) || has( 'terminal' )
-  "
     Plug 'kassio/neoterm'
-  "
   endif
   " end terminal plugin  終端機插件
   "}}}
   " language specific plugins  特定語言的插件{{{
   if has( 'nvim-0.5' ) && ( executable( 'gcc' ) || executable( 'clang' ) )
-  "
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-  "
   else
   "
     Plug 'octol/vim-cpp-enhanced-highlight'
@@ -238,9 +211,7 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   "}}}
   " plugin for autocomplete  自動補全的插件{{{
   if  v:version >= 702 && has( 'insert_expand' ) && has( 'menu' )
-  "
     Plug 'lifepillar/vim-mucomplete'
-  "
   elseif has( 'nvim-0.5' )
   "
     Plug 'hrsh7th/nvim-cmp'
@@ -263,9 +234,7 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
     endif
   "
   else " when 'vim' version is older  當 vim 版本較低時
-  "
     Plug 'shougo/neocomplcache.vim'
-  "
   endif
   " end plugin for autocomplete
   "}}}
@@ -273,9 +242,7 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   if has( 'nvim' ) || v:version >= 800
   "
     if has( 'nvim-0.5' )
-    "
       Plug 'neovim/nvim-lspconfig'
-    "
     else
     "
       Plug 'autozimu/LanguageClient-neovim',
@@ -306,9 +273,7 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   "}}}
   " mark plugin  標記插件{{{
   if 1
-  "
     Plug 't9md/vim-quickhl'
-  "
   else
   "
     Plug 'inkarkat/vim-ingo-library'
@@ -496,9 +461,7 @@ if FlotisablePluginExistsAndInRtp( 'neoterm' )
   let g:neoterm_default_mod = ":tab"  " 設定以 tab 開啟終端機  open terminal in a tab
 
   if has( 'win32' )
-  "
     let g:neoterm_shell = &shell .. ' #'
-  "
   endif
 "
 endif
@@ -578,17 +541,13 @@ endif
 "}}}
 " nerdtree key mapping{{{
 if FlotisablePluginExists( 'nerdtree', 0 )
-"
   noremap <C-x> <Cmd>NERDTreeToggle<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
-"
 endif
 " end nerdtree key mapping
 "}}}
 " tagbar key mapping{{{
 if FlotisablePluginExists( 'tagbar', 0 )
-"
   noremap <Leader>t <Cmd>Tagbar<Enter>| " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
-"
 endif
 " end tagbar key mapping
 "}}}
@@ -704,9 +663,7 @@ endif
 "}}}
 " vim-snipmate key mappings{{{
 if FlotisablePluginExistsAndInRtp( 'vim-snipmate' )
-"
   imap <C-s> <Plug>snipMateShow| " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
-"
 endif
 " end vim-snipmate key mappings
 "}}}
@@ -722,9 +679,7 @@ endif
 "}}}
 " basic key mappings{{{
 if has( 'nvim' ) || has( 'terminal' )
-"
   tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
-"
 endif
 
 noremap   <Leader>r <Cmd>set relativenumber!<Enter>|            " 設定 \r 鍵開關相對行號設定
