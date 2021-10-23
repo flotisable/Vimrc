@@ -241,7 +241,11 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   " end language specific plugins
   "}}}
   " plugin for autocomplete  自動補全的插件{{{
-  if has( 'nvim-0.5' )
+  if  v:version >= 702 && has( 'insert_expand' ) && has( 'menu' )
+  "
+    Plug 'lifepillar/vim-mucomplete'
+  "
+  elseif has( 'nvim-0.5' )
   "
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-nvim-lsp'
@@ -334,7 +338,13 @@ endif
 " end interactive finder plugin settings
 "}}}
 " completion plugin settings  補全插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'nvim-cmp' )
+if FlotisablePluginExistsAndInRtp( 'vim-mucomplete' )
+"
+  let g:mucomplete#no_mappings = 1
+
+  autocmd InsertEnter * MUcompleteAutoOn
+"
+elseif FlotisablePluginExistsAndInRtp( 'nvim-cmp' )
 "
   lua <<EOF
     require'cmp'.setup
