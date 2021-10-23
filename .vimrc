@@ -13,7 +13,7 @@ set hlsearch            " highlight the searched pattern  高亮搜尋的 patter
 set incsearch           " enable incremental search  開啟遞增搜尋
 
 set errorformat ^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ directory\ '%f'
-set viewoptions =folds,cursor,curdir
+set viewoptions =folds,cursor
 
 if has( 'nvim' )
 "
