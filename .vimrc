@@ -350,7 +350,7 @@ if FlotisablePluginExistsAndInRtp( 'vim-mucomplete' )
 "
   let g:mucomplete#no_mappings = 1
 
-  autocmd InsertEnter * MUcompleteAutoOn
+  autocmd InsertEnter * if &filetype != 'clap_input' | MUcompleteAutoOn | endif
 "
 elseif FlotisablePluginExistsAndInRtp( 'nvim-cmp' )
 "
