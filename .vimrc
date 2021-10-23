@@ -309,8 +309,16 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   " end code snippet plugin
   "}}}
   " mark plugin  標記插件{{{
-  Plug 'inkarkat/vim-ingo-library'
-  Plug 'inkarkat/vim-mark'
+  if 1
+  "
+    Plug 't9md/vim-quickhl'
+  "
+  else
+  "
+    Plug 'inkarkat/vim-ingo-library'
+    Plug 'inkarkat/vim-mark'
+  "
+  endif
   " end mark plugin
   "}}}
   " self use plugin  個人使用的插件{{{
@@ -653,7 +661,14 @@ endif
 " end lsp key mappings
 "}}}
 " vim-mark key mappings{{{
-if FlotisablePluginExistsAndInRtp( 'vim-mark' )
+if FlotisablePluginExistsAndInRtp( 'vim-quickhl' )
+"
+  nmap  <Leader>ms <Plug>(quickhl-manual-this)|   " set \ms key to set mark  設定 \ms 鍵設置標籤
+  xmap  <Leader>ms <Plug>(quickhl-manual-this)|   " set \ms key to set mark  設定 \ms 鍵設置標籤
+  nmap  <Leader>mc <Plug>(quickhl-manual-reset)| " set \mc key to clear mark  設定 \mc 鍵清理標籤
+  xmap  <Leader>mc <Plug>(quickhl-manual-reset)| " set \mc key to clear mark  設定 \mc 鍵清理標籤
+"
+elseif FlotisablePluginExistsAndInRtp( 'vim-mark' )
 "
   nmap  <Leader>ms <Plug>MarkSet|   " set \ms key to set mark  設定 \ms 鍵設置標籤
   xmap  <Leader>ms <Plug>MarkSet|   " set \ms key to set mark  設定 \ms 鍵設置標籤
