@@ -129,7 +129,8 @@ endfunction
 " setup buffer local keybinding for lsp  設定 lsp buffer local 的按鍵{{{
 function! FlotisableLspMaps( isNvimBuiltin )
 "
-  if !exists( 'g:flotisable.keybindings.lsp' ) || ( !a:isNvimBuiltin && !has_key( g:LanguageClient_serverCommands, &filetype ) )
+  if  !exists( 'g:flotisable.keybindings.lsp' ) ||
+      ( !a:isNvimBuiltin && !has_key( g:LanguageClient_serverCommands, &filetype ) )
   "
     return
   "
