@@ -23,5 +23,9 @@ if exists( 'g:GuiLoaded' )
 "
 endif
 
-colorscheme kalahari
+if FlotisablePluginExistsAndInRtp( 'kalahari.vim' )
+  colorscheme kalahari
+else
+  colorscheme desert
+endif
 autocmd ColorScheme * highlight Pmenu gui=NONE guibg=Grey

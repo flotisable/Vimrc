@@ -519,9 +519,14 @@ endif
 " highlight setup  高亮設定{{{
 " setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
 if has( 'gui_running' )
-  colorscheme kalahari  " colorscheme in gui  圖形介面顏色主題
+  " colorscheme in gui  圖形介面顏色主題
+  if FlotisablePluginExistsAndInRtp( 'kalahari.vim' )
+    colorscheme kalahari
+  else
+    colorscheme desert
+  endif
 else
-  colorscheme elflord   " colorscheme in terminal  終端機顏色主題
+  colorscheme elflord " colorscheme in terminal  終端機顏色主題
 endif
 " end setup colorscheme for terminal and gui
 "}}}
