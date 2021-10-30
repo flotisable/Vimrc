@@ -12,6 +12,7 @@ set expandtab           " expand TAB key to be spaces  將 tab 鍵展開為空�
 set hlsearch            " highlight the searched pattern  高亮搜尋的 pattern
 set incsearch           " enable incremental search  開啟遞增搜尋
 
+set listchars   =tab:>\ ,trail:-,space:.,nbsp:+
 set errorformat ^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ directory\ '%f'
 set viewoptions =folds,cursor
 
@@ -433,18 +434,6 @@ if FlotisablePluginExistsAndInRtp( 'vim-snipmate' )
 endif
 " end code snippet settings
 "}}}
-" tlib_vim settings  tlib_vim 設定{{{
-if FlotisablePluginExistsAndInRtp( 'tlib_vim' )
-"
-  " use Ctrl+n, Ctrl+p to select multiple snippet  用 Ctrl+n, Ctrl+p 選擇程式片段
-  let g:tlib_extend_keyagents_InputList_s = {
-    \ 16: 'tlib#agent#Up',
-    \ 14: 'tlib#agent#Down'
-    \ }
-"
-endif
-" end tlib_vim settings
-"}}}
 " nvim-treesitter settings  nvim-treesitter 設定{{{
 if FlotisablePluginExistsAndInRtp( 'nvim-treesitter' )
 "
@@ -497,7 +486,8 @@ endif
 "}}}
 " tagbar key mapping{{{
 if FlotisablePluginExists( 'tagbar', 0 )
-  noremap <Leader>t <Cmd>Tagbar<Enter>| " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
+  noremap <Leader>t <Cmd>Tagbar<Enter>|           " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
+  noremap <Leader>T <Cmd>TagbarCurrentTag<Enter>| " set \T to show current tag  設定 \T 顯示現在的 tag
 endif
 " end tagbar key mapping
 "}}}
@@ -568,18 +558,10 @@ endif
 " vim-mark key mappings{{{
 if FlotisablePluginExistsAndInRtp( 'vim-quickhl' )
 "
-  nmap  <Leader>ms <Plug>(quickhl-manual-this)|   " set \ms key to set mark  設定 \ms 鍵設置標籤
-  xmap  <Leader>ms <Plug>(quickhl-manual-this)|   " set \ms key to set mark  設定 \ms 鍵設置標籤
-  nmap  <Leader>mc <Plug>(quickhl-manual-reset)| " set \mc key to clear mark  設定 \mc 鍵清理標籤
-  xmap  <Leader>mc <Plug>(quickhl-manual-reset)| " set \mc key to clear mark  設定 \mc 鍵清理標籤
-"
-elseif FlotisablePluginExistsAndInRtp( 'vim-mark' )
-"
-  nmap  <Leader>ms <Plug>MarkSet|   " set \ms key to set mark  設定 \ms 鍵設置標籤
-  xmap  <Leader>ms <Plug>MarkSet|   " set \ms key to set mark  設定 \ms 鍵設置標籤
-  nmap  <Leader>mr <Plug>MarkRegex| " set \mr key to set mark using regular expression  設定 \mr 鍵使用正規表示式設置標籤
-  xmap  <Leader>mr <Plug>MarkRegex| " set \mr key to set mark using regular expression  設定 \mr 鍵使用正規表示式設置標籤
-  map   <Leader>mc <Plug>MarkClear| " set \mc key to clear mark  設定 \mc 鍵清理標籤
+  nmap <Leader>m <Plug>(quickhl-manual-this)|   " set \m key to set mark  設定 \m 鍵設置標籤
+  xmap <Leader>m <Plug>(quickhl-manual-this)|   " set \m key to set mark  設定 \m 鍵設置標籤
+  nmap <Leader>M <Plug>(quickhl-manual-reset)|  " set \M key to clear mark  設定 \M 鍵清理標籤
+  xmap <Leader>M <Plug>(quickhl-manual-reset)|  " set \M key to clear mark  設定 \M 鍵清理標籤
 "
 endif
 " end vim-mark key mappings
@@ -587,12 +569,13 @@ endif
 " interactive finder key mappings{{{
 if FlotisablePluginExistsAndInRtp( 'vim-clap' )
 "
-  noremap <Leader>fp <Cmd>Clap providers<Enter>|                              " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
-  noremap <Leader>f/ <Cmd>Clap blines<Enter>|                                 " set \f/ key to search in file  設定 \f/ 鍵在檔案中搜尋
-  noremap <Leader>fb <Cmd>Clap buffers<Enter>|                                " set \fb key to search buffer  設定 \fb 鍵搜尋 buffer
+  noremap <Leader>fp  <Cmd>Clap providers<Enter>| " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
+  noremap g/          <Cmd>Clap blines<Enter>|    " set g/ key to search in file  設定 g/ 鍵在檔案中搜尋
+  noremap gb          <Cmd>Clap buffers<Enter>|   " set gb key to search buffer  設定 gb 鍵搜尋 buffer
+  noremap <Leader>ff  :Clap files |               " set \ff key to search file  設定 \ff 鍵搜尋檔案
+  noremap <Leader>fg  :Clap grep2 |               " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
+
   noremap <Leader>fd <Cmd>call FlotisableToggleClapPreviewDirection()<Enter>| " set \fd to toggle preview direction  設定 \fd 切換預覽方向
-  noremap <Leader>ff :Clap files |                                            " set \ff key to search file  設定 \ff 鍵搜尋檔案
-  noremap <Leader>fg :Clap grep2 |                                            " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
 
   if has( 'nvim' )
   "
@@ -617,6 +600,18 @@ if FlotisablePluginExistsAndInRtp( 'vim-snipmate' )
 endif
 " end vim-snipmate key mappings
 "}}}
+" tlib_vim key mappings  tlib_vim 按鍵設定{{{
+if FlotisablePluginExistsAndInRtp( 'tlib_vim' )
+"
+  " use Ctrl+n, Ctrl+p to select multiple snippet  用 Ctrl+n, Ctrl+p 選擇程式片段
+  let g:tlib_extend_keyagents_InputList_s = {
+    \ 16: 'tlib#agent#Up',
+    \ 14: 'tlib#agent#Down'
+    \ }
+"
+endif
+" end tlib_vim key mappings
+"}}}
 " bufferize key mappings{{{
 if FlotisablePluginExistsAndInRtp( 'bufferize.vim' )
 "
@@ -634,6 +629,7 @@ endif
 
 noremap   <Leader>r <Cmd>set relativenumber!<Enter>|            " 設定 \r 鍵開關相對行號設定
 noremap   <Leader>c <Cmd>set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵開關游標高亮
+noremap   <Leader>L <Cmd>set list!<Enter>|                      " 設定 \L 開關特殊字元顯示
 
 nnoremap  <Space>   <C-F>
 nnoremap  <BS>      <C-B>
