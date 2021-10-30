@@ -139,7 +139,7 @@ function! FlotisableLspMaps( isNvimBuiltin )
 endfunction
 " end setup buffer local keybinding for LanguageClient-neovim
 "}}}
-" customize highlight  設定圖形介面的顏色{{{
+" customize highlight  設定介面的顏色{{{
 function! FlotisableCustomHighlight()
 "
   highlight CursorColumn  cterm=NONE ctermbg=Grey
@@ -300,6 +300,7 @@ endif
 " LSP client settings  LSP 客戶端設定{{{
 if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
 "
+  " sign setup  符號設定{{{
   call sign_define( 'LspDiagnosticsSignError',
     \ { 'text': "✖", 'texthl': 'LspDiagnosticsSignError' } )
   call sign_define( 'LspDiagnosticsSignWarning',
@@ -308,11 +309,12 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     \ { 'text': "➤", 'texthl': 'LspDiagnosticsSignHint' } )
   call sign_define( 'LspDiagnosticsSignInformation',
     \ { 'text': "ℹ", 'texthl': 'LspDiagnosticsSignInformation' } )
-
+  " end sign setup
+  "}}}
   lua << EOF
     local lsp = require'lspconfig'
 
-    -- use lsp omni function when a language server is attached
+    -- use lsp omni function when a language server is attached{{{
     local function flotisableOnAttach( client, buffer )
       vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc' )
       vim.fn.FlotisableLspMaps( true )
@@ -326,8 +328,8 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
       }
     )
     -- end use lsp omni function when a language server is attached
-
-    -- show diagnostics in quick fix list
+    --}}}
+    -- show diagnostics in quick fix list{{{
     local defaultHandler  = vim.lsp.diagnostic.on_publish_diagnostics
     local nvimVersion     = vim.version()
 
@@ -356,7 +358,8 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
       end
     end
     -- end show diagnostics in quick fix list
-
+    --}}}
+    -- language setup{{{
     lsp.clangd.setup{}
     lsp.bashls.setup{}
     lsp.vimls.setup{}
@@ -370,6 +373,8 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     {
       bundle_path = '/home/flotisable/Applications/PowerShellEditorServices'
     }
+    -- language setup
+    --}}}
 EOF
 "
 elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
@@ -458,15 +463,14 @@ endif
 "}}}
 " highlight setup  高亮設定{{{
 " setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
-if has( 'gui_running' )
-  " colorscheme in gui  圖形介面顏色主題
+if has( 'gui_running' ) " colorscheme in gui  圖形介面顏色主題
   if FlotisablePluginExistsAndInRtp( 'kalahari.vim' )
     colorscheme kalahari
   else
     colorscheme desert
   endif
-else
-  colorscheme elflord " colorscheme in terminal  終端機顏色主題
+else " colorscheme in terminal  終端機顏色主題
+  colorscheme elflord
 endif
 " end setup colorscheme for terminal and gui
 "}}}
