@@ -569,11 +569,11 @@ endif
 " interactive finder key mappings{{{
 if FlotisablePluginExistsAndInRtp( 'vim-clap' )
 "
-  noremap <Leader>fp  <Cmd>Clap providers<Enter>| " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
-  noremap g/          <Cmd>Clap blines<Enter>|    " set g/ key to search in file  設定 g/ 鍵在檔案中搜尋
-  noremap gb          <Cmd>Clap buffers<Enter>|   " set gb key to search buffer  設定 gb 鍵搜尋 buffer
-  noremap <Leader>ff  :Clap files |               " set \ff key to search file  設定 \ff 鍵搜尋檔案
-  noremap <Leader>fg  :Clap grep2 |               " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
+  noremap <Leader>F <Cmd>Clap providers<Enter>| " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
+  noremap g/        <Cmd>Clap blines<Enter>|    " set g/ key to search in file  設定 g/ 鍵在檔案中搜尋
+  noremap gb        <Cmd>Clap buffers<Enter>|   " set gb key to search buffer  設定 gb 鍵搜尋 buffer
+  noremap <Leader>f :Clap files |               " set \ff key to search file  設定 \ff 鍵搜尋檔案
+  noremap <Leader>g :Clap grep2 |               " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
 
   noremap <Leader>fd <Cmd>call FlotisableToggleClapPreviewDirection()<Enter>| " set \fd to toggle preview direction  設定 \fd 切換預覽方向
 
