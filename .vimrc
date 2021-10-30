@@ -12,7 +12,7 @@ set expandtab           " expand TAB key to be spaces  將 tab 鍵展開為空�
 set hlsearch            " highlight the searched pattern  高亮搜尋的 pattern
 set incsearch           " enable incremental search  開啟遞增搜尋
 
-set listchars   =tab:>\ ,trail:-,space:.,nbsp:+
+set listchars   =tab:>\ ,trail:-,nbsp:+
 set errorformat ^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ directory\ '%f'
 set viewoptions =folds,cursor
 
