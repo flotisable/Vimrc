@@ -108,7 +108,7 @@ endfunction
 "}}}
 " wrapper of build in lsp omnifunc  內建 lsp omnifunc 的 wrapper{{{
 " this wrapper function it to make neovim build in lsp omni function work
-" with deoplete and neocomplcache
+" with neocomplcache
 function! FlotisableBuildInLspOmniFunc( findstart, base )
   return v:lua.vim.lsp.omnifunc( a:findstart, a:base )
 endfunction
@@ -177,12 +177,15 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 
   call plug#begin( pluginRoot )
 
+  " basic plugins  基本的插件{{{
   Plug 'fabi1cazenave/kalahari.vim'
+  Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
+  Plug 't9md/vim-quickhl'           " mark plugin  標記插件
 
-  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'  } " plugin for display directory as tree view  樹狀顯示資料夾的插件
-  Plug 'majutsushi/tagbar',   { 'on': 'Tagbar'          } " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
-  Plug 'AndrewRadev/bufferize.vim'                        " make command output a buffer  將指令輸出變成 buffer
-
+  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'                  } " plugin for display directory as tree view  樹狀顯示資料夾的插件
+  Plug 'majutsushi/tagbar',   { 'on': [ 'Tagbar', 'TagbarCurrentTag' ]  } " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
+  " end basic plugins
+  "}}}
   " plugin for interactive finder and dispatcher  互動式查詢{{{
   if has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' )
     Plug 'liuchengxu/vim-clap', { 'do': { -> clap#installer#force_download() } }
@@ -212,27 +215,6 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   " plugin for autocomplete  自動補全的插件{{{
   if  v:version >= 702 && has( 'insert_expand' ) && has( 'menu' )
     Plug 'lifepillar/vim-mucomplete'
-  elseif has( 'nvim-0.5' )
-  "
-    Plug 'hrsh7th/nvim-cmp'
-    Plug 'hrsh7th/cmp-nvim-lsp'
-    Plug 'hrsh7th/cmp-buffer'
-    Plug 'hrsh7th/cmp-path'
-    Plug 'ray-x/cmp-treesitter'
-    Plug 'hrsh7th/cmp-omni'
-  "
-  elseif ( has( 'nvim' ) || v:version >= 800 ) && has( 'python3' )
-  "
-    Plug 'Shougo/neco-syntax'
-    Plug 'Shougo/deoplete.nvim', has( 'nvim' ) ? { 'do': ':UpdateRemotePlugins' }: {}
-
-    if !has( 'nvim' )
-    "
-      Plug 'roxma/nvim-yarp'
-      Plug 'roxma/vim-hug-neovim-rpc'
-    "
-    endif
-  "
   else " when 'vim' version is older  當 vim 版本較低時
     Plug 'shougo/neocomplcache.vim'
   endif
@@ -271,17 +253,6 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   Plug 'garbas/vim-snipmate'
   " end code snippet plugin
   "}}}
-  " mark plugin  標記插件{{{
-  if 1
-    Plug 't9md/vim-quickhl'
-  else
-  "
-    Plug 'inkarkat/vim-ingo-library'
-    Plug 'inkarkat/vim-mark'
-  "
-  endif
-  " end mark plugin
-  "}}}
   " self use plugin  個人使用的插件{{{
   Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " self use statusline plugin  個人使用的狀態列設定插件
   Plug 'flotisable/FlotisableVimSnippets'                       " self use code snippet  個人使用的程式碼片段
@@ -311,31 +282,9 @@ if FlotisablePluginExistsAndInRtp( 'vim-mucomplete' )
 "
   let g:mucomplete#no_mappings = 1
 
+  " to work with vim-clap
   autocmd FileType    clap_input  MUcompleteAutoOff
   autocmd InsertEnter *           if &filetype != 'clap_input' | MUcompleteAutoOn | endif
-"
-elseif FlotisablePluginExistsAndInRtp( 'nvim-cmp' )
-"
-  lua <<EOF
-    require'cmp'.setup
-    {
-      sources =
-      {
-        { name = 'nvim_lsp'   },
-        { name = 'buffer'     },
-        { name = 'path'       },
-        { name = 'treesitter' },
-        { name = 'omni'       },
-      }
-    }
-EOF
-"
-elseif FlotisablePluginExistsAndInRtp( 'deoplete.nvim' )
-"
-  let g:python3_host_prog = "python3"
-
-  autocmd InsertEnter * call deoplete#custom#var( 'omni', 'input_patterns', { '_': '\w+' } )
-  autocmd InsertEnter * call deoplete#enable()
 "
 elseif FlotisablePluginExistsAndInRtp( 'neocomplcache.vim' )
 "
@@ -445,15 +394,6 @@ if FlotisablePluginExistsAndInRtp( 'vim-signify' )
 "
 endif
 " end VCS diff plugin settings
-"}}}
-" mark plugin settings  標記插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'vim-mark' )
-"
-  let g:mwAutoLoadMarks = 1
-  let g:mw_no_mappings  = 1
-"
-endif
-" end mark plugin settings
 "}}}
 " neoterm settings  neoterm 插件設定{{{
 if FlotisablePluginExistsAndInRtp( 'neoterm' )
