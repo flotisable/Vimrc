@@ -136,6 +136,7 @@
   | Ctrl + s      | neoterm                                 | builtin terminal  | toggle builtin terminal               |
   | Ctrl + x      | nerdtree                                |                   | toggle the tree browser               |
   | \<Leader> t   | tagbar                                  | ctags             | toggle tagbar, show the tags overview |
+  | \<Leader> T   | tagbar                                  | ctags             | show tag in current cursor position   |
   | \<Leader> s   | vim-signify                             |                   | toggle VCS diff                       |
   | \<Leader> d   | vim-signify                             | VCS               | show VCS hunk diff                    |
   | \<Leader> u   | vim-signify                             | VCS               | undo VCS hunk                         |
@@ -146,15 +147,13 @@
   |  gr           | nvim-lspconfig or LanguageClient-neovim | language server   | find reference                        |
   |  K            | nvim-lspconfig or LanguageClient-neovim | language server   | show hover                            |
   | \<Leader> a   | nvim-lspconfig or LanguageClient-neovim | clangd            | switch c++ header, source file        |
-  | \<Leader> ms  | vim-mark                                |                   | set mark highlight                    |
-  | \<Leader> mr  | vim-mark                                |                   | set mark highlight with regex         |
-  | \<Leader> mc  | vim-mark                                |                   | clear mark highlight                  |
-  | \<Leader> fp  | vim-clap                                |                   | open fuzzy finder providers           |
-  | \<Leader> f/  | vim-clap                                |                   | search in file                        |
-  | \<Leader> fb  | vim-clap                                |                   | search buffer                         |
-  | \<Leader> fd  | vim-clap                                |                   | toggle preview direction              |
-  | \<Leader> ff  | vim-clap                                |                   | search file                           |
-  | \<Leader> fg  | vim-clap                                | ripgrep           | grep files                            |
+  | \<Leader> m   | vim-quickhl                             |                   | set mark highlight                    |
+  | \<Leader> M   | vim-quickhl                             |                   | clear mark highlight                  |
+  | \<Leader> F   | vim-clap                                |                   | open fuzzy finder providers           |
+  | g/            | vim-clap                                |                   | search in file                        |
+  | gb            | vim-clap                                |                   | search buffer                         |
+  | \<Leader> f   | vim-clap                                |                   | search file                           |
+  | \<Leader> g   | vim-clap                                | ripgrep           | grep files                            |
   | Ctrl + s      | vim-snipmate                            | insert mode       | show available snippets               |
   | \<Leader> bb  | bufferize.vim                           |                   | bufferize command                     |
   | \<Leader> bs  | bufferize.vim                           |                   | bufferize system command              |
@@ -162,6 +161,7 @@
   | Ctrl + q      |                                         | builtin terminal  | exit terminal mode                    |
   | \<Leader> r   |                                         |                   | toggle relative line number           |
   | \<Leader> c   |                                         |                   | toggle cursor line, column highlight  |
+  | \<Leader> L   |                                         |                   | toggle show special characters        |
   | space         |                                         |                   | scroll forward                        |
   | backspace     |                                         |                   | scroll backward                       |
   | Ctrl + a      |                                         | insert mode       | home                                  |
@@ -188,7 +188,8 @@
   | FlotisablePluginExists( name, isCheckRtp )      | test pluggin existence                                  |
   | FlotisableToggleClapPreviewDirection()          | toggle interactive fuzzy finder preview direction       |
   | FlotisableBuildInLspOmniFunc( findstart, base ) | wrapper of builtin lsp omnifunc                         |
-  | FlotisableLanguageClientNeovimMaps()            | setup buffer local keybinding for LanguageClient-neovim |
+  | FlotisableLspMaps( isNvimBuiltin )              | setup buffer local keybinding for lsp                   |
+  | FlotisableCustomHighlight()                     | setup custom highlight to overwrite colorscheme         |
 
 # Plugins
   | Category          | Plugin                                                                            | Purpose                                                                     | Requirement                                                         |
@@ -205,16 +206,7 @@
   |                   | [vim-toml](https://github.com/cespare/vim-toml)                                   | syntax highlight of [toml](https://toml.io/en/)                             |                                                                     |
   |                   | [vim-perl](https://github.com/vim-perl/vim-perl)                                  | syntax highlight of [perl](https://www.perl.org/)                           |                                                                     |
   |                   | [vim-ps1](https://github.com/pprovost/vim-ps1)                                    | syntax highlgiht of [powershell](https://github.com/PowerShell/PowerShell)  |                                                                     |
-  | Autocomplete      | [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)                                   | autocomplete plugin, to replace nvim-compe                                  | nvim 0.5                                                            |
-  |                   | [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp)                           | builtin lsp completion source of nvim-cmp                                   | nvim-cmp                                                            |
-  |                   | [cmp-buffer](https://github.com/hrsh7th/cmp-buffer)                               | buffer completion source of nvim-cmp                                        | nvim-cmp                                                            |
-  |                   | [cmp-path](https://github.com/hrsh7th/cmp-path)                                   | path completion source of nvim-cmp                                          | nvim-cmp                                                            |
-  |                   | [nvim-compe](https://github.com/hrsh7th/nvim-compe)                               | autocomplete plugin, to replace deoplete                                    |                                                                     |
-  |                   | [compe-necosyntax](https://github.com/tamago324/compe-necosyntax)                 | syntax completion source of nvim-compe                                      | nvim-compe, neco-syntax                                             |
-  |                   | [neco-syntax](https://github.com/Shougo/neco-syntax)                              | syntax completion source of deoplete.nvim                                   | deoplete.nvim                                                       |
-  |                   | [deoplete.nvim](https://github.com/Shougo/deoplete.nvim)                          | autocompelte plugin, to replace neocomplcache                               | nvim or vim 8, python3, nvim-yarp and vim-hug-neovim-rpc for vim 8  |
-  |                   | [nvim-yarp](https://github.com/roxma/nvim-yarp)                                   | dependency of deoplete.nvim for vim 8                                       |                                                                     |
-  |                   | [vim-hug-neovim-rpc](https://github.com/roxma/vim-hug-neovim-rpc)                 | dependency of deoplete.nvim for vim 8                                       |                                                                     |
+  | Autocomplete      | [vim-mucomplete](https://github.com/lifepillar/vim-mucomplete)                    | autocomplete plugin, to replace neocomplcache                               | vim 7.2, has( insert_expand ), has( menu )                          |
   |                   | [neocomplcache](https://github.com/shougo/neocomplcache.vim)                      | autocomplete plugin                                                         |                                                                     |
   | LSP               | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)                        | builtin language server client configuration                                | nvim 0.5                                                            |
   |                   | [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim)        | language server client                                                      |                                                                     |
@@ -222,8 +214,7 @@
   | Code Snippet      | [vim-snipmate](https://github.com/garbas/vim-snipmate)                            | code snippet plugin                                                         | vim-addon-mw-utils, tlibs                                           |
   |                   | [vim-addon-mw-utils](https://github.com/MarcWeber/vim-addon-mw-utils)             | dependency of vim-snipmate                                                  |                                                                     |
   |                   | [tlibs](https://github.com/tomtom/tlib_vim)                                       | dependency of vim-snipmate                                                  |                                                                     |
-  | Mark              | [vim-mark](https://github.com/inkarkat/vim-mark)                                  | mark highlight plugin                                                       | vim-ingo-library                                                    |
-  |                   | [vim-ingo-library](https://github.com/inkarkat/vim-ingo-library)                  | dependency of vim-mark                                                      |                                                                     |
+  | Mark              | [vim-quickhl](https://github.com/t9md/vim-quickhl)                                | mark highlight plugin                                                       |                                                                     |
   | Self Used         | [FlotisableStatusLine](https://github.com/flotisable/FlotisableStatusLine)        | a self use plugin to set up the status line                                 |                                                                     |
   |                   | [FlotisableVimSnipets](https://github.com/flotisable/FlotisableVimSnippets)       | a self use code snippets                                                    | vim-snipmate                                                        |
 
