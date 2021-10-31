@@ -575,8 +575,6 @@ if FlotisablePluginExistsAndInRtp( 'vim-clap' )
   noremap <Leader>f :Clap files |               " set \ff key to search file  設定 \ff 鍵搜尋檔案
   noremap <Leader>g :Clap grep2 |               " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
 
-  noremap <Leader>fd <Cmd>call FlotisableToggleClapPreviewDirection()<Enter>| " set \fd to toggle preview direction  設定 \fd 切換預覽方向
-
   if has( 'nvim' )
   "
     autocmd FileType clap_input inoremap <silent> <buffer> <C-n> <C-R>=clap#navigation#linewise( 'down' )<Enter>
