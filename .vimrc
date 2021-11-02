@@ -644,14 +644,14 @@ noremap!  <C-d>     <Del>
 
 if has( "cscope" )
 "
-  nnoremap <C-_>s <Cmd>cscope find s <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>g <Cmd>cscope find g <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>c <Cmd>cscope find c <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>t <Cmd>cscope find t <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>e <Cmd>cscope find e <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>f <Cmd>cscope find f <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>i <Cmd>cscope find i <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-_>d <Cmd>cscope find d <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>s :cscope find s <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>g :cscope find g <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>c :cscope find c <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>t :cscope find t <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>e :cscope find e <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>f :cscope find f <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>i :cscope find i <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-_>d :cscope find d <C-R>=expand("<cword>")<CR><CR>
 "
 endif
 " end basic key mappings}}}
