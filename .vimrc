@@ -155,6 +155,8 @@ function! FlotisableCustomHighlight()
   highlight link LspDiagnosticsDefaultWarning     Todo
   highlight link LspDiagnosticsDefaultHint        Todo
   highlight link LspDiagnosticsDefaultInformation Todo
+
+  highlight Pmenu gui=NONE guibg=Grey
 "
 endfunction
 " end customize highlight

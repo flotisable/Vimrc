@@ -3,13 +3,9 @@ if exists( 'g:GuiLoaded' )
   function! FlotisableToggleFullScreen()
   "
     if g:GuiWindowFullScreen == 1
-    "
       call GuiWindowFullScreen( 0 )
-    "
     else
-    "
       call GuiWindowFullScreen( 1 )
-    "
     endif
   "
   endfunction
@@ -28,4 +24,3 @@ if FlotisablePluginExistsAndInRtp( 'nord-vim' )
 else
   colorscheme desert
 endif
-autocmd ColorScheme * highlight Pmenu gui=NONE guibg=Grey
