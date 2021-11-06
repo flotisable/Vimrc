@@ -179,7 +179,7 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
   call plug#begin( pluginRoot )
 
   " basic plugins  基本的插件{{{
-  Plug 'fabi1cazenave/kalahari.vim'
+  Plug 'arcticicestudio/nord-vim'
   Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
   Plug 't9md/vim-quickhl'           " mark plugin  標記插件
 
@@ -452,12 +452,10 @@ endif
 "}}}
 " highlight setup  高亮設定{{{
 " setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
-if has( 'gui_running' ) " colorscheme in gui  圖形介面顏色主題
-  if FlotisablePluginExistsAndInRtp( 'kalahari.vim' )
-    colorscheme kalahari
-  else
-    colorscheme desert
-  endif
+if FlotisablePluginExistsAndInRtp( 'nord-vim' )
+  colorscheme nord
+elseif has( 'gui_running' ) " colorscheme in gui  圖形介面顏色主題
+  colorscheme desert
 else " colorscheme in terminal  終端機顏色主題
   colorscheme elflord
 endif

@@ -23,8 +23,8 @@ if exists( 'g:GuiLoaded' )
 "
 endif
 
-if FlotisablePluginExistsAndInRtp( 'kalahari.vim' )
-  colorscheme kalahari
+if FlotisablePluginExistsAndInRtp( 'nord-vim' )
+  colorscheme nord
 else
   colorscheme desert
 endif
