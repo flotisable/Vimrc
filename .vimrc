@@ -16,6 +16,12 @@ set listchars   =tab:>\ ,trail:-,nbsp:+
 set errorformat ^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ directory\ '%f'
 set viewoptions =folds,cursor
 
+if has( 'win32' )
+  set guifont=Consolas:h14
+else
+  set guifont=DejaVu\ Sans\ Mono:h14
+endif
+
 if has( 'nvim' )
   set jumpoptions=stack
 endif

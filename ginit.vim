@@ -12,7 +12,6 @@ if exists( 'g:GuiLoaded' )
 
   call GuiWindowMaximized( 1 )
 
-  GuiFont Consolas:h14
   GuiTabline 0
 
   noremap <F11> <Cmd>call FlotisableToggleFullScreen()<Enter>
