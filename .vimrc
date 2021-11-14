@@ -382,6 +382,7 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     {
       bundle_path = '/home/flotisable/Applications/PowerShellEditorServices'
     }
+    lsp.pylsp.setup{}
     -- language setup
     --}}}
 EOF
@@ -389,11 +390,12 @@ EOF
 elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
 "
   let g:LanguageClient_serverCommands = {
-    \ 'cpp':  ['clangd'],
-    \ 'sh':   ['bash-language-server','start'],
-    \ 'vim':  ['vim-language-server','--stdio'],
-    \ 'rust': ['rust-analyzer'],
-    \ 'raku': ['efm-langserver']
+    \ 'cpp':    ['clangd'],
+    \ 'sh':     ['bash-language-server','start'],
+    \ 'vim':    ['vim-language-server','--stdio'],
+    \ 'rust':   ['rust-analyzer'],
+    \ 'raku':   ['efm-langserver'],
+    \ 'python': ['pylsp']
     \ }
 "
 endif
