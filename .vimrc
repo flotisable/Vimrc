@@ -73,9 +73,11 @@ function! FlotisablePluginExists( name, isCheckRtp )
   "
   endif
 
-  let l:fullPath = printf( '%s/%s', g:plug_home, a:name )
+  if !exists( 's:installedPlugins' )
+    let s:installedPlugins = readdir( g:plug_home )
+  endif
 
-  return isdirectory( l:fullPath ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
+  return index( s:installedPlugins, a:name ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
 "
 endfunction
 " end test pluggin existence
@@ -147,7 +149,7 @@ autocmd FileType * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complet
 "}}}
 " plugin settings  插件設定{{{
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
-if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
+if filereadable( printf( '%s/%s', $HOME, '.vim/autoload/plug.vim' ) )
 "
   let g:pluginRoot = '~/.vim/plugged'
 
