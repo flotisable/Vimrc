@@ -238,6 +238,40 @@ if filereadable( globpath( &runtimepath, 'autoload/plug.vim' ) )
 endif
 " end vim-plug settings
 "}}}
+" bufferize settings  bufferize 插件設定{{{
+if FlotisablePluginExistsAndInRtp( 'bufferize.vim' )
+"
+  noremap <Leader>bb :Bufferize |       " set \bb to bufferize command  設定 \bb bufferize vim 命令
+  noremap <Leader>bs :BufferizeSystem | " set \bs to bufferize system commad  設定 \bs bufferize 系統命令
+  noremap <Leader>bn :Bufferize norm |  " set \bn to bufferize normal mode command  設定 \bn bufferize vim 一般模式命令
+"
+endif
+" end bufferize settings
+"}}}
+" mark plugin settings  標記插件設定{{{
+if FlotisablePluginExistsAndInRtp( 'vim-quickhl' )
+"
+  nmap <Leader>m <Plug>(quickhl-manual-this)|   " set \m key to set mark  設定 \m 鍵設置標籤
+  xmap <Leader>m <Plug>(quickhl-manual-this)|   " set \m key to set mark  設定 \m 鍵設置標籤
+  nmap <Leader>M <Plug>(quickhl-manual-reset)|  " set \M key to clear mark  設定 \M 鍵清理標籤
+  xmap <Leader>M <Plug>(quickhl-manual-reset)|  " set \M key to clear mark  設定 \M 鍵清理標籤
+"
+endif
+" end mark plugin settings
+"}}}
+" nerdtree settings  nerdtree 插件設定{{{
+if FlotisablePluginExists( 'nerdtree', 0 )
+  noremap <C-x> <Cmd>NERDTreeToggle<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
+endif
+" end nerdtree settings
+"}}}
+" tagbar settings  tagbar 插件設定{{{
+if FlotisablePluginExists( 'tagbar', 0 )
+  noremap <Leader>t <Cmd>Tagbar<Enter>|           " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
+  noremap <Leader>T <Cmd>TagbarCurrentTag<Enter>| " set \T to show current tag  設定 \T 顯示現在的 tag
+endif
+" end tagbar settings
+"}}}
 " interactive finder plugin settings  互動式查詢插件設定{{{
 if FlotisablePluginExistsAndInRtp( 'vim-clap' )
 "
@@ -249,9 +283,69 @@ if FlotisablePluginExistsAndInRtp( 'vim-clap' )
                     \   'width':    '45%',
                     \   'height':   '80%'
                     \ }
+
+  noremap <Leader>F <Cmd>Clap providers<Enter>| " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
+  noremap g/        <Cmd>Clap blines<Enter>|    " set g/ key to search in file  設定 g/ 鍵在檔案中搜尋
+  noremap gb        <Cmd>Clap buffers<Enter>|   " set gb key to search buffer  設定 gb 鍵搜尋 buffer
+  noremap <Leader>f :Clap files |               " set \ff key to search file  設定 \ff 鍵搜尋檔案
+  noremap <Leader>g :Clap grep2 |               " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
+
+  if has( 'nvim' )
+  "
+    autocmd FileType clap_input inoremap <silent> <buffer> <C-n> <C-R>=clap#navigation#linewise( 'down' )<Enter>
+    autocmd FileType clap_input inoremap <silent> <buffer> <C-p> <C-R>=clap#navigation#linewise( 'up'   )<Enter>
+  "
+  else
+  "
+    let g:clap_popup_move_manager = {
+                                  \ "\<C-N>": "\<Down>",
+                                  \ "\<C-P>": "\<Up>",
+                                  \ }
+  "
+  endif
 "
 endif
 " end interactive finder plugin settings
+"}}}
+" neoterm settings  neoterm 插件設定{{{
+if FlotisablePluginExistsAndInRtp( 'neoterm' )
+"
+  let g:neoterm_autoinsert  = 1       " 開啟終端機後進入終端機模式  enter terminal mode after open the terminal
+  let g:neoterm_default_mod = ":tab"  " 設定以 tab 開啟終端機  open terminal in a tab
+
+  if has( 'win32' )
+    let g:neoterm_shell = &shell .. ' #'
+  endif
+
+  noremap   <C-s> <Cmd>Ttoggle<Enter>| " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
+  tnoremap  <C-s> <Cmd>Ttoggle<Enter>| " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
+"
+endif
+" end neoterm settings
+"}}}
+" vim-cpp-enhanced-highlight settings  C++ 語法高亮插件設定{{{
+if FlotisablePluginExistsAndInRtp( 'vim-cpp-enhanced-highlight' )
+"
+  let g:cpp_class_scope_highlight     = 1
+  let g:cpp_member_variable_highlight = 1
+  let g:cpp_class_decl_highlight      = 1
+"
+endif
+" end vim-cpp-enhanced-highlight settings
+"}}}
+" nvim-treesitter settings  nvim-treesitter 設定{{{
+if FlotisablePluginExistsAndInRtp( 'nvim-treesitter' )
+"
+  lua << EOF
+    require'nvim-treesitter.configs'.setup
+    {
+      ensure_installed  = { 'cpp', 'rust', 'toml', 'vim', 'lua' },
+      highlight         = { enable = true }
+    }
+EOF
+"
+endif
+" end nvim-treesitter settings
 "}}}
 " completion plugin settings  補全插件設定{{{
 if FlotisablePluginExistsAndInRtp( 'vim-mucomplete' )
@@ -353,133 +447,7 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     -- language setup
     --}}}
 EOF
-"
-elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
-"
-  let g:LanguageClient_serverCommands = {
-    \ 'cpp':    ['clangd'],
-    \ 'sh':     ['bash-language-server','start'],
-    \ 'vim':    ['vim-language-server','--stdio'],
-    \ 'rust':   ['rust-analyzer'],
-    \ 'raku':   ['efm-langserver'],
-    \ 'python': ['pylsp']
-    \ }
-"
-endif
-" end LSP client settings
-"}}}
-" VCS diff plugin settings  版本控制差異插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'vim-signify' )
-"
-  set updatetime=100
-
-  let g:signify_disable_by_default = 1
-"
-endif
-" end VCS diff plugin settings
-"}}}
-" neoterm settings  neoterm 插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'neoterm' )
-"
-  let g:neoterm_autoinsert  = 1       " 開啟終端機後進入終端機模式  enter terminal mode after open the terminal
-  let g:neoterm_default_mod = ":tab"  " 設定以 tab 開啟終端機  open terminal in a tab
-
-  if has( 'win32' )
-    let g:neoterm_shell = &shell .. ' #'
-  endif
-"
-endif
-" end neoterm settings
-"}}}
-" vim-cpp-enhanced-highlight settings  C++ 語法高亮插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'vim-cpp-enhanced-highlight' )
-"
-  let g:cpp_class_scope_highlight     = 1
-  let g:cpp_member_variable_highlight = 1
-  let g:cpp_class_decl_highlight      = 1
-"
-endif
-" end vim-cpp-enhanced-highlight settings
-"}}}
-" code snippet settings  code snippet 設定{{{
-if FlotisablePluginExistsAndInRtp( 'vim-snipmate' )
-"
-  let g:snips_author              = "Flotisable"
-  let g:snipMate                  = {}
-  let g:snipMate.snippet_version  = 1
-"
-endif
-" end code snippet settings
-"}}}
-" nvim-treesitter settings  nvim-treesitter 設定{{{
-if FlotisablePluginExistsAndInRtp( 'nvim-treesitter' )
-"
-  lua << EOF
-    require'nvim-treesitter.configs'.setup
-    {
-      ensure_installed  = { 'cpp', 'rust', 'toml', 'vim', 'lua' },
-      highlight         = { enable = true }
-    }
-EOF
-"
-endif
-" end nvim-treesitter settings
-"}}}
-" end plugin settings
-"}}}
-" highlight setup  高亮設定{{{
-" setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
-if FlotisablePluginExistsAndInRtp( 'nord-vim' )
-  colorscheme nord
-elseif has( 'gui_running' ) " colorscheme in gui  圖形介面顏色主題
-  colorscheme desert
-else " colorscheme in terminal  終端機顏色主題
-  colorscheme elflord
-endif
-" end setup colorscheme for terminal and gui
-"}}}
-call FlotisableCustomHighlight()
-
-autocmd ColorScheme * call FlotisableCustomHighlight()
-" end highlight setup
-"}}}
-" key mapping  快捷鍵設定{{{
-" neoterm key mapping{{{
-if FlotisablePluginExistsAndInRtp( 'neoterm' )
-"
-  noremap   <C-s> <Cmd>Ttoggle<Enter>| " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
-  tnoremap  <C-s> <Cmd>Ttoggle<Enter>| " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
-"
-endif
-" end neoterm key mapping
-"}}}
-" nerdtree key mapping{{{
-if FlotisablePluginExists( 'nerdtree', 0 )
-  noremap <C-x> <Cmd>NERDTreeToggle<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
-endif
-" end nerdtree key mapping
-"}}}
-" tagbar key mapping{{{
-if FlotisablePluginExists( 'tagbar', 0 )
-  noremap <Leader>t <Cmd>Tagbar<Enter>|           " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
-  noremap <Leader>T <Cmd>TagbarCurrentTag<Enter>| " set \T to show current tag  設定 \T 顯示現在的 tag
-endif
-" end tagbar key mapping
-"}}}
-" vim-signify key mapping{{{
-if FlotisablePluginExistsAndInRtp( 'vim-signify' )
-"
-  noremap <Leader>s <Cmd>SignifyToggle<Enter>|    " set \s key to toggle VCS diff  設定 \s 鍵開闔版本控制差異
-  noremap <Leader>d <Cmd>SignifyHunkDiff<Enter>|  " set \d key to show hunk diff  設定 \d 鍵顯示片段差異
-  noremap <Leader>u <Cmd>SignifyHunkUndo<Enter>|  " set \u key to undo hunk  設定 \u 鍵回復片段
-  noremap <Leader>D <Cmd>SignifyDiff<Enter>|      " set \D key to show full diff  設定 \D 鍵顯示檔案差異
-"
-endif
-" end vim-signify key mapping
-"}}}
-" lsp key mappings{{{
-if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
-"
+  " key mappings{{{
   noremap <Leader>lo <Cmd>LspStart<Enter>|  " set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <Leader>lc <Cmd>LspStop<Enter>|   " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
@@ -500,9 +468,20 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     \     }
     \   }
     \ }
+  " end key mappings
+  "}}}
 "
 elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
 "
+  let g:LanguageClient_serverCommands = {
+    \ 'cpp':    ['clangd'],
+    \ 'sh':     ['bash-language-server','start'],
+    \ 'vim':    ['vim-language-server','--stdio'],
+    \ 'rust':   ['rust-analyzer'],
+    \ 'raku':   ['efm-langserver'],
+    \ 'python': ['pylsp']
+    \ }
+
   noremap <Leader>lo <Cmd>LanguageClientStart<Enter>| " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <Leader>lc <Cmd>LanguageClientStop<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
@@ -528,54 +507,32 @@ elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
   autocmd Filetype * call FlotisableLspMaps( v:false )
 "
 endif
-" end lsp key mappings
+" end LSP client settings
 "}}}
-" vim-mark key mappings{{{
-if FlotisablePluginExistsAndInRtp( 'vim-quickhl' )
+" VCS diff plugin settings  版本控制差異插件設定{{{
+if FlotisablePluginExistsAndInRtp( 'vim-signify' )
 "
-  nmap <Leader>m <Plug>(quickhl-manual-this)|   " set \m key to set mark  設定 \m 鍵設置標籤
-  xmap <Leader>m <Plug>(quickhl-manual-this)|   " set \m key to set mark  設定 \m 鍵設置標籤
-  nmap <Leader>M <Plug>(quickhl-manual-reset)|  " set \M key to clear mark  設定 \M 鍵清理標籤
-  xmap <Leader>M <Plug>(quickhl-manual-reset)|  " set \M key to clear mark  設定 \M 鍵清理標籤
-"
-endif
-" end vim-mark key mappings
-"}}}
-" interactive finder key mappings{{{
-if FlotisablePluginExistsAndInRtp( 'vim-clap' )
-"
-  noremap <Leader>F <Cmd>Clap providers<Enter>| " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
-  noremap g/        <Cmd>Clap blines<Enter>|    " set g/ key to search in file  設定 g/ 鍵在檔案中搜尋
-  noremap gb        <Cmd>Clap buffers<Enter>|   " set gb key to search buffer  設定 gb 鍵搜尋 buffer
-  noremap <Leader>f :Clap files |               " set \ff key to search file  設定 \ff 鍵搜尋檔案
-  noremap <Leader>g :Clap grep2 |               " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
+  set updatetime=100
 
-  if has( 'nvim' )
-  "
-    autocmd FileType clap_input inoremap <silent> <buffer> <C-n> <C-R>=clap#navigation#linewise( 'down' )<Enter>
-    autocmd FileType clap_input inoremap <silent> <buffer> <C-p> <C-R>=clap#navigation#linewise( 'up'   )<Enter>
-  "
-  else
-  "
-    let g:clap_popup_move_manager = {
-                                  \ "\<C-N>": "\<Down>",
-                                  \ "\<C-P>": "\<Up>",
-                                  \ }
-  "
-  endif
+  let g:signify_disable_by_default = 1
+
+  noremap <Leader>s <Cmd>SignifyToggle<Enter>|    " set \s key to toggle VCS diff  設定 \s 鍵開闔版本控制差異
+  noremap <Leader>d <Cmd>SignifyHunkDiff<Enter>|  " set \d key to show hunk diff  設定 \d 鍵顯示片段差異
+  noremap <Leader>u <Cmd>SignifyHunkUndo<Enter>|  " set \u key to undo hunk  設定 \u 鍵回復片段
+  noremap <Leader>D <Cmd>SignifyDiff<Enter>|      " set \D key to show full diff  設定 \D 鍵顯示檔案差異
 "
 endif
-" end interactive finder key mappings
+" end VCS diff plugin settings
 "}}}
-" vim-snipmate key mappings{{{
+" code snippet settings  code snippet 設定{{{
 if FlotisablePluginExistsAndInRtp( 'vim-snipmate' )
-  imap <C-s> <Plug>snipMateShow| " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
-endif
-" end vim-snipmate key mappings
-"}}}
-" tlib_vim key mappings  tlib_vim 按鍵設定{{{
-if FlotisablePluginExistsAndInRtp( 'tlib_vim' )
 "
+  let g:snips_author              = "Flotisable"
+  let g:snipMate                  = {}
+  let g:snipMate.snippet_version  = 1
+
+  imap <C-s> <Plug>snipMateShow| " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
+
   " use Ctrl+n, Ctrl+p to select multiple snippet  用 Ctrl+n, Ctrl+p 選擇程式片段
   let g:tlib_extend_keyagents_InputList_s = {
     \ 16: 'tlib#agent#Up',
@@ -583,19 +540,27 @@ if FlotisablePluginExistsAndInRtp( 'tlib_vim' )
     \ }
 "
 endif
-" end tlib_vim key mappings
+" end code snippet settings
 "}}}
-" bufferize key mappings{{{
-if FlotisablePluginExistsAndInRtp( 'bufferize.vim' )
-"
-  noremap <Leader>bb :Bufferize |       " set \bb to bufferize command  設定 \bb bufferize vim 命令
-  noremap <Leader>bs :BufferizeSystem | " set \bs to bufferize system commad  設定 \bs bufferize 系統命令
-  noremap <Leader>bn :Bufferize norm |  " set \bn to bufferize normal mode command  設定 \bn bufferize vim 一般模式命令
-"
+" end plugin settings
+"}}}
+" highlight setup  高亮設定{{{
+" setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
+if FlotisablePluginExistsAndInRtp( 'nord-vim' )
+  colorscheme nord
+elseif has( 'gui_running' ) " colorscheme in gui  圖形介面顏色主題
+  colorscheme desert
+else " colorscheme in terminal  終端機顏色主題
+  colorscheme elflord
 endif
-" end bufferize key mappings
+" end setup colorscheme for terminal and gui
 "}}}
-" basic key mappings{{{
+call FlotisableCustomHighlight()
+
+autocmd ColorScheme * call FlotisableCustomHighlight()
+" end highlight setup
+"}}}
+" key mapping  快捷鍵設定{{{
 if has( 'nvim' ) || has( 'terminal' )
   tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
 endif
@@ -629,7 +594,6 @@ if has( "cscope" )
   nnoremap <C-_>d <Cmd>execute 'cscope find d' expand("<cword>")<CR>
 "
 endif
-" end basic key mappings}}}
 " end key mapping
 "}}}
 " vim: foldmethod=marker foldmarker={{{,}}}
