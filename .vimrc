@@ -73,45 +73,12 @@ function! FlotisablePluginExists( name, isCheckRtp )
   "
   endif
 
-  let l:fullPath = expand( printf( '%s/%s', g:plug_home, a:name ) )
+  let l:fullPath = printf( '%s/%s', g:plug_home, a:name )
 
   return isdirectory( l:fullPath ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
 "
 endfunction
 " end test pluggin existence
-"}}}
-" interactive fuzzy finder settings  互動式查詢設定{{{
-function! FlotisableToggleClapPreviewDirection()
-"
-  if !FlotisablePluginExistsAndInRtp( 'vim-clap' )
-  "
-    echo "Plugin vim-clap not installed"
-    return
-  "
-  endif
-
-  if !exists( 'g:clap_preview_direction' )
-    let g:clap_preview_direction = 'LR'
-  endif
-
-  if g:clap_preview_direction == 'LR'
-  "
-    let g:clap_preview_direction  = 'UD'
-    let g:clap_layout.width       = '90%'
-    let g:clap_layout.height      = '40%'
-  "
-  else
-  "
-    let g:clap_preview_direction  = 'LR'
-    let g:clap_layout.width       = '45%'
-    let g:clap_layout.height      = '80%'
-  "
-  endif
-
-  echo "Clap preview direction changes to '" .. g:clap_preview_direction .. "'"
-"
-endfunction
-" end interactive fuzzy finder settings
 "}}}
 " wrapper of build in lsp omnifunc  內建 lsp omnifunc 的 wrapper{{{
 " this wrapper function it to make neovim build in lsp omni function work
