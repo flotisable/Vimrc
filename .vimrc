@@ -73,11 +73,9 @@ function! FlotisablePluginExists( name, isCheckRtp )
   "
   endif
 
-  if !exists( 's:installedPlugins' )
-    let s:installedPlugins = readdir( g:plug_home )
-  endif
+  let l:fullName = printf( '%s/%s', g:plug_home, a:name )
 
-  return index( s:installedPlugins, a:name ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
+  return isdirectory( l:fullName ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
 "
 endfunction
 " end test pluggin existence
