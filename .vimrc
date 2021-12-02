@@ -157,6 +157,7 @@ if filereadable( printf( '%s/%s', $HOME, '.vim/autoload/plug.vim' ) )
   Plug 'arcticicestudio/nord-vim'
   Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
   Plug 't9md/vim-quickhl'           " mark plugin  標記插件
+  Plug 'JMcKiern/vim-venter'        " center the text in a window  將視窗文字置中
 
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'                  } " plugin for display directory as tree view  樹狀顯示資料夾的插件
   Plug 'majutsushi/tagbar',   { 'on': [ 'Tagbar', 'TagbarCurrentTag' ]  } " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
@@ -258,6 +259,16 @@ if FlotisablePluginExistsAndInRtp( 'vim-quickhl' )
 "
 endif
 " end mark plugin settings
+"}}}
+" venter settings  venter 插件設定{{{
+if FlotisablePluginExistsAndInRtp( 'vim-venter' )
+"
+  let g:venter_width = &columns / 8
+
+  nmap <Leader>C <Cmd>VenterToggle<Enter>| " set \C key to center window text  設定 \C 鍵置中視窗文字
+"
+endif
+" end venter settings
 "}}}
 " nerdtree settings  nerdtree 插件設定{{{
 if FlotisablePluginExists( 'nerdtree', 0 )
