@@ -57,6 +57,17 @@ if has( "cscope" )
 endif
 " end option settings
 "}}}
+" self defined settings  自定義設定{{{
+let g:flotisable = {
+  \   'keybindings': {
+  \     'lsp': {}
+  \   },
+  \   'pluginRoot':           $HOME .. '/.vim/plugged',
+  \   'powershellBundlePath': $HOME .. '/Applications/PowerShellEditorServices',
+  \   'snippetAuthor':        'Flotisable'
+  \ }
+" end self defined settings
+"}}}
 " self defined functions  自定義的函式{{{
 " test pluggin existence  檢測插件是否存在{{{
 " this function is add since old vim not support optional argument
@@ -66,14 +77,7 @@ endfunction
 
 function! FlotisablePluginExists( name, isCheckRtp )
 "
-  if !exists( 'g:plug_home' )
-  "
-    echo 'g:plug_home not defined'
-    return 0
-  "
-  endif
-
-  let l:fullName = printf( '%s/%s', g:plug_home, a:name )
+  let l:fullName = g:flotisable.pluginRoot .. '/' .. a:name
 
   return isdirectory( l:fullName ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
 "
@@ -91,8 +95,7 @@ endfunction
 " setup buffer local keybinding for lsp  設定 lsp buffer local 的按鍵{{{
 function! FlotisableLspMaps( isNvimBuiltin )
 "
-  if  !exists( 'g:flotisable.keybindings.lsp' ) ||
-    \ ( !a:isNvimBuiltin && !has_key( g:LanguageClient_serverCommands, &filetype ) )
+  if !a:isNvimBuiltin && !has_key( g:LanguageClient_serverCommands, &filetype )
     return
   endif
 
@@ -147,11 +150,9 @@ autocmd FileType * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complet
 "}}}
 " plugin settings  插件設定{{{
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
-if filereadable( printf( '%s/%s', $HOME, '.vim/autoload/plug.vim' ) )
+if filereadable( $HOME .. '/.vim/autoload/plug.vim' )
 "
-  let g:pluginRoot = '~/.vim/plugged'
-
-  call plug#begin( pluginRoot )
+  call plug#begin( flotisable.pluginRoot )
 
   " basic plugins  基本的插件{{{
   Plug 'arcticicestudio/nord-vim'
@@ -404,9 +405,7 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     lsp.util.default_config = vim.tbl_extend(
       "force",
       lsp.util.default_config,
-      {
-        on_attach = flotisableOnAttach
-      }
+      { on_attach = flotisableOnAttach }
     )
     -- end use lsp omni function when a language server is attached
     --}}}
@@ -452,7 +451,7 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     }
     lsp.powershell_es.setup
     {
-      bundle_path = '/home/flotisable/Applications/PowerShellEditorServices'
+      bundle_path = vim.g.flotisable.powershellBundlePath
     }
     lsp.pylsp.setup{}
     -- language setup
@@ -465,18 +464,14 @@ EOF
   " set gd key to go to definition  設定 gd 鍵跳至定義
   " set gr key to show reference  設定 gr 鍵顯示參照
   " set K key to showhover  設定 K 鍵顯示文檔
-  let g:flotisable = {
-    \   'keybindings': {
-    \     'lsp': {
-    \       'global': {
-    \         'gd': '<Cmd>lua vim.lsp.buf.definition()<Enter>',
-    \         'gr': '<Cmd>lua vim.lsp.buf.references()<Enter>',
-    \         'K':  '<Cmd>lua vim.lsp.buf.hover()<Enter>'
-    \       },
-    \       'cpp': {
-    \         '<Leader>a': '<Cmd>ClangdSwitchSourceHeader<Enter>'
-    \       }
-    \     }
+  let g:flotisable.keybindings.lsp = {
+    \   'global': {
+    \     'gd': '<Cmd>lua vim.lsp.buf.definition()<Enter>',
+    \     'gr': '<Cmd>lua vim.lsp.buf.references()<Enter>',
+    \     'K':  '<Cmd>lua vim.lsp.buf.hover()<Enter>'
+    \   },
+    \   'cpp': {
+    \     '<Leader>a': '<Cmd>ClangdSwitchSourceHeader<Enter>'
     \   }
     \ }
   " end key mappings
@@ -496,22 +491,17 @@ elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
   noremap <Leader>lo <Cmd>LanguageClientStart<Enter>| " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <Leader>lc <Cmd>LanguageClientStop<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
-
   " set gd key to go to definition  設定 gd 鍵跳至定義
   " set gr key to show reference  設定 gr 鍵顯示參照
   " set K key to showhover  設定 K 鍵顯示文檔
-  let g:flotisable = {
-    \   'keybindings': {
-    \     'lsp': {
-    \       'global': {
-    \         'gd': '<Plug>(lcn-definition)',
-    \         'gr': '<Plug>(lcn-references)',
-    \         'K':  '<Plug>(lcn-hover)'
-    \       },
-    \       'cpp': {
-    \         '<Leader>a': '<Cmd>call LanguageClient#Call( "textDocument/switchSourceHeader", { "uri": expand("%") }, v:null )<Enter>'
-    \       }
-    \     }
+  let g:flotisable.keybindings.lsp = {
+    \   'global': {
+    \     'gd': '<Plug>(lcn-definition)',
+    \     'gr': '<Plug>(lcn-references)',
+    \     'K':  '<Plug>(lcn-hover)'
+    \   },
+    \   'cpp': {
+    \     '<Leader>a': '<Cmd>call LanguageClient#Call( "textDocument/switchSourceHeader", { "uri": expand("%") }, v:null )<Enter>'
     \   }
     \ }
 
@@ -538,7 +528,7 @@ endif
 " code snippet settings  code snippet 設定{{{
 if FlotisablePluginExistsAndInRtp( 'vim-snipmate' )
 "
-  let g:snips_author              = "Flotisable"
+  let g:snips_author              = g:flotisable.snippetAuthor
   let g:snipMate                  = {}
   let g:snipMate.snippet_version  = 1
 
@@ -556,16 +546,14 @@ endif
 " end plugin settings
 "}}}
 " highlight setup  高亮設定{{{
-" setup colorscheme for terminal and gui  根據終端與圖形設置不同的顏色主題{{{
 if FlotisablePluginExistsAndInRtp( 'nord-vim' )
   colorscheme nord
 elseif has( 'gui_running' ) " colorscheme in gui  圖形介面顏色主題
   colorscheme desert
-else " colorscheme in terminal  終端機顏色主題
+else                        " colorscheme in terminal  終端機顏色主題
   colorscheme elflord
 endif
-" end setup colorscheme for terminal and gui
-"}}}
+
 call FlotisableCustomHighlight()
 
 autocmd ColorScheme * call FlotisableCustomHighlight()
@@ -576,22 +564,22 @@ if has( 'nvim' ) || has( 'terminal' )
   tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
 endif
 
-noremap   <Leader>r <Cmd>set relativenumber!<Enter>|            " 設定 \r 鍵開關相對行號設定
-noremap   <Leader>c <Cmd>set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵開關游標高亮
-noremap   <Leader>L <Cmd>set list!<Enter>|                      " 設定 \L 開關特殊字元顯示
+noremap <Leader>r <Cmd>set relativenumber!<Enter>|            " 設定 \r 鍵開關相對行號設定
+noremap <Leader>c <Cmd>set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵開關游標高亮
+noremap <Leader>L <Cmd>set list!<Enter>|                      " 設定 \L 開關特殊字元顯示
 
-nnoremap  <Space>   <C-F>
-nnoremap  <BS>      <C-B>
-xnoremap  <Space>   <C-F>
-xnoremap  <BS>      <C-B>
-noremap!  <C-a>     <Home>
-noremap!  <C-e>     <End>
-noremap!  <C-f>     <Right>
-noremap!  <C-b>     <Left>
-noremap!  <C-p>     <Up>
-noremap!  <C-n>     <Down>
-noremap!  <C-k>     <C-e><C-u>
-noremap!  <C-d>     <Del>
+nnoremap  <Space> <C-F>
+nnoremap  <BS>    <C-B>
+xnoremap  <Space> <C-F>
+xnoremap  <BS>    <C-B>
+noremap!  <C-a>   <Home>
+noremap!  <C-e>   <End>
+noremap!  <C-f>   <Right>
+noremap!  <C-b>   <Left>
+noremap!  <C-p>   <Up>
+noremap!  <C-n>   <Down>
+noremap!  <C-k>   <C-e><C-u>
+noremap!  <C-d>   <Del>
 
 if has( "cscope" )
 "
