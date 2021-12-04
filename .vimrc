@@ -62,8 +62,8 @@ let g:flotisable = {
   \   'keybindings': {
   \     'lsp': {}
   \   },
-  \   'pluginRoot':           $HOME .. '/.vim/plugged',
-  \   'powershellBundlePath': $HOME .. '/Applications/PowerShellEditorServices',
+  \   'pluginRoot':           $HOME . '/.vim/plugged',
+  \   'powershellBundlePath': $HOME . '/Applications/PowerShellEditorServices',
   \   'snippetAuthor':        'Flotisable'
   \ }
 " end self defined settings
@@ -77,7 +77,7 @@ endfunction
 
 function! FlotisablePluginExists( name, isCheckRtp )
 "
-  let l:fullName = g:flotisable.pluginRoot .. '/' .. a:name
+  let l:fullName = g:flotisable.pluginRoot . '/' . a:name
 
   return isdirectory( l:fullName ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
 "
@@ -103,7 +103,7 @@ function! FlotisableLspMaps( isNvimBuiltin )
 
   for scope in [ "global", &filetype ]
   "
-    if !exists( 'g:flotisable.keybindings.lsp["' .. scope .. '"]' )
+    if !exists( 'g:flotisable.keybindings.lsp["' . scope . '"]' )
       continue
     endif
 
@@ -150,7 +150,7 @@ autocmd FileType * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complet
 "}}}
 " plugin settings  插件設定{{{
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
-if filereadable( $HOME .. '/.vim/autoload/plug.vim' )
+if filereadable( $HOME . '/.vim/autoload/plug.vim' )
 "
   call plug#begin( flotisable.pluginRoot )
 
@@ -158,10 +158,13 @@ if filereadable( $HOME .. '/.vim/autoload/plug.vim' )
   Plug 'arcticicestudio/nord-vim'
   Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
   Plug 't9md/vim-quickhl'           " mark plugin  標記插件
-  Plug 'JMcKiern/vim-venter'        " center the text in a window  將視窗文字置中
 
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'                  } " plugin for display directory as tree view  樹狀顯示資料夾的插件
   Plug 'majutsushi/tagbar',   { 'on': [ 'Tagbar', 'TagbarCurrentTag' ]  } " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
+
+  if v:version >= 800
+    Plug 'JMcKiern/vim-venter' " center the text in a window  將視窗文字置中
+  endif
   " end basic plugins
   "}}}
   " plugin for interactive finder and dispatcher  互動式查詢{{{
@@ -326,7 +329,7 @@ if FlotisablePluginExistsAndInRtp( 'neoterm' )
   let g:neoterm_default_mod = ":tab"  " 設定以 tab 開啟終端機  open terminal in a tab
 
   if has( 'win32' )
-    let g:neoterm_shell = &shell .. ' #'
+    let g:neoterm_shell = &shell . ' #'
   endif
 
   noremap   <C-s> <Cmd>Ttoggle<Enter>| " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
