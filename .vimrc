@@ -429,7 +429,7 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
       vim.lsp.util.set_qflist( result.diagnostics )
     end
 
-    if nvimVersion.minor == 5 and nvimVersion.patch == 1 then
+    if nvimVersion.minor > 5 or nvimVersion == 5 and nvimVersion.patch == 1 then
       vim.lsp.diagnostic.on_publish_diagnostics = function( error, result, context, config )
         defaultHandler( error, result, context, config )
         flotisableOnPublishDiagnosticCore( result, context.clientId )
