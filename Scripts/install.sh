@@ -1,7 +1,9 @@
 #!/bin/sh
 settingFile="./settings.toml"
 
-. ./readSettings.sh ${settingFile}
+scriptDir="$(dirname $0)"
+
+. ${scriptDir}/readSettings.sh ${settingFile}
 
 installFile()
 {

@@ -1,16 +1,25 @@
 #!/bin/sh
 settingFile="./settings.toml"
 
-. ./readSettings.sh ${settingFile}
+scriptDir="$(dirname $0)"
+
+. ${scriptDir}/readSettings.sh ${settingFile}
+
+removeFile()
+{
+  local file=$1
+
+  echo "remove $file"
+  rm $file
+}
 
 targetTableName=$(mapFind "settings" "target")
-sourceTableName=$(mapFind "settings" "source")
 dirTableName=$(mapFind "settings" "dir")
+pluginManagerTableName=$(mapFind "settings" "pluginManager")
 
 for target in $(mapKeys "$targetTableName"); do
 
   targetFile=$(mapFind "$targetTableName" "$target")
-  sourceFile=$(mapFind "$sourceTableName" "$target")
 
   if [ "$target" == "vimrc" ]; then
 
@@ -24,11 +33,10 @@ for target in $(mapKeys "$targetTableName"); do
 
   dir=$(mapFind "$dirTableName" "$dirType")
 
-  if [ -r "$targetFile" ]; then
-
-    echo "copy $dir/$targetFile to $sourceFile"
-    cp $dir/$targetFile $sourceFile
-
-  fi
+  removeFile $dir/$targetFile
 
 done
+
+if [ -e "$(mapFind "$pluginManagerTableName" "path")/plug.vim" ]; then
+  removeFile "$(mapFind "$pluginManagerTableName" "path")/plug.vim"
+fi

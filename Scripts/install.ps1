@@ -1,6 +1,8 @@
 $settingFile = "./settings.toml"
 
-. ./readSettings.ps1 $settingFile
+$scriptDir = "$(Split-Path $PSCommandPath )"
+
+. ${scriptDir}/readSettings.ps1 $settingFile
 
 $pluginManagerPath = Invoke-Expression "Write-Output $($settings['pluginManager']['path'])"
 

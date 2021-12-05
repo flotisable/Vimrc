@@ -3,9 +3,9 @@ vim   = "${HOME}"
 nvim  = ""
 
 [source]
-vimrc   = ".vimrc"
-nvimrc  = "init.vim"
-gnvimrc = "ginit.vim"
+vimrc   = "Rcs/.vimrc"
+nvimrc  = "Rcs/init.vim"
+gnvimrc = "Rcs/ginit.vim"
 
 [target]
 vimrc   = ".vimrc"
