@@ -1,6 +1,6 @@
 $settingFile = "./settings.toml"
 
-$scriptDir = "$(Split-Path $PSCommandPath )"
+$scriptDir = "$(Split-Path $PSCommandPath)"
 
 . ${scriptDir}/readSettings.ps1 $settingFile
 
@@ -18,7 +18,7 @@ ForEach( $target in $settings['target'].keys )
   }
   $dir        = Invoke-Expression "Write-Output $($settings['dir'][$dirType])"
 
-  If( !( Get-Item -Force -ErrorAction SilentlyContinue $targetFile ) )
+  If( !( Get-Item -Force -ErrorAction SilentlyContinue $dir/$targetFile ) )
   {
     Continue
   }

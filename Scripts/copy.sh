@@ -26,7 +26,7 @@ for target in $(mapKeys "$targetTableName"); do
 
   dir=$(mapFind "$dirTableName" "$dirType")
 
-  if [ -r "$targetFile" ]; then
+  if [ -r "$dir/$targetFile" ]; then
 
     echo "copy $dir/$targetFile to $sourceFile"
     cp $dir/$targetFile $sourceFile
