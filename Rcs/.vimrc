@@ -6,6 +6,7 @@ set laststatus  =2      " show the status line  顯示狀態列
 set autoindent          " automatic indent as last line  自動縮排（與上一行縮排相同
 set smartindent         " smart indent based on {}  根據大括號縮排
 set foldmethod  =manual " manual fold the code  手動折疊程式碼
+set textwidth   =80
 set tabstop     =2      " set TAB key to be equivalent to how many spaces  設定 tab 鍵等於幾個空白鍵
 set shiftwidth  =2      " use same number of spaces for indent as tabstop  設定縮排時用 tabstop 的空白鍵數量
 set expandtab           " expand TAB key to be spaces  將 tab 鍵展開為空白鍵
@@ -267,7 +268,7 @@ endif
 " venter settings  venter 插件設定{{{
 if FlotisablePluginExistsAndInRtp( 'vim-venter' )
 "
-  let g:venter_width = &columns / 8
+  let g:venter_use_textwidth = v:true
 
   nmap <Leader>C <Cmd>VenterToggle<Enter>| " set \C key to center window text  設定 \C 鍵置中視窗文字
 "
