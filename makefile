@@ -1,8 +1,13 @@
 OS ?= $(shell uname -s)
 
+GIT := git
+
 scriptDir := Scripts
 
-.PHONY: default copy install uninstall
+mainBranch  := master
+localBranch := local
+
+.PHONY: default copy install uninstall sync sync-from-remote sync-to-remote
 default: copy
 
 copy:
@@ -25,3 +30,24 @@ ifeq "${OS}" "Windows_NT"
 else
 	@./${scriptDir}/uninstall.sh
 endif
+
+sync: sync-from-remote sync-to-remote
+
+sync-from-remote:
+	${GIT} checkout ${mainBranch}
+	${GIT} pull
+	${GIT} checkout ${localBranch}
+	${GIT} merge ${mainBranch}
+
+sync-to-remote:
+	${GIT} checkout ${mainBranch}
+	${GIT} checkout -B ${localBranch}
+	${MAKE} copy
+	${GIT} stash
+	${GIT} checkout ${mainBranch}
+	${GIT} stash apply
+	${GIT} mergetool
+	${GIT} add -up
+	${GIT} commit
+	${GIT} push
+	${GIT} stash drop
