@@ -34,21 +34,21 @@ endif
 sync: sync-from-remote sync-to-remote
 
 sync-from-remote:
-	${GIT} checkout ${mainBranch}
-	${GIT} pull
-	${GIT} checkout -B ${localBranch}
-	${GIT} merge ${mainBranch}
-	${MAKE} install
+	@${GIT} checkout ${mainBranch}
+	@${GIT} pull
+	@${GIT} checkout -B ${localBranch}
+	@${GIT} merge ${mainBranch}
+	@${MAKE} install
 
 sync-to-remote:
-	${GIT} checkout ${mainBranch}
-	${GIT} checkout -B ${localBranch}
-	${MAKE} copy
-	${GIT} stash
-	${GIT} checkout ${mainBranch}
-	${GIT} stash apply -q
-	${GIT} mergetool
-	${GIT} add -up
-	${GIT} commit
-	${GIT} push
-	${GIT} stash drop
+	@${GIT} checkout ${mainBranch}
+	@${GIT} checkout -B ${localBranch}
+	@${MAKE} copy
+	@${GIT} stash
+	@${GIT} checkout ${mainBranch}
+	@${GIT} stash apply -q
+	@${GIT} mergetool
+	@${GIT} add -up
+	@${GIT} commit
+	@${GIT} push
+	@${GIT} stash drop
