@@ -36,8 +36,9 @@ sync: sync-from-remote sync-to-remote
 sync-from-remote:
 	${GIT} checkout ${mainBranch}
 	${GIT} pull
-	${GIT} checkout ${localBranch}
+	${GIT} checkout -B ${localBranch}
 	${GIT} merge ${mainBranch}
+	${MAKE} install
 
 sync-to-remote:
 	${GIT} checkout ${mainBranch}
