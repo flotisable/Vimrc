@@ -46,7 +46,7 @@ sync-to-remote:
 	${MAKE} copy
 	${GIT} stash
 	${GIT} checkout ${mainBranch}
-	${GIT} stash apply
+	${GIT} stash apply -q
 	${GIT} mergetool
 	${GIT} add -up
 	${GIT} commit
