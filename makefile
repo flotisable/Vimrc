@@ -31,24 +31,36 @@ else
 	@./${scriptDir}/uninstall.sh
 endif
 
-sync: sync-from-remote sync-to-remote
-
-sync-from-remote:
-	@${GIT} checkout ${mainBranch}
-	@${GIT} pull
-	@${GIT} checkout -B ${localBranch}
-	@${GIT} merge ${mainBranch}
+sync: sync-from-remote sync-from-local sync-main-and-local sync-to-remote sync-from-remote
 	@${MAKE} install
 
-sync-to-remote:
+sync-init:
 	@${GIT} checkout ${mainBranch}
 	@${GIT} checkout -B ${localBranch}
+
+sync-from-remote: sync-init
+	@${GIT} checkout ${mainBranch}
+	@${GIT} pull
+	@${GIT} checkout ${localBranch}
+	@${GIT} merge ${mainBranch}
+
+sync-from-local: sync-init
+	@${GIT} checkout ${localBranch}
+	@${MAKE} copy
+	@${GIT} add -up
+	@-${GIT} commit
+
+sync-main-and-local: sync-init
+	@${GIT} checkout ${localBranch}
 	@${MAKE} copy
 	@${GIT} stash
 	@${GIT} checkout ${mainBranch}
-	@${GIT} stash apply -q
+	@${GIT} stash apply
 	@${GIT} mergetool
 	@${GIT} add -up
 	@${GIT} commit
-	@${GIT} push
 	@${GIT} stash drop
+
+sync-to-remote:
+	@${GIT} checkout ${mainBranch}
+	@${GIT} push
