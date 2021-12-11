@@ -35,7 +35,8 @@ else
 endif
 
 .PHONY: sync
-sync: sync-main-to-local sync-from-local sync-main-from-local sync-to-remote sync-to-local
+sync: sync-main-to-local sync-from-local sync-main-from-local sync-to-remote
+	@${MAKE} sync-to-local
 
 .PHONY: sync-init
 sync-init:
