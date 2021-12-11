@@ -41,7 +41,7 @@ sync: sync-main-to-local sync-from-local sync-main-from-local sync-to-remote
 .PHONY: sync-init
 sync-init:
 	@${GIT} checkout ${mainBranch}
-	@${GIT} checkout -B ${localBranch}
+	@-${GIT} checkout -b ${localBranch}
 
 .PHONY: sync-main-to-local
 sync-main-to-local: sync-init sync-from-remote
