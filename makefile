@@ -36,50 +36,56 @@ endif
 
 .PHONY: sync
 sync: sync-main-to-local sync-from-local sync-main-from-local sync-to-remote
-	@${MAKE} sync-to-local
+	@${MAKE} sync-to-local --no-print-directory
 
 .PHONY: sync-init
 sync-init:
-	@${GIT} checkout ${mainBranch}
-	@-${GIT} checkout -b ${localBranch}
+	@${GIT} checkout -q ${mainBranch}
+	@-${GIT} checkout -q -b ${localBranch}
 
 .PHONY: sync-main-to-local
 sync-main-to-local: sync-init sync-from-remote
-	@${GIT} checkout ${localBranch}
+	$(info Sync branch ${mainBranch} to branch ${localBranch})
+	@${GIT} checkout -q ${localBranch}
 	@${GIT} merge ${mainBranch}
 	@${GIT} mergetool
 	@-${GIT} commit
 
 .PHONY: sync-from-remote
 sync-from-remote: sync-init
-	@${GIT} checkout ${mainBranch}
+	$(info Sync branch ${mainBranch} from remote)
+	@${GIT} checkout -q ${mainBranch}
 	@${GIT} pull
 
 .PHONY: sync-from-local
 sync-from-local: sync-init
-	@${GIT} checkout ${localBranch}
-	@${MAKE} copy
+	$(info Sync branch ${localBranch} from local machine)
+	@${GIT} checkout -q ${localBranch}
+	@${MAKE} copy --no-print-directory
 	@${GIT} add -up
 	@-${GIT} commit
 
 .PHONY: sync-main-from-local
 sync-main-from-local: sync-init
-	@${GIT} checkout ${localBranch}
-	@${MAKE} copy
-	@${GIT} stash
-	@${GIT} checkout ${mainBranch}
-	@${GIT} stash apply
+	$(info Sync branch ${mainBranch} from local machine)
+	@${GIT} checkout -q ${localBranch}
+	@${MAKE} copy --no-print-directory
+	@${GIT} stash -q
+	@${GIT} checkout -q ${mainBranch}
+	@${GIT} stash apply -q
 	@${GIT} mergetool
 	@${GIT} add -up
 	@-${GIT} commit
-	@${GIT} stash drop
+	@${GIT} stash drop -q
 
 .PHONY: sync-to-remote
 sync-to-remote:
-	@${GIT} checkout ${mainBranch}
+	$(info Sync branch ${mainBranch} to remote)
+	@${GIT} checkout -q ${mainBranch}
 	@${GIT} push
 
 .PHONY: sync-to-local
 sync-to-local: sync-init sync-main-to-local
-	@${GIT} checkout ${localBranch}
-	@${MAKE} install
+	$(info Sync branch ${localBranch} to local machine)
+	@${GIT} checkout -q ${localBranch}
+	@${MAKE} install --no-print-directory
