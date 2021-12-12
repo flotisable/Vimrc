@@ -105,7 +105,10 @@ ifeq "${OS}" "Windows_NT"
 		${GIT} stash apply -q; \
 		${GIT} mergetool; \
 		${GIT} add -up; \
-		${GIT} commit; \
+		If( '$$( ${GIT} diff-index --cached HEAD )' ) \
+		{ \
+			${GIT} commit; \
+		}; \
 		${GIT} stash drop -q; \
 	}"
 else
@@ -115,7 +118,9 @@ else
 		${GIT} stash apply -q; \
 		${GIT} mergetool; \
 		${GIT} add -up; \
-		${GIT} commit; \
+		if [ -n "$$( ${GIT} diff-index --cached HEAD )" ]; then \
+			${GIT} commit; \
+		fi; \
 		${GIT} stash drop -q; \
 	fi
 endif
