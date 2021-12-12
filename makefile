@@ -101,36 +101,24 @@ ifeq "${OS}" "Windows_NT"
 	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-index HEAD )' ) \
 	{ \
 		${GIT} stash -q; \
+		${GIT} checkout -q ${mainBranch}; \
+		${GIT} stash apply -q; \
+		${GIT} mergetool; \
+		${GIT} add -up; \
+		${GIT} commit; \
+		${GIT} stash drop -q; \
 	}"
 else
 	@if [ -n "$$( ${GIT} diff-index HEAD )" ]; then \
 		${GIT} stash -q; \
-	fi
-endif
-	@${GIT} checkout -q ${mainBranch}
-	@${GIT} stash apply -q
-ifeq "${OS}" "Windows_NT"
-	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-tree ${mainBranch} ${localBranch} )' ) \
-	{ \
+		${GIT} checkout -q ${mainBranch}; \
+		${GIT} stash apply -q; \
 		${GIT} mergetool; \
-	}"
-else
-	@if [ -n "$$( ${GIT} diff-tree ${mainBranch} ${localBranch} )" ]; then \
-		${GIT} mergetool; \
+		${GIT} add -up; \
+		${GIT} commit; \
+		${GIT} stash drop -q; \
 	fi
 endif
-	@${GIT} add -up
-ifeq "${OS}" "Windows_NT"
-	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-index --cached HEAD )' ) \
-	{ \
-		${GIT} commit; \
-	}"
-else
-	@if [ -n "$$( ${GIT} diff-index --cached HEAD )" ]; then \
-		${GIT} commit; \
-	fi
-endif
-	@${GIT} stash drop -q
 
 .PHONY: sync-to-remote
 sync-to-remote:
