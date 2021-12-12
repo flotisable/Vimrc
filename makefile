@@ -13,7 +13,7 @@ default: copy
 .PHONY: copy
 copy:
 ifeq "${OS}" "Windows_NT"
-	powershell -NoProfile ./${scriptDir}/copy.ps1
+	@powershell -NoProfile ./${scriptDir}/copy.ps1
 else
 	@./${scriptDir}/copy.sh
 endif
@@ -40,16 +40,34 @@ sync: sync-main-to-local sync-from-local sync-main-from-local sync-to-remote
 
 .PHONY: sync-init
 sync-init:
-	@${GIT} checkout -q ${mainBranch}
-	@-${GIT} checkout -q -b ${localBranch}
+	@$(if $(shell ${GIT} show-ref ${localBranch}), \
+		$(shell), \
+		${GIT} update-ref refs/heads/${localBranch} $(word 1,$(shell ${GIT} show-ref ${mainBranch})))
 
 .PHONY: sync-main-to-local
 sync-main-to-local: sync-init sync-from-remote
-	$(info Sync branch ${mainBranch} to branch ${localBranch})
+	@$(if $(shell ${GIT} diff-tree ${mainBranch} ${localBranch}), \
+		$(info Sync branch ${mainBranch} to branch ${localBranch}))
 	@${GIT} checkout -q ${localBranch}
-	@${GIT} merge ${mainBranch}
-	@${GIT} mergetool
-	@-${GIT} commit
+ifeq "${OS}" "Windows_NT"
+	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-tree ${mainBranch} ${localBranch} )' ) \
+	{ \
+		${GIT} merge ${mainBranch}; \
+		${GIT} mergetool; \
+	}"
+	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-index --cached HEAD )' ) \
+	{ \
+		${GIT} commit; \
+	}"
+else
+	@if [ -n "$$( ${GIT} diff-tree ${mainBranch} ${localBranch} )" ]; then \
+		${GIT} merge ${mainBranch}; \
+		${GIT} mergetool; \
+	fi
+	@if [ -n "$$( ${GIT} diff-index --cached HEAD )" ]; then \
+		${GIT} commit; \
+	fi
+endif
 
 .PHONY: sync-from-remote
 sync-from-remote: sync-init
@@ -63,19 +81,55 @@ sync-from-local: sync-init
 	@${GIT} checkout -q ${localBranch}
 	@${MAKE} copy --no-print-directory
 	@${GIT} add -up
-	@-${GIT} commit
+ifeq "${OS}" "Windows_NT"
+	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-index --cached HEAD )' ) \
+	{ \
+		${GIT} commit; \
+	}"
+else
+	@if [ -n "$$( ${GIT} diff-index --cached HEAD )" ]; then \
+		${GIT} commit; \
+	fi
+endif
 
 .PHONY: sync-main-from-local
 sync-main-from-local: sync-init
 	$(info Sync branch ${mainBranch} from local machine)
 	@${GIT} checkout -q ${localBranch}
 	@${MAKE} copy --no-print-directory
-	@${GIT} stash -q
+ifeq "${OS}" "Windows_NT"
+	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-index HEAD )' ) \
+	{ \
+		${GIT} stash -q; \
+	}"
+else
+	@if [ -n "$$( ${GIT} diff-index HEAD )" ]; then \
+		${GIT} stash -q; \
+	fi
+endif
 	@${GIT} checkout -q ${mainBranch}
 	@${GIT} stash apply -q
-	@${GIT} mergetool
+ifeq "${OS}" "Windows_NT"
+	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-tree ${mainBranch} ${localBranch} )' ) \
+	{ \
+		${GIT} mergetool; \
+	}"
+else
+	@if [ -n "$$( ${GIT} diff-tree ${mainBranch} ${localBranch} )" ]; then \
+		${GIT} mergetool; \
+	fi
+endif
 	@${GIT} add -up
-	@-${GIT} commit
+ifeq "${OS}" "Windows_NT"
+	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-index --cached HEAD )' ) \
+	{ \
+		${GIT} commit; \
+	}"
+else
+	@if [ -n "$$( ${GIT} diff-index --cached HEAD )" ]; then \
+		${GIT} commit; \
+	fi
+endif
 	@${GIT} stash drop -q
 
 .PHONY: sync-to-remote
