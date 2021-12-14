@@ -50,15 +50,15 @@ sync-main-to-local: sync-init sync-from-remote
 		$(info Sync branch ${mainBranch} to branch ${localBranch}))
 	@${GIT} checkout -q ${localBranch}
 ifeq "${OS}" "Windows_NT"
-	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-tree ${mainBranch} ${localBranch} )' ) \
+	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-tree ${mainBranch} ${localBranch} )" -ne "" ) \
 	{ \
 		${GIT} merge ${mainBranch}; \
 		${GIT} mergetool; \
-	}"
-	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-index --cached HEAD )' ) \
+	}'
+	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index --cached HEAD )" -ne "" ) \
 	{ \
 		${GIT} commit; \
-	}"
+	}'
 else
 	@if [ -n "$$( ${GIT} diff-tree ${mainBranch} ${localBranch} )" ]; then \
 		${GIT} merge ${mainBranch}; \
@@ -82,10 +82,10 @@ sync-from-local: sync-init
 	@${MAKE} copy --no-print-directory
 	@${GIT} add -up
 ifeq "${OS}" "Windows_NT"
-	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-index --cached HEAD )' ) \
+	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index --cached HEAD )" -ne "" ) \
 	{ \
 		${GIT} commit; \
-	}"
+	}'
 else
 	@if [ -n "$$( ${GIT} diff-index --cached HEAD )" ]; then \
 		${GIT} commit; \
@@ -98,19 +98,19 @@ sync-main-from-local: sync-init
 	@${GIT} checkout -q ${localBranch}
 	@${MAKE} copy --no-print-directory
 ifeq "${OS}" "Windows_NT"
-	@powershell -NoProfile -Command "If( '$$( ${GIT} diff-index HEAD )' ) \
+	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index HEAD )" ) \
 	{ \
 		${GIT} stash -q; \
 		${GIT} checkout -q ${mainBranch}; \
 		${GIT} stash apply -q; \
 		${GIT} mergetool; \
 		${GIT} add -up; \
-		If( '$$( ${GIT} diff-index --cached HEAD )' ) \
+		If( "$$( ${GIT} diff-index --cached HEAD )" ) \
 		{ \
 			${GIT} commit; \
 		}; \
 		${GIT} stash drop -q; \
-	}"
+	}'
 else
 	@if [ -n "$$( ${GIT} diff-index HEAD )" ]; then \
 		${GIT} stash -q; \
