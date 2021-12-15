@@ -159,6 +159,7 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
   Plug 'arcticicestudio/nord-vim'
   Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
   Plug 't9md/vim-quickhl'           " mark plugin  標記插件
+  Plug 'vim-scripts/zoom.vim'       " zoom gui font  縮放圖形介面字型
 
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'                  } " plugin for display directory as tree view  樹狀顯示資料夾的插件
   Plug 'majutsushi/tagbar',   { 'on': [ 'Tagbar', 'TagbarCurrentTag' ]  } " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
@@ -264,6 +265,14 @@ if FlotisablePluginExistsAndInRtp( 'vim-quickhl' )
 "
 endif
 " end mark plugin settings
+"}}}
+" gui font plugin settings  圖形介面字型插件設定{{{
+if FlotisablePluginExistsAndInRtp( 'zoom.vim' )
+"
+  noremap <C-0> <Cmd>ZoomReset<Enter> | " set Ctrl+0 key to reset gui font  設定 Ctrl+0 重置圖形介面字型
+"
+endif
+" end gui font plugin settings
 "}}}
 " venter settings  venter 插件設定{{{
 if FlotisablePluginExistsAndInRtp( 'vim-venter' )
