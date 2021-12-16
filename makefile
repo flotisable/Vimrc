@@ -135,4 +135,16 @@ sync-to-remote:
 sync-to-local: sync-init sync-main-to-local
 	$(info Sync branch ${localBranch} to local machine)
 	@${GIT} checkout -q ${localBranch}
+ifeq "${OS}" "Windows_NT"
+	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index HEAD )" ) \
+	{ \
+		${GIT} reset -p; \
+		${GIT} checkout -p; \
+	}'
+else
+	@if [ -n "$$( ${GIT} diff-index HEAD )" ]; then \
+		${GIT} reset -p; \
+		${GIT} checkout -p; \
+	fi
+endif
 	@${MAKE} install --no-print-directory
