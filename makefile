@@ -80,7 +80,7 @@ sync-from-local: sync-init
 	$(info Sync branch ${localBranch} from local machine)
 	@${GIT} checkout -q ${localBranch}
 	@${MAKE} copy --no-print-directory
-	@${GIT} add -up
+	@${GIT} add -i
 ifeq "${OS}" "Windows_NT"
 	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index --cached HEAD )" -ne "" ) \
 	{ \
@@ -104,7 +104,7 @@ ifeq "${OS}" "Windows_NT"
 		${GIT} checkout -q ${mainBranch}; \
 		${GIT} stash apply -q; \
 		${GIT} mergetool; \
-		${GIT} add -up; \
+		${GIT} add -i; \
 		If( "$$( ${GIT} diff-index --cached HEAD )" ) \
 		{ \
 			${GIT} commit; \
@@ -117,7 +117,7 @@ else
 		${GIT} checkout -q ${mainBranch}; \
 		${GIT} stash apply -q; \
 		${GIT} mergetool; \
-		${GIT} add -up; \
+		${GIT} add -i; \
 		if [ -n "$$( ${GIT} diff-index --cached HEAD )" ]; then \
 			${GIT} commit; \
 		fi; \
@@ -138,13 +138,11 @@ sync-to-local: sync-init sync-main-to-local
 ifeq "${OS}" "Windows_NT"
 	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index HEAD )" ) \
 	{ \
-		${GIT} reset -p; \
-		${GIT} checkout -p; \
+		${GIT} add -i; \
 	}'
 else
 	@if [ -n "$$( ${GIT} diff-index HEAD )" ]; then \
-		${GIT} reset -p; \
-		${GIT} checkout -p; \
+		${GIT} add -i; \
 	fi
 endif
 	@${MAKE} install --no-print-directory
