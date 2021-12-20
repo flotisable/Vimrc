@@ -129,7 +129,7 @@ endif
 sync-to-remote:
 	$(info Sync branch ${mainBranch} to remote)
 	@${GIT} checkout -q ${mainBranch}
-	@${GIT} push
+	@-${GIT} push
 
 .PHONY: sync-to-local
 sync-to-local: sync-init sync-main-to-local
