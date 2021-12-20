@@ -80,15 +80,21 @@ sync-from-local: sync-init
 	$(info Sync branch ${localBranch} from local machine)
 	@${GIT} checkout -q ${localBranch}
 	@${MAKE} copy --no-print-directory
-	@${GIT} add -i
 ifeq "${OS}" "Windows_NT"
-	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index --cached HEAD )" -ne "" ) \
+	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index HEAD )" ) \
 	{ \
-		${GIT} commit; \
+		${GIT} add -i; \
+		If( "$$( ${GIT} diff-index --cached HEAD )" ) \
+		{ \
+			${GIT} commit; \
+		}; \
 	}'
 else
-	@if [ -n "$$( ${GIT} diff-index --cached HEAD )" ]; then \
-		${GIT} commit; \
+	@if [ -n "$$( ${GIT} diff-index HEAD )" ]; then \
+		${GIT} add -i; \
+		if [ -n "$$( ${GIT} diff-index --cached HEAD )" ]; then \
+			${GIT} commit; \
+		fi; \
 	fi
 endif
 
