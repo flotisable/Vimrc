@@ -135,7 +135,19 @@ endif
 sync-to-remote:
 	$(info Sync branch ${mainBranch} to remote)
 	@${GIT} checkout -q ${mainBranch}
-	@-${GIT} push
+ifeq "${OS}" "Windows_NT"
+	@powershell -NoProfile -Command '$$isPush = Read-Host "Push commits to remote server?[y/n]"; \
+	If( $$isPush -eq "y" ) \
+	{ \
+		${GIT} push \
+	}'
+else
+	@echo -n "Push commits to remote server?[y/n]: "
+	@read isPush; \
+	if [ "$$isPush" == "y" ]; then \
+		${GIT} push \
+	fi
+endif
 
 .PHONY: sync-to-local
 sync-to-local: sync-init sync-main-to-local
