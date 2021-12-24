@@ -4,8 +4,11 @@ GIT := git
 
 scriptDir := Scripts
 
-mainBranch  := master
-localBranch := local
+mainBranch       := master
+localBranch      := local
+remote           := $(shell ${GIT} config --get branch.${mainBranch}.remote)
+remoteBranch     := $(subst refs/heads/,,$(shell ${GIT} config --get branch.${mainBranch}.merge))
+remoteBranchFull := ${remote}/${remoteBranch}
 
 .PHONY: default
 default: copy
@@ -137,17 +140,23 @@ endif
 sync-to-remote:
 	$(info Sync branch ${mainBranch} to remote)
 	@${GIT} checkout -q ${mainBranch}
+	@${GIT} fetch
 ifeq "${OS}" "Windows_NT"
-	@powershell -NoProfile -Command '$$isPush = Read-Host "Push commits to remote server?[y/n]"; \
-	If( $$isPush -eq "y" ) \
+	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-tree ${mainBranch} ${remoteBranchFull} )" -ne "" ) \
 	{ \
-		${GIT} push \
+		$$isPush = Read-Host "Push commits to remote server?[y/n]"; \
+		If( $$isPush -eq "y" ) \
+		{ \
+			${GIT} push \
+		} \
 	}'
 else
-	@echo -n "Push commits to remote server?[y/n]: "
-	@read isPush; \
-	if [ "$$isPush" == "y" ]; then \
-		${GIT} push; \
+	@if [ -n "$$( ${GIT} diff-tree ${mainBranch} ${remoteBranchFull} )" ]; then \
+		echo -n "Push commits to remote server?[y/n]: "; \
+		read isPush; \
+		if [ "$$isPush" == "y" ]; then \
+			${GIT} push; \
+		fi \
 	fi
 endif
 
