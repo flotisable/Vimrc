@@ -76,7 +76,17 @@ endif
 sync-from-remote: sync-init
 	$(info [Sync branch ${mainBranch} from remote])
 	@${GIT} checkout -q ${mainBranch}
-	@${GIT} pull
+	@${GIT} fetch
+ifeq "${OS}" "Windows_NT"
+	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-tree ${mainBranch} ${remoteBranchFull} )" -ne "" ) \
+	{ \
+		${GIT} pull \
+	}'
+else
+	@if [ -n "$$( ${GIT} diff-tree ${mainBranch} ${remoteBranchFull} )" ]; then \
+		${GIT} pull; \
+	fi
+endif
 
 .PHONY: sync-from-local
 sync-from-local: sync-init
