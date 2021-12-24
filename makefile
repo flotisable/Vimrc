@@ -147,7 +147,7 @@ else
 	@echo -n "Push commits to remote server?[y/n]: "
 	@read isPush; \
 	if [ "$$isPush" == "y" ]; then \
-		${GIT} push \
+		${GIT} push; \
 	fi
 endif
 
