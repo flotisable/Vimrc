@@ -50,7 +50,7 @@ sync-init:
 .PHONY: sync-main-to-local
 sync-main-to-local: sync-init sync-from-remote
 	@$(if $(shell ${GIT} diff-tree ${mainBranch} ${localBranch}), \
-		$(info Sync branch ${mainBranch} to branch ${localBranch}))
+		$(info [Sync branch ${mainBranch} to branch ${localBranch}]))
 	@${GIT} checkout -q ${localBranch}
 ifeq "${OS}" "Windows_NT"
 	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-tree ${mainBranch} ${localBranch} )" -ne "" ) \
@@ -74,13 +74,13 @@ endif
 
 .PHONY: sync-from-remote
 sync-from-remote: sync-init
-	$(info Sync branch ${mainBranch} from remote)
+	$(info [Sync branch ${mainBranch} from remote])
 	@${GIT} checkout -q ${mainBranch}
 	@${GIT} pull
 
 .PHONY: sync-from-local
 sync-from-local: sync-init
-	$(info Sync branch ${localBranch} from local machine)
+	$(info [Sync branch ${localBranch} from local machine])
 	@${GIT} checkout -q ${localBranch}
 	@${MAKE} copy --no-print-directory
 	@${GIT} update-index --refresh || true
@@ -104,7 +104,7 @@ endif
 
 .PHONY: sync-main-from-local
 sync-main-from-local: sync-init
-	$(info Sync branch ${mainBranch} from local machine)
+	$(info [Sync branch ${mainBranch} from local machine])
 	@${GIT} checkout -q ${localBranch}
 	@${MAKE} copy --no-print-directory
 	@${GIT} update-index --refresh || true
@@ -138,7 +138,7 @@ endif
 
 .PHONY: sync-to-remote
 sync-to-remote:
-	$(info Sync branch ${mainBranch} to remote)
+	$(info [Sync branch ${mainBranch} to remote])
 	@${GIT} checkout -q ${mainBranch}
 	@${GIT} fetch
 ifeq "${OS}" "Windows_NT"
@@ -162,7 +162,7 @@ endif
 
 .PHONY: sync-to-local
 sync-to-local: sync-init sync-main-to-local
-	$(info Sync branch ${localBranch} to local machine)
+	$(info [Sync branch ${localBranch} to local machine])
 	@${GIT} checkout -q ${localBranch}
 ifeq "${OS}" "Windows_NT"
 	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index HEAD )" ) \
