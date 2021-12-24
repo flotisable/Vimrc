@@ -86,7 +86,7 @@ endfunction
 " end test pluggin existence
 "}}}
 " wrapper of build in lsp omnifunc  內建 lsp omnifunc 的 wrapper{{{
-" this wrapper function it to make neovim build in lsp omni function work
+" this wrapper function is to make neovim build in lsp omni function work
 " with neocomplcache
 function! FlotisableBuildInLspOmniFunc( findstart, base )
   return v:lua.vim.lsp.omnifunc( a:findstart, a:base )
@@ -445,8 +445,10 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     end
 
     vim.lsp.diagnostic.on_publish_diagnostics = function( error, result, context, config )
+
       defaultHandler( error, result, context, config )
       flotisableOnPublishDiagnosticCore( result )
+
     end
     -- end show diagnostics in quick fix list
     --}}}
@@ -474,7 +476,7 @@ EOF
 
   " set gd key to go to definition  設定 gd 鍵跳至定義
   " set gr key to show reference  設定 gr 鍵顯示參照
-  " set K key to showhover  設定 K 鍵顯示文檔
+  " set K key to show hover  設定 K 鍵顯示文檔
   let g:flotisable.keybindings.lsp = {
     \   'global': {
     \     'gd': '<Cmd>lua vim.lsp.buf.definition()<Enter>',
@@ -504,7 +506,7 @@ elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
 
   " set gd key to go to definition  設定 gd 鍵跳至定義
   " set gr key to show reference  設定 gr 鍵顯示參照
-  " set K key to showhover  設定 K 鍵顯示文檔
+  " set K key to show hover  設定 K 鍵顯示文檔
   let g:flotisable.keybindings.lsp = {
     \   'global': {
     \     'gd': '<Plug>(lcn-definition)',
