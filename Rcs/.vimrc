@@ -468,26 +468,31 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     lsp.pylsp.setup{}
     -- language setup
     --}}}
-EOF
-  " key mappings{{{
-  noremap <Leader>lo <Cmd>LspStart<Enter>|  " set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
-  noremap <Leader>lc <Cmd>LspStop<Enter>|   " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
+    -- key mappings{{{
+    local function noremap( lhs, rhs )
+      vim.api.nvim_set_keymap( '', lhs, rhs, { noremap = true } )
+    end
+    noremap( '<Leader>lo', '<Cmd>LspStart<Enter>' ) -- set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
+    noremap( '<Leader>lc', '<Cmd>LspStop<Enter>'  ) -- set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
-  " set gd key to go to definition  設定 gd 鍵跳至定義
-  " set gr key to show reference  設定 gr 鍵顯示參照
-  " set K key to show hover  設定 K 鍵顯示文檔
-  let g:flotisable.keybindings.lsp = {
-    \   'global': {
-    \     'gd': '<Cmd>lua vim.lsp.buf.definition()<Enter>',
-    \     'gr': '<Cmd>lua vim.lsp.buf.references()<Enter>',
-    \     'K':  '<Cmd>lua vim.lsp.buf.hover()<Enter>'
-    \   },
-    \   'cpp': {
-    \     '<Leader>a': '<Cmd>ClangdSwitchSourceHeader<Enter>'
-    \   }
-    \ }
-  " end key mappings
-  "}}}
+    local flotisable = vim.g.flotisable
+    flotisable.keybindings.lsp =
+    {
+      global =
+      {
+        gd  = '<Cmd>lua vim.lsp.buf.definition()<Enter>', -- set gd key to go to definition  設定 gd 鍵跳至定義
+        gr  = '<Cmd>lua vim.lsp.buf.references()<Enter>', -- set gr key to show reference  設定 gr 鍵顯示參照
+        K   =  '<Cmd>lua vim.lsp.buf.hover()<Enter>'      -- set K key to show hover  設定 K 鍵顯示文檔
+      },
+      cpp =
+      {
+        ['<Leader>a'] = '<Cmd>ClangdSwitchSourceHeader<Enter>'
+      }
+    }
+    vim.g.flotisable = flotisable
+    -- end key mappings
+    --}}}
+EOF
 "
 elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
 "
