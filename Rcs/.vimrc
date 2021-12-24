@@ -59,10 +59,9 @@ endif
 " end option settings
 "}}}
 " self defined settings  自定義設定{{{
-let g:flotisable = {
-  \   'keybindings': {
-  \     'lsp': {}
-  \   },
+let g:flotisable =
+  \ {
+  \   'keybindings':          { 'lsp': {} },
   \   'pluginRoot':           $HOME . '/.vim/plugged',
   \   'powershellBundlePath': $HOME . '/Applications/PowerShellEditorServices',
   \   'snippetAuthor':        'Flotisable'
@@ -492,13 +491,14 @@ EOF
 "
 elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
 "
-  let g:LanguageClient_serverCommands = {
-    \ 'cpp':    ['clangd'],
-    \ 'sh':     ['bash-language-server','start'],
-    \ 'vim':    ['vim-language-server','--stdio'],
-    \ 'rust':   ['rust-analyzer'],
-    \ 'raku':   ['efm-langserver'],
-    \ 'python': ['pylsp']
+  let g:LanguageClient_serverCommands =
+    \ {
+    \   'cpp':    ['clangd'],
+    \   'sh':     ['bash-language-server','start'],
+    \   'vim':    ['vim-language-server','--stdio'],
+    \   'rust':   ['rust-analyzer'],
+    \   'raku':   ['efm-langserver'],
+    \   'python': ['pylsp']
     \ }
 
   noremap <Leader>lo <Cmd>LanguageClientStart<Enter>| " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
@@ -507,13 +507,16 @@ elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
   " set gd key to go to definition  設定 gd 鍵跳至定義
   " set gr key to show reference  設定 gr 鍵顯示參照
   " set K key to show hover  設定 K 鍵顯示文檔
-  let g:flotisable.keybindings.lsp = {
-    \   'global': {
+  let g:flotisable.keybindings.lsp =
+    \ {
+    \   'global':
+    \   {
     \     'gd': '<Plug>(lcn-definition)',
     \     'gr': '<Plug>(lcn-references)',
     \     'K':  '<Plug>(lcn-hover)'
     \   },
-    \   'cpp': {
+    \   'cpp':
+    \   {
     \     '<Leader>a': '<Cmd>call LanguageClient#Call( "textDocument/switchSourceHeader", { "uri": expand("%") }, v:null )<Enter>'
     \   }
     \ }
@@ -548,7 +551,8 @@ if FlotisablePluginExistsAndInRtp( 'vim-snipmate' )
   imap <C-s> <Plug>snipMateShow| " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
 
   " use Ctrl+n, Ctrl+p to select multiple snippet  用 Ctrl+n, Ctrl+p 選擇程式片段
-  let g:tlib_extend_keyagents_InputList_s = {
+  let g:tlib_extend_keyagents_InputList_s =
+    \ {
     \ 16: 'tlib#agent#Up',
     \ 14: 'tlib#agent#Down'
     \ }
