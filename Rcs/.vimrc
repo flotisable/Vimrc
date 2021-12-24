@@ -128,11 +128,6 @@ function! FlotisableCustomHighlight()
   highlight DiffText    cterm=bold ctermfg=Yellow ctermbg=Red       gui=bold guifg='Yellow' guibg='Red'
   highlight DiffDelete                            ctermbg=Red                               guibg='Red'
 
-  highlight link LspDiagnosticsDefaultError       Error
-  highlight link LspDiagnosticsDefaultWarning     Todo
-  highlight link LspDiagnosticsDefaultHint        Todo
-  highlight link LspDiagnosticsDefaultInformation Todo
-
   highlight Pmenu gui=NONE guibg=Grey
 "
 endfunction
@@ -395,24 +390,28 @@ endif
 " LSP client settings  LSP 客戶端設定{{{
 if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
 "
-  " sign setup  符號設定{{{
-  call sign_define( 'LspDiagnosticsSignError',
-    \ { 'text': "✖", 'texthl': 'LspDiagnosticsSignError' } )
-  call sign_define( 'LspDiagnosticsSignWarning',
-    \ { 'text': "⚠", 'texthl': 'LspDiagnosticsSignWarning' } )
-  call sign_define( 'LspDiagnosticsSignHint',
-    \ { 'text': "➤", 'texthl': 'LspDiagnosticsSignHint' } )
-  call sign_define( 'LspDiagnosticsSignInformation',
-    \ { 'text': "ℹ", 'texthl': 'LspDiagnosticsSignInformation' } )
-  " end sign setup
-  "}}}
   lua << EOF
     local lsp = require'lspconfig'
 
+    -- sign setup  符號設定{{{
+    local signs = {
+                    DiagnosticSignError = "✖",
+                    DiagnosticSignWarn  = "⚠",
+                    DiagnosticSignHint  = "➤",
+                    DiagnosticSignInfo  = "ℹ"
+                  }
+
+    for type, sign in pairs( signs ) do
+      vim.fn.sign_define( type, { text = sign, texthl = type } )
+    end
+    -- end sign setup
+    --}}}
     -- use lsp omni function when a language server is attached{{{
     local function flotisableOnAttach( client, buffer )
+
       vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc' )
       vim.fn.FlotisableLspMaps( true )
+
     end
 
     lsp.util.default_config = vim.tbl_extend(
