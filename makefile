@@ -80,6 +80,7 @@ sync-from-local: sync-init
 	$(info Sync branch ${localBranch} from local machine)
 	@${GIT} checkout -q ${localBranch}
 	@${MAKE} copy --no-print-directory
+	@${GIT} update-index --refresh || true
 ifeq "${OS}" "Windows_NT"
 	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index HEAD )" ) \
 	{ \
@@ -103,6 +104,7 @@ sync-main-from-local: sync-init
 	$(info Sync branch ${mainBranch} from local machine)
 	@${GIT} checkout -q ${localBranch}
 	@${MAKE} copy --no-print-directory
+	@${GIT} update-index --refresh || true
 ifeq "${OS}" "Windows_NT"
 	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index HEAD )" ) \
 	{ \
