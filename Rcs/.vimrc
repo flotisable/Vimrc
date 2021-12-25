@@ -59,7 +59,7 @@ endif
 " end option settings
 "}}}
 " self defined settings  自定義設定{{{
-let g:flotisable =
+let g:my =
   \ {
   \   'keybindings':          { 'lsp': {} },
   \   'pluginRoot':           $HOME . '/.vim/plugged',
@@ -71,13 +71,13 @@ let g:flotisable =
 " self defined functions  自定義的函式{{{
 " test pluggin existence  檢測插件是否存在{{{
 " this function is add since old vim not support optional argument
-function! FlotisablePluginExistsAndInRtp( name )
-  return FlotisablePluginExists( a:name, 1 )
+function! MyPluginExistsAndInRtp( name )
+  return MyPluginExists( a:name, 1 )
 endfunction
 
-function! FlotisablePluginExists( name, isCheckRtp )
+function! MyPluginExists( name, isCheckRtp )
 "
-  let l:fullName = g:flotisable.pluginRoot . '/' . a:name
+  let l:fullName = g:my.pluginRoot . '/' . a:name
 
   return isdirectory( l:fullName ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
 "
@@ -87,13 +87,13 @@ endfunction
 " wrapper of build in lsp omnifunc  內建 lsp omnifunc 的 wrapper{{{
 " this wrapper function is to make neovim build in lsp omni function work
 " with neocomplcache
-function! FlotisableBuildInLspOmniFunc( findstart, base )
+function! MyBuildInLspOmniFunc( findstart, base )
   return v:lua.vim.lsp.omnifunc( a:findstart, a:base )
 endfunction
 " end wrapper of build in lsp omnifunc
 "}}}
 " setup buffer local keybinding for lsp  設定 lsp buffer local 的按鍵{{{
-function! FlotisableLspMaps( isNvimBuiltin )
+function! MyLspMaps( isNvimBuiltin )
 "
   if !a:isNvimBuiltin && !has_key( g:LanguageClient_serverCommands, &filetype )
     return
@@ -103,21 +103,21 @@ function! FlotisableLspMaps( isNvimBuiltin )
 
   for scope in [ "global", &filetype ]
   "
-    if !exists( 'g:flotisable.keybindings.lsp["' . scope . '"]' )
+    if !exists( 'g:my.keybindings.lsp["' . scope . '"]' )
       continue
     endif
 
-    for key in keys( g:flotisable.keybindings.lsp[scope] )
-      execute printf( l:mapFormat, key, g:flotisable.keybindings.lsp[scope][key] )
+    for key in keys( g:my.keybindings.lsp[scope] )
+      execute printf( l:mapFormat, key, g:my.keybindings.lsp[scope][key] )
     endfor
   "
   endfor
 "
 endfunction
-" end setup buffer local keybinding for LanguageClient-neovim
+" end setup buffer local keybinding for lsp
 "}}}
 " customize highlight  設定介面的顏色{{{
-function! FlotisableCustomHighlight()
+function! MyCustomHighlight()
 "
   highlight CursorColumn  cterm=NONE ctermbg=Grey
   highlight CursorLine    cterm=NONE ctermbg=Grey
@@ -147,7 +147,7 @@ autocmd FileType * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complet
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
 if filereadable( $HOME . '/.vim/autoload/plug.vim' )
 "
-  call plug#begin( flotisable.pluginRoot )
+  call plug#begin( g:my.pluginRoot )
 
   " basic plugins  基本的插件{{{
   Plug 'arcticicestudio/nord-vim'
@@ -240,7 +240,7 @@ endif
 " end vim-plug settings
 "}}}
 " bufferize settings  bufferize 插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'bufferize.vim' )
+if MyPluginExistsAndInRtp( 'bufferize.vim' )
 "
   noremap <Leader>bb :Bufferize |       " set \bb to bufferize command  設定 \bb bufferize vim 命令
   noremap <Leader>bs :BufferizeSystem | " set \bs to bufferize system commad  設定 \bs bufferize 系統命令
@@ -250,7 +250,7 @@ endif
 " end bufferize settings
 "}}}
 " mark plugin settings  標記插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'vim-quickhl' )
+if MyPluginExistsAndInRtp( 'vim-quickhl' )
 "
   nmap <Leader>m <Plug>(quickhl-manual-this)|   " set \m key to set mark  設定 \m 鍵設置標籤
   xmap <Leader>m <Plug>(quickhl-manual-this)|   " set \m key to set mark  設定 \m 鍵設置標籤
@@ -261,7 +261,7 @@ endif
 " end mark plugin settings
 "}}}
 " gui font plugin settings  圖形介面字型插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'zoom.vim' )
+if MyPluginExistsAndInRtp( 'zoom.vim' )
 "
   noremap <C-0> <Cmd>ZoomReset<Enter> | " set Ctrl+0 key to reset gui font  設定 Ctrl+0 重置圖形介面字型
 "
@@ -269,7 +269,7 @@ endif
 " end gui font plugin settings
 "}}}
 " venter settings  venter 插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'vim-venter' )
+if MyPluginExistsAndInRtp( 'vim-venter' )
 "
   let g:venter_use_textwidth = v:true
 
@@ -279,20 +279,20 @@ endif
 " end venter settings
 "}}}
 " nerdtree settings  nerdtree 插件設定{{{
-if FlotisablePluginExists( 'nerdtree', 0 )
+if MyPluginExists( 'nerdtree', 0 )
   noremap <C-x> <Cmd>NERDTreeToggle<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
 endif
 " end nerdtree settings
 "}}}
 " tagbar settings  tagbar 插件設定{{{
-if FlotisablePluginExists( 'tagbar', 0 )
+if MyPluginExists( 'tagbar', 0 )
   noremap <Leader>t <Cmd>Tagbar<Enter>|           " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
   noremap <Leader>T <Cmd>TagbarCurrentTag<Enter>| " set \T to show current tag  設定 \T 顯示現在的 tag
 endif
 " end tagbar settings
 "}}}
 " interactive finder plugin settings  互動式查詢插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'vim-clap' )
+if MyPluginExistsAndInRtp( 'vim-clap' )
 "
   let g:clap_theme  = 'material_design_dark'
   let g:clap_layout = {
@@ -327,7 +327,7 @@ endif
 " end interactive finder plugin settings
 "}}}
 " neoterm settings  neoterm 插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'neoterm' )
+if MyPluginExistsAndInRtp( 'neoterm' )
 "
   let g:neoterm_autoinsert  = 1       " 開啟終端機後進入終端機模式  enter terminal mode after open the terminal
   let g:neoterm_default_mod = ":tab"  " 設定以 tab 開啟終端機  open terminal in a tab
@@ -343,7 +343,7 @@ endif
 " end neoterm settings
 "}}}
 " vim-cpp-enhanced-highlight settings  C++ 語法高亮插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'vim-cpp-enhanced-highlight' )
+if MyPluginExistsAndInRtp( 'vim-cpp-enhanced-highlight' )
 "
   let g:cpp_class_scope_highlight     = 1
   let g:cpp_member_variable_highlight = 1
@@ -353,7 +353,7 @@ endif
 " end vim-cpp-enhanced-highlight settings
 "}}}
 " nvim-treesitter settings  nvim-treesitter 設定{{{
-if FlotisablePluginExistsAndInRtp( 'nvim-treesitter' )
+if MyPluginExistsAndInRtp( 'nvim-treesitter' )
 "
   lua << EOF
     require'nvim-treesitter.configs'.setup
@@ -367,7 +367,7 @@ endif
 " end nvim-treesitter settings
 "}}}
 " completion plugin settings  補全插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'vim-mucomplete' )
+if MyPluginExistsAndInRtp( 'vim-mucomplete' )
 "
   let g:mucomplete#no_mappings = 1
 
@@ -375,7 +375,7 @@ if FlotisablePluginExistsAndInRtp( 'vim-mucomplete' )
   autocmd FileType    clap_input  MUcompleteAutoOff
   autocmd InsertEnter *           if &filetype != 'clap_input' | MUcompleteAutoOn | endif
 "
-elseif FlotisablePluginExistsAndInRtp( 'neocomplcache.vim' )
+elseif MyPluginExistsAndInRtp( 'neocomplcache.vim' )
 "
   " the plugin has the issue that it can auto insert the completion when set
   " noselect in completeopt
@@ -387,7 +387,7 @@ endif
 " end completion plugin settings
 "}}}
 " LSP client settings  LSP 客戶端設定{{{
-if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
+if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
 "
   lua << EOF
     local lsp = require'lspconfig'
@@ -406,24 +406,24 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     -- end sign setup
     --}}}
     -- use lsp omni function when a language server is attached{{{
-    local function flotisableOnAttach( client, buffer )
+    local function myOnAttach( client, buffer )
 
-      vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'FlotisableBuildInLspOmniFunc' )
-      vim.fn.FlotisableLspMaps( true )
+      vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'MyBuildInLspOmniFunc' )
+      vim.fn.MyLspMaps( true )
 
     end
 
     lsp.util.default_config = vim.tbl_extend(
       "force",
       lsp.util.default_config,
-      { on_attach = flotisableOnAttach }
+      { on_attach = myOnAttach }
     )
     -- end use lsp omni function when a language server is attached
     --}}}
     -- show diagnostics in quick fix list{{{
     local defaultHandler = vim.lsp.diagnostic.on_publish_diagnostics
 
-    local function flotisableOnPublishDiagnosticCore( result )
+    local function myOnPublishDiagnosticCore( result )
 
       if not result or not result.diagnostics or #result.diagnostics == 0 then
         do return end
@@ -446,7 +446,7 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     vim.lsp.diagnostic.on_publish_diagnostics = function( error, result, context, config )
 
       defaultHandler( error, result, context, config )
-      flotisableOnPublishDiagnosticCore( result )
+      myOnPublishDiagnosticCore( result )
 
     end
     -- end show diagnostics in quick fix list
@@ -463,7 +463,7 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     }
     lsp.powershell_es.setup
     {
-      bundle_path = vim.g.flotisable.powershellBundlePath
+      bundle_path = vim.g.my.powershellBundlePath
     }
     lsp.pylsp.setup{}
     -- language setup
@@ -475,8 +475,8 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
     noremap( '<Leader>lo', '<Cmd>LspStart<Enter>' ) -- set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
     noremap( '<Leader>lc', '<Cmd>LspStop<Enter>'  ) -- set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
-    local flotisable = vim.g.flotisable
-    flotisable.keybindings.lsp =
+    local my = vim.g.my
+    my.keybindings.lsp =
     {
       global =
       {
@@ -489,12 +489,12 @@ if FlotisablePluginExistsAndInRtp( 'nvim-lspconfig' )
         ['<Leader>a'] = '<Cmd>ClangdSwitchSourceHeader<Enter>'
       }
     }
-    vim.g.flotisable = flotisable
+    vim.g.my = my
     -- end key mappings
     --}}}
 EOF
 "
-elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
+elseif MyPluginExistsAndInRtp( 'LanguageClient-neovim' )
 "
   let g:LanguageClient_serverCommands =
     \ {
@@ -512,7 +512,7 @@ elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
   " set gd key to go to definition  設定 gd 鍵跳至定義
   " set gr key to show reference  設定 gr 鍵顯示參照
   " set K key to show hover  設定 K 鍵顯示文檔
-  let g:flotisable.keybindings.lsp =
+  let g:my.keybindings.lsp =
     \ {
     \   'global':
     \   {
@@ -526,13 +526,13 @@ elseif FlotisablePluginExistsAndInRtp( 'LanguageClient-neovim' )
     \   }
     \ }
 
-  autocmd Filetype * call FlotisableLspMaps( v:false )
+  autocmd Filetype * call MyLspMaps( v:false )
 "
 endif
 " end LSP client settings
 "}}}
 " VCS diff plugin settings  版本控制差異插件設定{{{
-if FlotisablePluginExistsAndInRtp( 'vim-signify' )
+if MyPluginExistsAndInRtp( 'vim-signify' )
 "
   set updatetime=100
 
@@ -547,9 +547,9 @@ endif
 " end VCS diff plugin settings
 "}}}
 " code snippet settings  code snippet 設定{{{
-if FlotisablePluginExistsAndInRtp( 'vim-snipmate' )
+if MyPluginExistsAndInRtp( 'vim-snipmate' )
 "
-  let g:snips_author              = g:flotisable.snippetAuthor
+  let g:snips_author              = g:my.snippetAuthor
   let g:snipMate                  = {}
   let g:snipMate.snippet_version  = 1
 
@@ -568,7 +568,7 @@ endif
 " end plugin settings
 "}}}
 " highlight setup  高亮設定{{{
-if FlotisablePluginExistsAndInRtp( 'nord-vim' )
+if MyPluginExistsAndInRtp( 'nord-vim' )
   colorscheme nord
 elseif has( 'gui_running' ) " colorscheme in gui  圖形介面顏色主題
   colorscheme desert
@@ -576,9 +576,9 @@ else                        " colorscheme in terminal  終端機顏色主題
   colorscheme elflord
 endif
 
-call FlotisableCustomHighlight()
+call MyCustomHighlight()
 
-autocmd ColorScheme * call FlotisableCustomHighlight()
+autocmd ColorScheme * call MyCustomHighlight()
 " end highlight setup
 "}}}
 " key mapping  快捷鍵設定{{{

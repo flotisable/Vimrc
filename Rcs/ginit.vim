@@ -1,6 +1,6 @@
 if exists( 'g:GuiLoaded' )
 "
-  function! FlotisableToggleFullScreen()
+  function! MyToggleFullScreen()
   "
     if g:GuiWindowFullScreen == 1
       call GuiWindowFullScreen( 0 )
@@ -14,11 +14,11 @@ if exists( 'g:GuiLoaded' )
 
   GuiTabline 0
 
-  noremap <F11> <Cmd>call FlotisableToggleFullScreen()<Enter>
+  noremap <F11> <Cmd>call MyToggleFullScreen()<Enter>
 "
 endif
 
-if FlotisablePluginExistsAndInRtp( 'nord-vim' )
+if MyPluginExistsAndInRtp( 'nord-vim' )
   colorscheme nord
 else
   colorscheme desert
