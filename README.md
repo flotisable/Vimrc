@@ -133,31 +133,33 @@
 # Key Bindings
   | Keybinding    | Required Plugin                         | Other Requirement | Action                                |
   | ------------- | --------------------------------------- | ----------------- | ------------------------------------- |
-  | Ctrl + s      | neoterm                                 | builtin terminal  | toggle builtin terminal               |
+  | \<Leader> bb  | bufferize.vim                           |                   | bufferize command                     |
+  | \<Leader> bs  | bufferize.vim                           |                   | bufferize system command              |
+  | \<Leader> bn  | bufferize.vim                           |                   | bufferize normal mode command         |
+  | \<Leader> m   | vim-quickhl                             |                   | set mark highlight                    |
+  | \<Leader> M   | vim-quickhl                             |                   | clear mark highlight                  |
+  | Ctrl + 0      | zoom.vim                                |                   | reset gui font                        |
+  | \<Leader> C   | vim-venter                              |                   | center window text                    |
   | Ctrl + x      | nerdtree                                |                   | toggle the tree browser               |
   | \<Leader> t   | tagbar                                  | ctags             | toggle tagbar, show the tags overview |
   | \<Leader> T   | tagbar                                  | ctags             | show tag in current cursor position   |
-  | \<Leader> s   | vim-signify                             |                   | toggle VCS diff                       |
-  | \<Leader> d   | vim-signify                             | VCS               | show VCS hunk diff                    |
-  | \<Leader> u   | vim-signify                             | VCS               | undo VCS hunk                         |
-  | \<Leader> D   | vim-signify                             | VCS               | show VCS full diff                    |
+  | \<Leader> F   | vim-clap                                |                   | open fuzzy finder providers           |
+  | g/            | vim-clap                                |                   | search in file                        |
+  | gb            | vim-clap                                |                   | search buffer                         |
+  | \<Leader> f   | vim-clap                                |                   | search file                           |
+  | \<Leader> g   | vim-clap                                | ripgrep           | grep files                            |
+  | Ctrl + s      | neoterm                                 | builtin terminal  | toggle builtin terminal               |
   | \<Leader> lo  | nvim-lspconfig or LanguageClient-neovim |                   | start language client                 |
   | \<Leader> lc  | nvim-lspconfig or LanguageClient-neovim |                   | stop language client                  |
   |  gd           | nvim-lspconfig or LanguageClient-neovim | language server   | go to definition                      |
   |  gr           | nvim-lspconfig or LanguageClient-neovim | language server   | find reference                        |
   |  K            | nvim-lspconfig or LanguageClient-neovim | language server   | show hover                            |
   | \<Leader> a   | nvim-lspconfig or LanguageClient-neovim | clangd            | switch c++ header, source file        |
-  | \<Leader> m   | vim-quickhl                             |                   | set mark highlight                    |
-  | \<Leader> M   | vim-quickhl                             |                   | clear mark highlight                  |
-  | \<Leader> F   | vim-clap                                |                   | open fuzzy finder providers           |
-  | g/            | vim-clap                                |                   | search in file                        |
-  | gb            | vim-clap                                |                   | search buffer                         |
-  | \<Leader> f   | vim-clap                                |                   | search file                           |
-  | \<Leader> g   | vim-clap                                | ripgrep           | grep files                            |
+  | \<Leader> s   | vim-signify                             |                   | toggle VCS diff                       |
+  | \<Leader> d   | vim-signify                             | VCS               | show VCS hunk diff                    |
+  | \<Leader> u   | vim-signify                             | VCS               | undo VCS hunk                         |
+  | \<Leader> D   | vim-signify                             | VCS               | show VCS full diff                    |
   | Ctrl + s      | vim-snipmate                            | insert mode       | show available snippets               |
-  | \<Leader> bb  | bufferize.vim                           |                   | bufferize command                     |
-  | \<Leader> bs  | bufferize.vim                           |                   | bufferize system command              |
-  | \<Leader> bn  | bufferize.vim                           |                   | bufferize normal mode command         |
   | Ctrl + q      |                                         | builtin terminal  | exit terminal mode                    |
   | \<Leader> r   |                                         |                   | toggle relative line number           |
   | \<Leader> c   |                                         |                   | toggle cursor line, column highlight  |
@@ -182,25 +184,26 @@
   | Ctrl + _ d    |                                         | cscope            | cscope find function called           |
 
 # Self Defined Functions
-  | Function                                        | Description                                             |
-  | ----------------------------------------------- | ------------------------------------------------------- |
-  | FlotisablePluginExistsAndInRtp( name )          | test pluggin existence and in runtimepath               |
-  | FlotisablePluginExists( name, isCheckRtp )      | test pluggin existence                                  |
-  | FlotisableToggleClapPreviewDirection()          | toggle interactive fuzzy finder preview direction       |
-  | FlotisableBuildInLspOmniFunc( findstart, base ) | wrapper of builtin lsp omnifunc                         |
-  | FlotisableLspMaps( isNvimBuiltin )              | setup buffer local keybinding for lsp                   |
-  | FlotisableCustomHighlight()                     | setup custom highlight to overwrite colorscheme         |
+  | Function                                | Description                                             |
+  | --------------------------------------- | ------------------------------------------------------- |
+  | MyPluginExistsAndInRtp( name )          | test pluggin existence and in runtimepath               |
+  | MyPluginExists( name, isCheckRtp )      | test pluggin existence                                  |
+  | MyBuildInLspOmniFunc( findstart, base ) | wrapper of builtin lsp omnifunc                         |
+  | MyLspMaps( isNvimBuiltin )              | setup buffer local keybinding for lsp                   |
+  | MyCustomHighlight()                     | setup custom highlight to overwrite colorscheme         |
 
 # Plugins
   | Category          | Plugin                                                                            | Purpose                                                                     | Requirement                                                         |
   | ----------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------- |
   | Plugin Manager    | [vim-plug](https://github.com/junegunn/vim-plug)                                  | vim plugins manager                                                         |                                                                     |
-  | Colorscheme       | [kalahari.vim](https://github.com/fabi1cazenave/kalahari.vim)                     | dark, high contrast colorscheme                                             |                                                                     |
+  | Colorscheme       | [nord-vim](https://github.com/arcticicestudio/nord-vim)                           | dark, smooth colorscheme                                                    |                                                                     |
   | UI                | [nerdtree](https://github.com/scrooloose/nerdtree)                                | to browse the directory in a tree view                                      |                                                                     |
   |                   | [tagbar](https://github.com/majutsushi/tagbar)                                    | to display tags                                                             | [ctags](#for-ctags)                                                 |
   |                   | [bufferize.vim](https://github.com/AndrewRadev/bufferize.vim)                     | make command output a buffer                                                |                                                                     |
   |                   | [vim-clap](https://github.com/liuchengxu/vim-clap)                                | plugin for interactive finder and dispatcher                                | nvim 0.4.2 or patch 8.1.2114                                        |
   |                   | [neoterm](https://github.com/kassio/neoterm)                                      | terminal plugin                                                             | builtin terminal                                                    |
+  |                   | [zoom.vim](https://github.com/vim-scripts/zoom.vim)                               | zoom gui font                                                               | gui                                                                 |
+  |                   | [vim-venter](https://github.com/JMcKiern/vim-venter)                              | center window text                                                          | nvim or vim 8.0                                                     |
   | Language Specific | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)             | treesitter syntax highlight                                                 | nvim 0.5, c compiler                                                |
   |                   | [vim-cpp-enhanced-highlight](http://github.com/octol/vim-cpp-enhanced-highlight)  | to add some highlight feature of C++                                        |                                                                     |
   |                   | [vim-toml](https://github.com/cespare/vim-toml)                                   | syntax highlight of [toml](https://toml.io/en/)                             |                                                                     |

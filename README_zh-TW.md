@@ -131,31 +131,33 @@
 # 快捷鍵設定
   | 快捷鍵        | 需要的插件                              | 其他需求        | 功能                      |
   | ------------- | --------------------------------------- | --------------- | ------------------------- |
-  | Ctrl + s      | neoterm                                 | 內建終端機      | 開關內建終端機            |
+  | \<Leader> bb  | bufferize.vim                           |                 | bufferize vim 命令        |
+  | \<Leader> bs  | bufferize.vim                           |                 | bufferize 系統命令        |
+  | \<Leader> bn  | bufferize.vim                           |                 | bufferize 一般模式命令    |
+  | \<Leader> m   | vim-quickhl                             |                 | 設置標籤高亮              |
+  | \<Leader> M   | vim-quickhl                             |                 | 清除標籤高亮              |
+  | Ctrl + 0      | zoom.vim                                |                 | 重置圖形介面字型          |
+  | \<Leader> C   | vim-venter                              |                 | 置中視窗文字              |
   | Ctrl + x      | nerdtree                                |                 | 開關樹狀檢視器            |
   | \<Leader> t   | tagbar                                  | ctags           | 開關 tag 顯示             |
   | \<Leader> T   | tagbar                                  | ctags           | 顯示當前游標所在的 tag    |
-  | \<Leader> s   | vim-signify                             |                 | 開關版本控制差異插件      |
-  | \<Leader> d   | vim-signify                             | 版本控制程式    | 顯示版本控制片段差異      |
-  | \<Leader> u   | vim-signify                             | 版本控制程式    | 回復版本控制片段          |
-  | \<Leader> D   | vim-signify                             | 版本控制程式    | 顯示版本控制差異          |
+  | \<Leader> F   | vim-clap                                |                 | 開啟模糊搜尋選單          |
+  | g/            | vim-clap                                |                 | 檔案內搜尋                |
+  | gb            | vim-clap                                |                 | 搜尋 buffer               |
+  | \<Leader> f   | vim-clap                                |                 | 搜尋檔案                  |
+  | \<Leader> f   | vim-clap                                | ripgrep         | 搜尋檔案內容              |
+  | Ctrl + s      | neoterm                                 | 內建終端機      | 開關內建終端機            |
   | \<Leader> lo  | nvim-lspconfig 或 LanguageClient-neovim |                 | 開啟 LSP 客戶端           |
   | \<Leader> lc  | nvim-lspconfig 或 LanguageClient-neovim |                 | 關閉 LSP 客戶端           |
   |  gd           | nvim-lspconfig 或 LanguageClient-neovim | language server | 尋找定義                  |
   |  gr           | nvim-lspconfig 或 LanguageClient-neovim | language server | 尋找參考                  |
   |  K            | nvim-lspconfig 或 LanguageClient-neovim | language server | 顯示文檔                  |
   | \<Leader> a   | nvim-lspconfig 或 LanguageClient-neovim | clangd          | 切換 c++ 標頭與原始碼     |
-  | \<Leader> m   | vim-quickhl                             |                 | 設置標籤高亮              |
-  | \<Leader> M   | vim-quickhl                             |                 | 清除標籤高亮              |
-  | \<Leader> F   | vim-clap                                |                 | 開啟模糊搜尋選單          |
-  | g/            | vim-clap                                |                 | 檔案內搜尋                |
-  | gb            | vim-clap                                |                 | 搜尋 buffer               |
-  | \<Leader> f   | vim-clap                                |                 | 搜尋檔案                  |
-  | \<Leader> f   | vim-clap                                | ripgrep         | 搜尋檔案內容              |
+  | \<Leader> s   | vim-signify                             |                 | 開關版本控制差異插件      |
+  | \<Leader> d   | vim-signify                             | 版本控制程式    | 顯示版本控制片段差異      |
+  | \<Leader> u   | vim-signify                             | 版本控制程式    | 回復版本控制片段          |
+  | \<Leader> D   | vim-signify                             | 版本控制程式    | 顯示版本控制差異          |
   | Ctrl + s      | vim-snipmate                            | 插入模式        | 顯示可用的程式碼片段      |
-  | \<Leader> bb  | bufferize.vim                           |                 | bufferize vim 命令        |
-  | \<Leader> bs  | bufferize.vim                           |                 | bufferize 系統命令        |
-  | \<Leader> bn  | bufferize.vim                           |                 | bufferize 一般模式命令    |
   | Ctrl + q      |                                         | 內建終端機      | 離開終端機模式            |
   | \<Leader> r   |                                         |                 | 切換相對行號顯示          |
   | \<Leader> c   |                                         |                 | 切換游標高亮              |
@@ -180,31 +182,32 @@
   | Ctrl + _ d    |                                         | cscope          | cscope 尋找函數呼叫       |
 
 # 自定義函式
-  | 函數                                            | 功能                                        |
-  | ----------------------------------------------- | ------------------------------------------- |
-  | FlotisablePluginExistsAndInRtp( name )          | 檢測插件是否存在與在 runtimepath            |
-  | FlotisablePluginExists( name, isCheckRtp )      | 檢測插件是否存在                            |
-  | FlotisableToggleClapPreviewDirection()          | 切換模糊搜尋器預覽方向                      |
-  | FlotisableBuildInLspOmniFunc( findstart, base ) | 內建 lsp omni 的 wrapper                    |
-  | FlotisableLspMaps( isNvimBuiltin )              | lsp 的按鍵設定                              |
-  | FlotisableCustomHighlight()                     | 自訂顏色                                    |
+  | 函數                                    | 功能                                        |
+  | --------------------------------------- | ------------------------------------------- |
+  | MyPluginExistsAndInRtp( name )          | 檢測插件是否存在與在 runtimepath            |
+  | MyPluginExists( name, isCheckRtp )      | 檢測插件是否存在                            |
+  | MyBuildInLspOmniFunc( findstart, base ) | 內建 lsp omni 的 wrapper                    |
+  | MyLspMaps( isNvimBuiltin )              | lsp 的按鍵設定                              |
+  | MyCustomHighlight()                     | 自訂顏色                                    |
 
 # 插件
   | 分類          | 插件                                                                              | 用途                                                            | 需求                                                                |
   | ------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------- |
   | 插件管理員    | [vim-plug](https://github.com/junegunn/vim-plug)                                  | vim 插件管理員                                                  |                                                                     |
-  | 色彩方案      | [kalahari.vim](https://github.com/fabi1cazenave/kalahari.vim)                     | 暗色高對比色彩方案                                              |                                                                     |
+  | 色彩方案      | [nord-vim](https://github.com/arcticicestudio/nord-vim)                           | 暗色柔和色彩方案                                                |                                                                     |
   | 介面          | [nerdtree](https://github.com/scrooloose/nerdtree)                                | 樹狀檢視器                                                      |                                                                     |
   |               | [tagbar](https://github.com/majutsushi/tagbar)                                    | 顯示 tags                                                       | [ctags](#for-ctags)                                                 |
   |               | [bufferize.vim](https://github.com/AndrewRadev/bufferize.vim)                     | 讓命令顯示在 buffer                                             |                                                                     |
   |               | [vim-clap](https://github.com/liuchengxu/vim-clap)                                | 互動式查詢                                                      | nvim 0.4.2 or patch 8.1.2114                                        |
   |               | [neoterm](https://github.com/kassio/neoterm)                                      | 終端機插件                                                      | 內建終端機                                                          |
+  |               | [zoom.vim](https://github.com/vim-scripts/zoom.vim)                               | 縮放圖形介面字型                                                | gui                                                                 |
+  |               | [vim-venter](https://github.com/JMcKiern/vim-venter)                              | 置中視窗文字                                                    | nvim or vim 8.0                                                     |
   | 語言限定插件  | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)             | treesitter 語法高亮                                             | nvim 0.5, c 編譯器                                                  |
   |               | [vim-cpp-enhanced-highlight](http://github.com/octol/vim-cpp-enhanced-highlight)  | 增強 C++ 語法高亮                                               |                                                                     |
   |               | [vim-toml](https://github.com/cespare/vim-toml)                                   | [toml](https://toml.io/en/) 語法高亮                            |                                                                     |
   |               | [vim-perl](https://github.com/vim-perl/vim-perl)                                  | [perl](https://www.perl.org/) 語法高亮                          |                                                                     |
   |               | [vim-ps1](https://github.com/pprovost/vim-ps1)                                    | [powershell](https://github.com/PowerShell/PowerShell) 語法高亮 |                                                                     |
-  | 自動補全      | [vim-mucomplete](https://github.com/lifepillar/vim-mucomplete)                    | 自動補全插件，用來取代 neocomplcache                               | nvim 0.5                                                         |
+  | 自動補全      | [vim-mucomplete](https://github.com/lifepillar/vim-mucomplete)                    | 自動補全插件，用來取代 neocomplcache                            | nvim 0.5                                                         |
   |               | [neocomplcache](https://github.com/shougo/neocomplcache.vim)                      | 自動補全插件                                                    |                                                                     |
   | LSP           | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)                        | 內建 LSP 客戶端設定                                             | nvim 0.5                                                            |
   |               | [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim)        | LSP 客戶端                                                      |                                                                     |
