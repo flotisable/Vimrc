@@ -1,16 +1,16 @@
 " option settings  選項設定{{{
 set encoding    =utf-8  " set file encoding  設定編碼
 set number              " display line number  顯示行號
-set showcmd             " show the command at the status bar  顯示指令在狀態列（知道自己輸入什麼）
+set showcmd             " show command at the status bar  顯示指令在狀態列（知道自己輸入什麼）
 set laststatus  =2      " show the status line  顯示狀態列
 set autoindent          " automatic indent as last line  自動縮排（與上一行縮排相同
 set smartindent         " smart indent based on {}  根據大括號縮排
 set foldmethod  =manual " manual fold the code  手動折疊程式碼
-set textwidth   =80
-set tabstop     =2      " set TAB key to be equivalent to how many spaces  設定 tab 鍵等於幾個空白鍵
-set shiftwidth  =2      " use same number of spaces for indent as tabstop  設定縮排時用 tabstop 的空白鍵數量
+set textwidth   =80     " set column num  設定行數
+set tabstop     =2      " set spaces num of TAB key  設定 tab 鍵等於幾個空白鍵
+set shiftwidth  =2      " use same spaces num for indent as tabstop  設定縮排時用 tabstop 的空白鍵數量
 set expandtab           " expand TAB key to be spaces  將 tab 鍵展開為空白鍵
-set hlsearch            " highlight the searched pattern  高亮搜尋的 pattern
+set hlsearch            " highlight searched pattern  高亮搜尋的 pattern
 set incsearch           " enable incremental search  開啟遞增搜尋
 
 set listchars   =tab:>\ ,trail:-,nbsp:+
@@ -85,8 +85,7 @@ endfunction
 " end test pluggin existence
 "}}}
 " wrapper of build in lsp omnifunc  內建 lsp omnifunc 的 wrapper{{{
-" this wrapper function is to make neovim build in lsp omni function work
-" with neocomplcache
+" this function is to make neovim build in lsp omnifunc work with neocomplcache
 function! MyBuildInLspOmniFunc( findstart, base )
   return v:lua.vim.lsp.omnifunc( a:findstart, a:base )
 endfunction
@@ -140,33 +139,33 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
 "
   call plug#begin( g:my.pluginRoot )
 
-  " basic plugins  基本的插件{{{
+  " basic  基本的插件{{{
   Plug 'arcticicestudio/nord-vim'
   Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
   Plug 't9md/vim-quickhl'           " mark plugin  標記插件
   Plug 'vim-scripts/zoom.vim'       " zoom gui font  縮放圖形介面字型
 
-  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'                  } " plugin for display directory as tree view  樹狀顯示資料夾的插件
-  Plug 'majutsushi/tagbar',   { 'on': [ 'Tagbar', 'TagbarCurrentTag' ]  } " plugin for display tags( depend on 'ctags' )  顯示 tag 的插件（需搭配 ctags ）
+  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'                  } " display directory as tree view  樹狀顯示資料夾
+  Plug 'majutsushi/tagbar',   { 'on': [ 'Tagbar', 'TagbarCurrentTag' ]  } " display tags( depend on 'ctags' )  顯示 tag （需搭配 ctags ）
 
   if v:version >= 800
     Plug 'JMcKiern/vim-venter' " center the text in a window  將視窗文字置中
   endif
-  " end basic plugins
+  " end basic
   "}}}
-  " plugin for interactive finder and dispatcher  互動式查詢{{{
+  " interactive finder and dispatcher  互動式查詢{{{
   if has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' )
     Plug 'liuchengxu/vim-clap', { 'do': { -> clap#installer#force_download() } }
   endif
-  " end plugin for interactive finder and dispatcher  互動式查詢
+  " end interactive finder and dispatcher  互動式查詢
   "}}}
-  " terminal plugin  終端機插件{{{
+  " terminal  終端機插件{{{
   if has( 'nvim' ) || has( 'terminal' )
     Plug 'kassio/neoterm'
   endif
-  " end terminal plugin  終端機插件
+  " end terminal  終端機插件
   "}}}
-  " language specific plugins  特定語言的插件{{{
+  " language specific  特定語言的插件{{{
   if has( 'nvim-0.5' ) && ( executable( 'gcc' ) || executable( 'clang' ) )
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
   else
@@ -178,15 +177,15 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
 
   Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }
   Plug 'pprovost/vim-ps1'
-  " end language specific plugins
+  " end language specific
   "}}}
-  " plugin for autocomplete  自動補全的插件{{{
+  " autocomplete  自動補全的插件{{{
   if  v:version >= 702 && has( 'insert_expand' ) && has( 'menu' )
     Plug 'lifepillar/vim-mucomplete'
   else " when 'vim' version is older  當 vim 版本較低時
     Plug 'shougo/neocomplcache.vim'
   endif
-  " end plugin for autocomplete
+  " end autocomplete
   "}}}
   " language server protocal client  LSP 客戶端{{{
   if has( 'nvim' ) || v:version >= 800
@@ -207,24 +206,24 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
   endif
   " end language server protocal client
   "}}}
-  " VCS diff plugin  版本控制差異插件{{{
+  " VCS diff  版本控制差異插件{{{
   if has( 'nvim' ) || has( 'patch-8.0.902' )
     Plug 'mhinz/vim-signify'
   else
     Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
   endif
-  " end VCS diff plugin
+  " end VCS diff
   "}}}
-  " code snippet plugin  程式碼片段插件{{{
+  " code snippet  程式碼片段插件{{{
   Plug 'MarcWeber/vim-addon-mw-utils'
   Plug 'tomtom/tlib_vim'
   Plug 'garbas/vim-snipmate'
-  " end code snippet plugin
+  " end code snippet
   "}}}
-  " self use plugin  個人使用的插件{{{
+  " self use  個人使用的插件{{{
   Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " self use statusline plugin  個人使用的狀態列設定插件
   Plug 'flotisable/FlotisableVimSnippets'                       " self use code snippet  個人使用的程式碼片段
-  " end self use plugin}}}
+  " end self use}}}
   call plug#end()
 "
 endif
@@ -294,11 +293,11 @@ if MyPluginExistsAndInRtp( 'vim-clap' )
                     \   'height':   '80%'
                     \ }
 
-  noremap <Leader>F <Cmd>Clap providers<Enter>| " set \fp key to open provider dispather  設定 \fp 鍵開啟模糊搜尋選單
+  noremap <Leader>F <Cmd>Clap providers<Enter>| " set \F key to open provider dispather  設定 \F 鍵開啟模糊搜尋選單
   noremap g/        <Cmd>Clap blines<Enter>|    " set g/ key to search in file  設定 g/ 鍵在檔案中搜尋
   noremap gb        <Cmd>Clap buffers<Enter>|   " set gb key to search buffer  設定 gb 鍵搜尋 buffer
-  noremap <Leader>f :Clap files |               " set \ff key to search file  設定 \ff 鍵搜尋檔案
-  noremap <Leader>g :Clap grep2 |               " set \fg key to search file content  設定 \fg 鍵搜尋檔案內容
+  noremap <Leader>f :Clap files |               " set \f key to search file  設定 \f 鍵搜尋檔案
+  noremap <Leader>g :Clap grep2 |               " set \g key to search file content  設定 \g 鍵搜尋檔案內容
 
   if has( 'nvim' )
   "
@@ -320,8 +319,8 @@ endif
 " neoterm settings  neoterm 插件設定{{{
 if MyPluginExistsAndInRtp( 'neoterm' )
 "
-  let g:neoterm_autoinsert  = 1       " 開啟終端機後進入終端機模式  enter terminal mode after open the terminal
-  let g:neoterm_default_mod = ":tab"  " 設定以 tab 開啟終端機  open terminal in a tab
+  let g:neoterm_autoinsert  = 1       " enter terminal mode after open the terminal  開啟終端機後進入終端機模式
+  let g:neoterm_default_mod = ":tab"  " open terminal in a tab  設定以 tab 開啟終端機
 
   if has( 'win32' )
     let g:neoterm_shell = &shell . ' #'
