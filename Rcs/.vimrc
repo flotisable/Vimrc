@@ -134,15 +134,6 @@ endfunction
 "}}}
 " end self defined functions
 "}}}
-" save and load view  自動讀取與儲存手動的折疊{{{
-autocmd BufWinLeave * silent! mkview
-autocmd BufWinEnter * silent! loadview
-" end save and load view
-"}}}
-" minimal completion base on syntax  基於語法的補全{{{
-autocmd FileType * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
-" end minimal completion base on syntax
-"}}}
 " plugin settings  插件設定{{{
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
 if filereadable( $HOME . '/.vim/autoload/plug.vim' )
@@ -577,9 +568,23 @@ else                        " colorscheme in terminal  終端機顏色主題
 endif
 
 call MyCustomHighlight()
-
-autocmd ColorScheme * call MyCustomHighlight()
 " end highlight setup
+"}}}
+" auto commands{{{
+augroup MyAutoCmds
+autocmd!
+" save and load view  自動讀取與儲存手動的折疊{{{
+autocmd BufWinLeave * silent! mkview
+autocmd BufWinEnter * silent! loadview
+" end save and load view
+"}}}
+" minimal completion base on syntax  基於語法的補全{{{
+autocmd FileType * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
+" end minimal completion base on syntax
+"}}}
+autocmd ColorScheme * call MyCustomHighlight()
+augroup END
+" end auto commands
 "}}}
 " key mapping  快捷鍵設定{{{
 if has( 'nvim' ) || has( 'terminal' )
