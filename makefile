@@ -93,9 +93,9 @@ sync-from-local: sync-init
 	$(info [Sync branch ${localBranch} from local machine])
 	@${GIT} checkout -q ${localBranch}
 	@${MAKE} copy --no-print-directory
-	@${GIT} update-index --refresh || true
 ifeq "${OS}" "Windows_NT"
-	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index HEAD )" ) \
+	@powershell -NoProfile -Command '${GIT} update-index --refresh; \
+	If( "$$( ${GIT} diff-index HEAD )" ) \
 	{ \
 		${GIT} add -i; \
 		If( "$$( ${GIT} diff-index --cached HEAD )" ) \
@@ -104,6 +104,7 @@ ifeq "${OS}" "Windows_NT"
 		}; \
 	}'
 else
+	@${GIT} update-index --refresh || true
 	@if [ -n "$$( ${GIT} diff-index HEAD )" ]; then \
 		${GIT} add -i; \
 		if [ -n "$$( ${GIT} diff-index --cached HEAD )" ]; then \
@@ -117,9 +118,9 @@ sync-main-from-local: sync-init
 	$(info [Sync branch ${mainBranch} from local machine])
 	@${GIT} checkout -q ${localBranch}
 	@${MAKE} copy --no-print-directory
-	@${GIT} update-index --refresh || true
 ifeq "${OS}" "Windows_NT"
-	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index HEAD )" ) \
+	@powershell -NoProfile -Command '${GIT} update-index --refresh; \
+	If( "$$( ${GIT} diff-index HEAD )" ) \
 	{ \
 		${GIT} stash -q; \
 		${GIT} checkout -q ${mainBranch}; \
@@ -133,6 +134,7 @@ ifeq "${OS}" "Windows_NT"
 		${GIT} stash drop -q; \
 	}'
 else
+	@${GIT} update-index --refresh || true
 	@if [ -n "$$( ${GIT} diff-index HEAD )" ]; then \
 		${GIT} stash -q; \
 		${GIT} checkout -q ${mainBranch}; \
