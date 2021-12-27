@@ -265,7 +265,7 @@ if MyPluginExistsAndInRtp( 'nerdcommenter' )
   let g:NERDCreateDefaultMappings = 0
   let g:NERDSpaceDelims           = 1
 
-  map <C-;> <Plug>NERDCommenterToggle| " set Ctrl+; key to toggle comments  設定 Ctrl+; 切換註解
+  map gc <Plug>NERDCommenterToggle| " set gc key to toggle comments  設定 gc 切換註解
 "
 endif
 " end comment plugin settings
