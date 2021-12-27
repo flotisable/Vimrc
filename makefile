@@ -180,10 +180,12 @@ ifeq "${OS}" "Windows_NT"
 	@powershell -NoProfile -Command 'If( "$$( ${GIT} diff-index HEAD )" ) \
 	{ \
 		${GIT} add -i; \
+		${GIT} checkout -p; \
 	}'
 else
 	@if [ -n "$$( ${GIT} diff-index HEAD )" ]; then \
 		${GIT} add -i; \
+		${GIT} checkout -p; \
 	fi
 endif
 	@${MAKE} install --no-print-directory
