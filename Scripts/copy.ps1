@@ -8,15 +8,14 @@ ForEach( $target in $settings['target'].keys )
 {
   $targetFile = Invoke-Expression "Write-Output $($settings['target'][$target])"
   $sourceFile = Invoke-Expression "Write-Output $($settings['source'][$target])"
-  If( $target -eq 'vimrc' )
+
+  Switch( $target )
   {
-    $dirType  = 'vim'
+    'vimrc'         { $dirType = 'vim'            }
+    'pluginManager' { $dirType = 'pluginManager'  }
+    default         { $dirType = 'nvim'           }
   }
-  Else
-  {
-    $dirType  = 'nvim'
-  }
-  $dir        = Invoke-Expression "Write-Output $($settings['dir'][$dirType])"
+  $dir = Invoke-Expression "Write-Output $($settings['dir'][$dirType])"
 
   If( !( Get-Item -Force -ErrorAction SilentlyContinue $dir/$targetFile ) )
   {

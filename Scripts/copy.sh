@@ -14,15 +14,13 @@ for target in $(mapKeys "$targetTableName"); do
   targetFile=$(mapFind "$targetTableName" "$target")
   sourceFile=$(mapFind "$sourceTableName" "$target")
 
-  if [ "$target" == "vimrc" ]; then
+  case $target in
 
-    dirType="vim"
+    'vimrc')          dirType='vim';;
+    'pluginManager')  dirType='pluginManager';;
+    *)                dirType='nvim';;
 
-  else
-
-    dirType="nvim"
-
-  fi
+  esac
 
   dir=$(mapFind "$dirTableName" "$dirType")
 

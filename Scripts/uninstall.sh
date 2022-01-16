@@ -21,22 +21,23 @@ for target in $(mapKeys "$targetTableName"); do
 
   targetFile=$(mapFind "$targetTableName" "$target")
 
-  if [ "$target" == "vimrc" ]; then
+  case $target in
 
-    dirType="vim"
+    'pluginManager')
 
-  else
+      dirType='pluginManager'
+      if [ "$(mapFind "$pluginManagerTableName" "install")" != "1" ]; then
+        continue
+      fi
+      ;;
 
-    dirType="nvim"
+    'vimrc')  dirType='vim';;
+    *)        dirType='nvim';;
 
-  fi
+  esac
 
   dir=$(mapFind "$dirTableName" "$dirType")
 
   removeFile $dir/$targetFile
 
 done
-
-if [ -e "$(mapFind "$pluginManagerTableName" "path")/plug.vim" ]; then
-  removeFile "$(mapFind "$pluginManagerTableName" "path")/plug.vim"
-fi
