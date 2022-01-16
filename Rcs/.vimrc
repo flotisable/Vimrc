@@ -133,6 +133,58 @@ endfunction
 "}}}
 " end self defined functions
 "}}}
+" auto commands{{{
+augroup MyAutoCmds
+autocmd!
+" save and load view  自動讀取與儲存手動的折疊{{{
+autocmd BufWinLeave * silent! mkview
+autocmd BufWinEnter * silent! loadview
+" end save and load view
+"}}}
+" minimal completion base on syntax  基於語法的補全{{{
+autocmd FileType * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
+" end minimal completion base on syntax
+"}}}
+autocmd ColorScheme * call MyCustomHighlight()
+augroup END
+" end auto commands
+"}}}
+" key mapping  快捷鍵設定{{{
+if has( 'nvim' ) || has( 'terminal' )
+  tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
+endif
+
+noremap <Leader>r <Cmd>set relativenumber!<Enter>|            " 設定 \r 鍵開關相對行號設定
+noremap <Leader>c <Cmd>set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵開關游標高亮
+noremap <Leader>L <Cmd>set list!<Enter>|                      " 設定 \L 開關特殊字元顯示
+
+nnoremap  <Space> <C-F>
+nnoremap  <BS>    <C-B>
+xnoremap  <Space> <C-F>
+xnoremap  <BS>    <C-B>
+noremap!  <C-a>   <Home>
+noremap!  <C-e>   <End>
+noremap!  <C-f>   <Right>
+noremap!  <C-b>   <Left>
+noremap!  <C-p>   <Up>
+noremap!  <C-n>   <Down>
+noremap!  <C-k>   <C-e><C-u>
+noremap!  <C-d>   <Del>
+
+if has( "cscope" )
+"
+  nnoremap <C-_>s <Cmd>execute 'cscope find s' expand("<cword>")<CR>
+  nnoremap <C-_>g <Cmd>execute 'cscope find g' expand("<cword>")<CR>
+  nnoremap <C-_>c <Cmd>execute 'cscope find c' expand("<cword>")<CR>
+  nnoremap <C-_>t <Cmd>execute 'cscope find t' expand("<cword>")<CR>
+  nnoremap <C-_>e <Cmd>execute 'cscope find e' expand("<cword>")<CR>
+  nnoremap <C-_>f <Cmd>execute 'cscope find f' expand("<cword>")<CR>
+  nnoremap <C-_>i <Cmd>execute 'cscope find i' expand("<cword>")<CR>
+  nnoremap <C-_>d <Cmd>execute 'cscope find d' expand("<cword>")<CR>
+"
+endif
+" end key mapping
+"}}}
 " plugin settings  插件設定{{{
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
 if filereadable( $HOME . '/.vim/autoload/plug.vim' )
@@ -581,57 +633,5 @@ endif
 
 call MyCustomHighlight()
 " end highlight setup
-"}}}
-" auto commands{{{
-augroup MyAutoCmds
-autocmd!
-" save and load view  自動讀取與儲存手動的折疊{{{
-autocmd BufWinLeave * silent! mkview
-autocmd BufWinEnter * silent! loadview
-" end save and load view
-"}}}
-" minimal completion base on syntax  基於語法的補全{{{
-autocmd FileType * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
-" end minimal completion base on syntax
-"}}}
-autocmd ColorScheme * call MyCustomHighlight()
-augroup END
-" end auto commands
-"}}}
-" key mapping  快捷鍵設定{{{
-if has( 'nvim' ) || has( 'terminal' )
-  tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
-endif
-
-noremap <Leader>r <Cmd>set relativenumber!<Enter>|            " 設定 \r 鍵開關相對行號設定
-noremap <Leader>c <Cmd>set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵開關游標高亮
-noremap <Leader>L <Cmd>set list!<Enter>|                      " 設定 \L 開關特殊字元顯示
-
-nnoremap  <Space> <C-F>
-nnoremap  <BS>    <C-B>
-xnoremap  <Space> <C-F>
-xnoremap  <BS>    <C-B>
-noremap!  <C-a>   <Home>
-noremap!  <C-e>   <End>
-noremap!  <C-f>   <Right>
-noremap!  <C-b>   <Left>
-noremap!  <C-p>   <Up>
-noremap!  <C-n>   <Down>
-noremap!  <C-k>   <C-e><C-u>
-noremap!  <C-d>   <Del>
-
-if has( "cscope" )
-"
-  nnoremap <C-_>s <Cmd>execute 'cscope find s' expand("<cword>")<CR>
-  nnoremap <C-_>g <Cmd>execute 'cscope find g' expand("<cword>")<CR>
-  nnoremap <C-_>c <Cmd>execute 'cscope find c' expand("<cword>")<CR>
-  nnoremap <C-_>t <Cmd>execute 'cscope find t' expand("<cword>")<CR>
-  nnoremap <C-_>e <Cmd>execute 'cscope find e' expand("<cword>")<CR>
-  nnoremap <C-_>f <Cmd>execute 'cscope find f' expand("<cword>")<CR>
-  nnoremap <C-_>i <Cmd>execute 'cscope find i' expand("<cword>")<CR>
-  nnoremap <C-_>d <Cmd>execute 'cscope find d' expand("<cword>")<CR>
-"
-endif
-" end key mapping
 "}}}
 " vim: foldmethod=marker foldmarker={{{,}}}
