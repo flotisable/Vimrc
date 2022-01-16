@@ -64,7 +64,8 @@ let g:my =
   \   'keybindings':          { 'lsp': {} },
   \   'pluginRoot':           $HOME . '/.vim/plugged',
   \   'powershellBundlePath': $HOME . '/Applications/PowerShellEditorServices',
-  \   'snippetAuthor':        'Flotisable'
+  \   'snippetAuthor':        'Flotisable',
+  \   'localVimrc':           $HOME . '/.vim/localVimrc'
   \ }
 " end self defined settings
 "}}}
@@ -185,6 +186,7 @@ if has( "cscope" )
 endif
 " end key mapping
 "}}}
+if filereadable( g:my.localVimrc ) | exec 'source' . g:my.localVimrc | endif
 " plugin settings  插件設定{{{
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
 if filereadable( $HOME . '/.vim/autoload/plug.vim' )
@@ -278,6 +280,7 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
   Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " self use statusline plugin  個人使用的狀態列設定插件
   Plug 'flotisable/FlotisableVimSnippets'                       " self use code snippet  個人使用的程式碼片段
   " end self use}}}
+  if exists( '*MyLocalPlugin' ) | call MyLocalPlugin() | endif
   call plug#end()
 "
 endif
@@ -634,4 +637,5 @@ endif
 call MyCustomHighlight()
 " end highlight setup
 "}}}
-" vim: foldmethod=marker foldmarker={{{,}}}
+if exists( '*MyLocalPostPluginSettings' ) | call MyLocalPostPluginSettings() | endif
+" vim: foldmethod=marker foldmarker={{{,}}}'
