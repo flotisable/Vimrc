@@ -155,9 +155,11 @@ if has( 'nvim' ) || has( 'terminal' )
   tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
 endif
 
-noremap <Leader>r <Cmd>set relativenumber!<Enter>|            " 設定 \r 鍵開關相對行號設定
-noremap <Leader>c <Cmd>set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵開關游標高亮
-noremap <Leader>L <Cmd>set list!<Enter>|                      " 設定 \L 開關特殊字元顯示
+noremap <Leader>r   <Cmd>set relativenumber!<Enter>|            " 設定 \r 鍵開關相對行號設定
+noremap <Leader>c   <Cmd>set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵開關游標高亮
+noremap <Leader>L   <Cmd>set list!<Enter>|                      " 設定 \L 開關特殊字元顯示
+noremap <Leader>es  <Cmd>edit $HOME/.vimrc<Enter>|              " 設定 \es 編輯 vimrc
+noremap <Leader>el  <Cmd>exec 'edit' . g:my.localVimrc<Enter>|  " 設定 \el 編輯本地端 vimrc
 
 nnoremap  <Space> <C-F>
 nnoremap  <BS>    <C-B>
