@@ -640,4 +640,4 @@ call MyCustomHighlight()
 " end highlight setup
 "}}}
 if exists( '*MyLocalPostPluginSettings' ) | call MyLocalPostPluginSettings() | endif
-" vim: foldmethod=marker foldmarker={{{,}}}'
+" vim: foldmethod=marker foldmarker={{{,}}}
