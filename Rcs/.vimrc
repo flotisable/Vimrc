@@ -470,6 +470,13 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
 
       vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'MyBuildInLspOmniFunc' )
       vim.fn.MyLspMaps( true )
+      vim.cmd(
+        [[
+          augroup MyAutoCmds
+          autocmd FileChangedShellPost <buffer> setlocal omnifunc=MyBuildInLspOmniFunc
+          augroup END
+        ]]
+      )
 
     end
 
