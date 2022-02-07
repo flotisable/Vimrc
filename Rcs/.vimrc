@@ -468,8 +468,13 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     -- use lsp omni function when a language server is attached{{{
     local function myOnAttach( client, buffer )
 
-      vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'MyBuildInLspOmniFunc' )
       vim.fn.MyLspMaps( true )
+
+      if not client.server_capabilities.completionProvider then
+        return
+      end
+
+      vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'MyBuildInLspOmniFunc' )
       vim.cmd(
         [[
           augroup MyAutoCmds
