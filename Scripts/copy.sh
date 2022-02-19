@@ -16,9 +16,9 @@ for target in $(mapKeys "$targetTableName"); do
 
   case $target in
 
-    'vimrc')          dirType='vim';;
-    'pluginManager')  dirType='pluginManager';;
-    *)                dirType='nvim';;
+    'vimrc')                        dirType='vim';;
+    'pluginManager' | 'vimrcLocal') dirType='vimShare';;
+    *)                              dirType='nvim';;
 
   esac
 

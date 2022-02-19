@@ -25,14 +25,15 @@ for target in $(mapKeys "$targetTableName"); do
 
     'pluginManager')
 
-      dirType='pluginManager'
+      dirType='vimShare'
       if [ "$(mapFind "$pluginManagerTableName" "install")" != "1" ]; then
         continue
       fi
       ;;
 
-    'vimrc')  dirType='vim';;
-    *)        dirType='nvim';;
+    'vimrcLocal') dirType='vimShare';;
+    'vimrc')      dirType='vim';;
+    *)            dirType='nvim';;
 
   esac
 

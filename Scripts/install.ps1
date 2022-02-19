@@ -13,14 +13,15 @@ ForEach( $target in $settings['target'].keys )
   {
     'pluginManager'
     {
-      $dirType = 'pluginManager'
+      $dirType = 'vimShare'
       If( !$settings['pluginManager']['install'] )
       {
         Continue
       }
     }
-    'vimrc' { $dirType = 'vim'  }
-    default { $dirType = 'nvim' }
+    'vimrcLocal'  { $dirType = 'vimShare' }
+    'vimrc'       { $dirType = 'vim'      }
+    default       { $dirType = 'nvim'     }
   }
 
   $dir = Invoke-Expression "Write-Output $($settings['dir'][$dirType])"

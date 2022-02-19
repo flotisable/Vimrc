@@ -1,0 +1,10 @@
+function! MyLocalPlugin()
+"
+"
+endfunction
+
+function! MyLocalPostPluginSettings()
+"
+"
+endfunction
+" vim: filetype=vim

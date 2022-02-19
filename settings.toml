@@ -1,19 +1,24 @@
 [dir]
 vim           = "${HOME}"
 nvim          = ""
-pluginManager = "${HOME}/.vim/autoload"
+vimShare      = "${HOME}/.vim"
 
 [source]
 vimrc         = "Rcs/.vimrc"
 nvimrc        = "Rcs/init.vim"
 gnvimrc       = "Rcs/ginit.vim"
+vimrcLocal    = "Rcs/localVimrc"
 pluginManager = "Rcs/plug.vim"
 
 [target]
+# in vim dir
 vimrc         = ".vimrc"
+# in nvim dir
 nvimrc        = "init.vim"
 gnvimrc       = "ginit.vim"
-pluginManager = "plug.vim"
+# in vimShare dir
+vimrcLocal    = "localVimrc"
+pluginManager = "autoload/plug.vim"
 
 [pluginManager]
 install = true
