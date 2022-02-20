@@ -625,8 +625,8 @@ if MyPluginExistsAndInRtp( 'vim-snipmate' )
   let g:snipMate                  = {}
   let g:snipMate.snippet_version  = 1
 
-  imap    <C-s>       <Plug>snipMateShow|           " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
-  noremap <Leader>es  <Cmd>SnipMateOpenSnippetFiles " set \es to open snippet files  設定 \es 開啟 snipprt 檔案
+  imap    <C-s>       <Plug>snipMateShow|                   " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
+  noremap <Leader>es  <Cmd>SnipMateOpenSnippetFiles<Enter>  " set \es to open snippet files  設定 \es 開啟 snipprt 檔案
 
   " use Ctrl+n, Ctrl+p to select multiple snippet  用 Ctrl+n, Ctrl+p 選擇程式片段
   let g:tlib_extend_keyagents_InputList_s =
