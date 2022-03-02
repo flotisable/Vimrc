@@ -188,7 +188,7 @@ if has( "cscope" )
 endif
 " end key mapping
 "}}}
-if filereadable( g:my.localVimrc ) | exec 'source' . g:my.localVimrc | endif
+if filereadable( g:my.localVimrc ) | exec 'source ' . g:my.localVimrc | endif
 " plugin settings  插件設定{{{
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
 if filereadable( $HOME . '/.vim/autoload/plug.vim' )
