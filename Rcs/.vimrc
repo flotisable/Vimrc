@@ -44,7 +44,7 @@ endif
 
 if has( "cscope" )
 "
-  if executable( "gtags-cscope" ) && filereadable( "GTAGS" )
+  if filereadable( "GTAGS" ) && executable( "gtags-cscope" )
   "
     set cscopeprg=gtags-cscope
 
@@ -198,13 +198,15 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
   " basic  基本的插件{{{
   Plug 'arcticicestudio/nord-vim'
   Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
-  Plug 't9md/vim-quickhl'           " mark plugin  標記插件
   Plug 'vim-scripts/zoom.vim'       " zoom gui font  縮放圖形介面字型
-  Plug 'preservim/nerdcommenter'    " comment plugin  註解插件
   Plug 'mhinz/vim-hugefile'         " handle large file  處理大檔案
 
-  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'                  } " display directory as tree view  樹狀顯示資料夾
-  Plug 'majutsushi/tagbar',   { 'on': [ 'Tagbar', 'TagbarCurrentTag' ]  } " display tags( depend on 'ctags' )  顯示 tag （需搭配 ctags ）
+  Plug 'scrooloose/nerdtree',     { 'on': 'NERDTreeToggle'                    } " display directory as tree view  樹狀顯示資料夾
+  Plug 'majutsushi/tagbar',       { 'on': [ 'Tagbar',
+                                          \ 'TagbarCurrentTag' ]              } " display tags( depend on 'ctags' )  顯示 tag （需搭配 ctags ）
+  Plug 't9md/vim-quickhl',        { 'on': [ '<Plug>(quickhl-manual-this)',
+                                          \ '<Plug>(quickhl-manual-reset)' ]  } " mark plugin  標記插件
+  Plug 'preservim/nerdcommenter', { 'on': '<Plug>NERDCommenterToggle'         } " comment plugin  註解插件
 
   if v:version >= 800
     Plug 'JMcKiern/vim-venter' " center the text in a window  將視窗文字置中
@@ -299,7 +301,7 @@ endif
 " end bufferize settings
 "}}}
 " mark plugin settings  標記插件設定{{{
-if MyPluginExistsAndInRtp( 'vim-quickhl' )
+if MyPluginExists( 'vim-quickhl', 0 )
 "
   nmap <Leader>m <Plug>(quickhl-manual-this)|   " set \m key to set mark  設定 \m 鍵設置標籤
   xmap <Leader>m <Plug>(quickhl-manual-this)|   " set \m key to set mark  設定 \m 鍵設置標籤
@@ -318,7 +320,7 @@ endif
 " end gui font plugin settings
 "}}}
 " comment plugin settings  註解插件設定{{{
-if MyPluginExistsAndInRtp( 'nerdcommenter' )
+if MyPluginExists( 'nerdcommenter', 0 )
 "
   let g:NERDCreateDefaultMappings = 0
   let g:NERDSpaceDelims           = 1
