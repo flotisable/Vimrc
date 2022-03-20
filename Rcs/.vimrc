@@ -398,8 +398,8 @@ if MyPluginExistsAndInRtp( 'neoterm' )
     let g:neoterm_shell = &shell . ' #'
   endif
 
-  noremap   <C-s> :Ttoggle<Enter>| " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
-  tnoremap  <C-s> :Ttoggle<Enter>| " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
+  noremap   <C-s> :Ttoggle<Enter>|            " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
+  tnoremap  <C-s> <C-\><C-n>:Ttoggle<Enter>|  " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
 "
 endif
 " end neoterm settings
