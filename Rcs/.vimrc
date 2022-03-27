@@ -201,26 +201,31 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
   Plug 'vim-scripts/zoom.vim'       " zoom gui font  縮放圖形介面字型
   Plug 'mhinz/vim-hugefile'         " handle large file  處理大檔案
 
-  Plug 'scrooloose/nerdtree',     { 'on': 'NERDTreeToggle'                    } " display directory as tree view  樹狀顯示資料夾
-  Plug 'majutsushi/tagbar',       { 'on': [ 'Tagbar',
-                                          \ 'TagbarCurrentTag' ]              } " display tags( depend on 'ctags' )  顯示 tag （需搭配 ctags ）
   Plug 't9md/vim-quickhl',        { 'on': [ '<Plug>(quickhl-manual-this)',
                                           \ '<Plug>(quickhl-manual-reset)' ]  } " mark plugin  標記插件
   Plug 'preservim/nerdcommenter', { 'on': '<Plug>NERDCommenterToggle'         } " comment plugin  註解插件
 
-  if v:version >= 800
+  if !exists( 'g:vscode' )
+  "
+    Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'        } " display directory as tree view  樹狀顯示資料夾
+    Plug 'majutsushi/tagbar',   { 'on': [ 'Tagbar',
+                                        \ 'TagbarCurrentTag' ]  } " display tags( depend on 'ctags' )  顯示 tag （需搭配 ctags ）
+  "
+  endif
+
+  if v:version >= 800 && !exists( 'g:vscode' )
     Plug 'JMcKiern/vim-venter' " center the text in a window  將視窗文字置中
   endif
   " end basic
   "}}}
   " interactive finder and dispatcher  互動式查詢{{{
-  if has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' )
+  if ( has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' ) ) && !exists( 'g:vscode' )
     Plug 'liuchengxu/vim-clap', { 'do': { -> clap#installer#force_download() } }
   endif
   " end interactive finder and dispatcher  互動式查詢
   "}}}
   " terminal  終端機插件{{{
-  if has( 'nvim' ) || has( 'terminal' )
+  if ( has( 'nvim' ) || has( 'terminal' ) ) && !exists( 'g:vscode' )
     Plug 'kassio/neoterm'
   endif
   " end terminal  終端機插件
