@@ -559,12 +559,14 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     {
       global =
       {
-        gd              = '<Cmd>lua vim.lsp.buf.definition()<Enter>',     -- set gd key to go to definition  設定 gd 鍵跳至定義
-        gr              = '<Cmd>lua vim.lsp.buf.references()<Enter>',     -- set gr key to show reference  設定 gr 鍵顯示參照
-        K               = '<Cmd>lua vim.lsp.buf.hover()<Enter>',          -- set K key to show hover  設定 K 鍵顯示文檔
-        gi              = '<Cmd>lua vim.lsp.buf.implementation()<Enter>', -- set gi key to go to implementation  設定 gi 鍵跳至實作
-        ['<Leader>lr']  = '<Cmd>lua vim.lsp.buf.rename()<Enter>',         -- set \lr key to rename symbol  設定 \lr 鍵將符號改名
-        ['<Leader>la']  = '<Cmd>lua vim.lsp.buf.code_action()<Enter>',    -- set \la key to run code action  設定 \la 鍵執行 code action
+        gd              = '<Cmd>lua vim.lsp.buf.definition()<Enter>',       -- set gd key to go to definition  設定 gd 鍵跳至定義
+        gr              = '<Cmd>lua vim.lsp.buf.references()<Enter>',       -- set gr key to show reference  設定 gr 鍵顯示參照
+        K               = '<Cmd>lua vim.lsp.buf.hover()<Enter>',            -- set K key to show hover  設定 K 鍵顯示文檔
+        gi              = '<Cmd>lua vim.lsp.buf.implementation()<Enter>',   -- set gi key to go to implementation  設定 gi 鍵跳至實作
+        ['=']           = '<Cmd>lua vim.lsp.buf.range_formatting()<Enter>', -- set = key to format range  設定 = 鍵排版程式碼
+
+        ['<Leader>lr']  = '<Cmd>lua vim.lsp.buf.rename()<Enter>',           -- set \lr key to rename symbol  設定 \lr 鍵將符號改名
+        ['<Leader>la']  = '<Cmd>lua vim.lsp.buf.code_action()<Enter>',      -- set \la key to run code action  設定 \la 鍵執行 code action
       },
       cpp =
       {
@@ -595,6 +597,7 @@ elseif MyPluginExistsAndInRtp( 'LanguageClient-neovim' )
   " set gr key to show reference  設定 gr 鍵顯示參照
   " set K key to show hover  設定 K 鍵顯示文檔
   " set gi key to go to implementation  設定 gi 鍵跳至實作
+  " set = key to format range  設定 = 鍵排版程式碼
   " set \lr key to rename symbol  設定 \lr 鍵將符號改名
   " set \la key to run code action  設定 \la 鍵執行 code action
   let g:my.keybindings.lsp =
@@ -605,6 +608,7 @@ elseif MyPluginExistsAndInRtp( 'LanguageClient-neovim' )
     \     'gr':         '<Plug>(lcn-references)',
     \     'K':          '<Plug>(lcn-hover)',
     \     'gi':         '<Plug>(lcn-implementaion)',
+    \     '=':          ':call LanguageClient#textDocument_rangeFormatting()<Enter>',
     \     '<Leader>lr': '<Plug>(lcn-rename)',
     \     '<Leader>la': '<Plug>(lcn-code-action)',
     \   },
