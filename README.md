@@ -139,8 +139,8 @@
   | \<Leader> m   | vim-quickhl                             |                   | set mark highlight                    |
   | \<Leader> M   | vim-quickhl                             |                   | clear mark highlight                  |
   | Ctrl + 0      | zoom.vim                                |                   | reset gui font                        |
+  | gc            | nerdcommenter                           |                   | comment code                          |
   | \<Leader> C   | vim-venter                              |                   | center window text                    |
-  | Ctrl + x      | nerdtree                                |                   | toggle the tree browser               |
   | \<Leader> t   | tagbar                                  | ctags             | toggle tagbar, show the tags overview |
   | \<Leader> T   | tagbar                                  | ctags             | show tag in current cursor position   |
   | \<Leader> F   | vim-clap                                |                   | open fuzzy finder providers           |
@@ -154,16 +154,23 @@
   |  gd           | nvim-lspconfig or LanguageClient-neovim | language server   | go to definition                      |
   |  gr           | nvim-lspconfig or LanguageClient-neovim | language server   | find reference                        |
   |  K            | nvim-lspconfig or LanguageClient-neovim | language server   | show hover                            |
+  |  gi           | nvim-lspconfig or LanguageClient-neovim | language server   | go to implementation                  |
+  |  =            | nvim-lspconfig or LanguageClient-neovim | language server   | format range                          |
+  | \<Leader> lr  | nvim-lspconfig or LanguageClient-neovim | language server   | rename symbol                         |
+  | \<Leader> la  | nvim-lspconfig or LanguageClient-neovim | language server   | code action                           |
   | \<Leader> a   | nvim-lspconfig or LanguageClient-neovim | clangd            | switch c++ header, source file        |
   | \<Leader> s   | vim-signify                             |                   | toggle VCS diff                       |
   | \<Leader> d   | vim-signify                             | VCS               | show VCS hunk diff                    |
   | \<Leader> u   | vim-signify                             | VCS               | undo VCS hunk                         |
   | \<Leader> D   | vim-signify                             | VCS               | show VCS full diff                    |
   | Ctrl + s      | vim-snipmate                            | insert mode       | show available snippets               |
+  | Ctrl + x      | netrw                                   |                   | toggle the tree browser               |
   | Ctrl + q      |                                         | builtin terminal  | exit terminal mode                    |
   | \<Leader> r   |                                         |                   | toggle relative line number           |
   | \<Leader> c   |                                         |                   | toggle cursor line, column highlight  |
   | \<Leader> L   |                                         |                   | toggle show special characters        |
+  | \<Leader> er  |                                         |                   | edit vimrc                            |
+  | \<Leader> el  |                                         |                   | edit local vimrc                      |
   | space         |                                         |                   | scroll forward                        |
   | backspace     |                                         |                   | scroll backward                       |
   | Ctrl + a      |                                         | insert mode       | home                                  |
@@ -191,14 +198,14 @@
   | MyBuildInLspOmniFunc( findstart, base ) | wrapper of builtin lsp omnifunc                         |
   | MyLspMaps( isNvimBuiltin )              | setup buffer local keybinding for lsp                   |
   | MyCustomHighlight()                     | setup custom highlight to overwrite colorscheme         |
+  | MyNetrwMaps()                           | setup buffer local keybinding for netrw                 |
 
 # Plugins
   | Category          | Plugin                                                                            | Purpose                                                                     | Requirement                                                         |
   | ----------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------- |
   | Plugin Manager    | [vim-plug](https://github.com/junegunn/vim-plug)                                  | vim plugins manager                                                         |                                                                     |
   | Colorscheme       | [nord-vim](https://github.com/arcticicestudio/nord-vim)                           | dark, smooth colorscheme                                                    |                                                                     |
-  | UI                | [nerdtree](https://github.com/scrooloose/nerdtree)                                | to browse the directory in a tree view                                      |                                                                     |
-  |                   | [tagbar](https://github.com/majutsushi/tagbar)                                    | to display tags                                                             | [ctags](#for-ctags)                                                 |
+  | UI                | [tagbar](https://github.com/majutsushi/tagbar)                                    | to display tags                                                             | [ctags](#for-ctags)                                                 |
   |                   | [bufferize.vim](https://github.com/AndrewRadev/bufferize.vim)                     | make command output a buffer                                                |                                                                     |
   |                   | [vim-clap](https://github.com/liuchengxu/vim-clap)                                | plugin for interactive finder and dispatcher                                | nvim 0.4.2 or patch 8.1.2114                                        |
   |                   | [neoterm](https://github.com/kassio/neoterm)                                      | terminal plugin                                                             | builtin terminal                                                    |
@@ -218,6 +225,8 @@
   |                   | [vim-addon-mw-utils](https://github.com/MarcWeber/vim-addon-mw-utils)             | dependency of vim-snipmate                                                  |                                                                     |
   |                   | [tlibs](https://github.com/tomtom/tlib_vim)                                       | dependency of vim-snipmate                                                  |                                                                     |
   | Mark              | [vim-quickhl](https://github.com/t9md/vim-quickhl)                                | mark highlight plugin                                                       |                                                                     |
+  | Misc              | [vim-hugefile](https://github.com/mhinz/vim-hugefile)                             | disable some feature when edit large file                                   |                                                                     |
+  |                   | [nerdcommenter](https://github.com/preservim/nerdcommenter)                       | comment code                                                                |                                                                     |
   | Self Used         | [FlotisableStatusLine](https://github.com/flotisable/FlotisableStatusLine)        | a self use plugin to set up the status line                                 |                                                                     |
   |                   | [FlotisableVimSnipets](https://github.com/flotisable/FlotisableVimSnippets)       | a self use code snippets                                                    | vim-snipmate                                                        |
 

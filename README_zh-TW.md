@@ -137,8 +137,8 @@
   | \<Leader> m   | vim-quickhl                             |                 | 設置標籤高亮              |
   | \<Leader> M   | vim-quickhl                             |                 | 清除標籤高亮              |
   | Ctrl + 0      | zoom.vim                                |                 | 重置圖形介面字型          |
+  | gc            | nerdcommenter                           |                 | 註解程式碼                |
   | \<Leader> C   | vim-venter                              |                 | 置中視窗文字              |
-  | Ctrl + x      | nerdtree                                |                 | 開關樹狀檢視器            |
   | \<Leader> t   | tagbar                                  | ctags           | 開關 tag 顯示             |
   | \<Leader> T   | tagbar                                  | ctags           | 顯示當前游標所在的 tag    |
   | \<Leader> F   | vim-clap                                |                 | 開啟模糊搜尋選單          |
@@ -152,16 +152,23 @@
   |  gd           | nvim-lspconfig 或 LanguageClient-neovim | language server | 尋找定義                  |
   |  gr           | nvim-lspconfig 或 LanguageClient-neovim | language server | 尋找參考                  |
   |  K            | nvim-lspconfig 或 LanguageClient-neovim | language server | 顯示文檔                  |
+  |  gi           | nvim-lspconfig or LanguageClient-neovim | language server | 尋找實作                  |
+  |  =            | nvim-lspconfig or LanguageClient-neovim | language server | 區塊排版                  |
+  | \<Leader> lr  | nvim-lspconfig or LanguageClient-neovim | language server | 修改 symbol 名稱          |
+  | \<Leader> la  | nvim-lspconfig or LanguageClient-neovim | language server | code action               |
   | \<Leader> a   | nvim-lspconfig 或 LanguageClient-neovim | clangd          | 切換 c++ 標頭與原始碼     |
   | \<Leader> s   | vim-signify                             |                 | 開關版本控制差異插件      |
   | \<Leader> d   | vim-signify                             | 版本控制程式    | 顯示版本控制片段差異      |
   | \<Leader> u   | vim-signify                             | 版本控制程式    | 回復版本控制片段          |
   | \<Leader> D   | vim-signify                             | 版本控制程式    | 顯示版本控制差異          |
   | Ctrl + s      | vim-snipmate                            | 插入模式        | 顯示可用的程式碼片段      |
+  | Ctrl + x      | netrw                                   |                 | 開關樹狀檢視器            |
   | Ctrl + q      |                                         | 內建終端機      | 離開終端機模式            |
   | \<Leader> r   |                                         |                 | 切換相對行號顯示          |
   | \<Leader> c   |                                         |                 | 切換游標高亮              |
   | \<Leader> L   |                                         |                 | 切換顯示特殊字元          |
+  | \<Leader> er  |                                         |                 | 編輯 vimrc                |
+  | \<Leader> el  |                                         |                 | 編輯本地端 vimrc          |
   | 空白鍵        |                                         |                 | 向下滾動                  |
   | backspace 鍵  |                                         |                 | 向上滾動                  |
   | Ctrl + a      |                                         | 插入模式        | home 鍵                   |
@@ -189,14 +196,14 @@
   | MyBuildInLspOmniFunc( findstart, base ) | 內建 lsp omni 的 wrapper                    |
   | MyLspMaps( isNvimBuiltin )              | lsp 的按鍵設定                              |
   | MyCustomHighlight()                     | 自訂顏色                                    |
+  | MyNetrwMaps()                           | netrw 的按鍵設定                            |
 
 # 插件
   | 分類          | 插件                                                                              | 用途                                                            | 需求                                                                |
   | ------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------- |
   | 插件管理員    | [vim-plug](https://github.com/junegunn/vim-plug)                                  | vim 插件管理員                                                  |                                                                     |
   | 色彩方案      | [nord-vim](https://github.com/arcticicestudio/nord-vim)                           | 暗色柔和色彩方案                                                |                                                                     |
-  | 介面          | [nerdtree](https://github.com/scrooloose/nerdtree)                                | 樹狀檢視器                                                      |                                                                     |
-  |               | [tagbar](https://github.com/majutsushi/tagbar)                                    | 顯示 tags                                                       | [ctags](#for-ctags)                                                 |
+  | 介面          | [tagbar](https://github.com/majutsushi/tagbar)                                    | 顯示 tags                                                       | [ctags](#for-ctags)                                                 |
   |               | [bufferize.vim](https://github.com/AndrewRadev/bufferize.vim)                     | 讓命令顯示在 buffer                                             |                                                                     |
   |               | [vim-clap](https://github.com/liuchengxu/vim-clap)                                | 互動式查詢                                                      | nvim 0.4.2 or patch 8.1.2114                                        |
   |               | [neoterm](https://github.com/kassio/neoterm)                                      | 終端機插件                                                      | 內建終端機                                                          |
@@ -216,6 +223,8 @@
   |               | [vim-addon-mw-utils](https://github.com/MarcWeber/vim-addon-mw-utils)             | vim-snipmate 的依賴                                             |                                                                     |
   |               | [tlibs](https://github.com/tomtom/tlib_vim)                                       | vim-snipmate 的依賴                                             |                                                                     |
   | 標籤高亮      | [vim-quickhl](https://github.com/t9md/vim-quickhl)                                | 標籤高亮插件                                                    | vim-ingo-library                                                    |
+  | 雜項          | [vim-hugefile](https://github.com/mhinz/vim-hugefile)                             | 編輯大檔案時關閉些許功能                                        |                                                                     |
+  |               | [nerdcommenter](https://github.com/preservim/nerdcommenter)                       | 註解程式碼                                                      |                                                                     |
   | 自用插件      | [FlotisableStatusLine](https://github.com/flotisable/FlotisableStatusLine)        | 自用的狀態列設定                                                |                                                                     |
   |               | [FlotisableVimSnipets](https://github.com/flotisable/FlotisableVimSnippets)       | 自用的程式碼片段                                                | vim-snipmate                                                        |
 
