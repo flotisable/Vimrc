@@ -132,6 +132,20 @@ function! MyCustomHighlight()
 endfunction
 " end customize highlight
 "}}}
+" setup buffer local keybinding for netrw  設定 netrw 的按鍵{{{
+function! MyNetrwMaps()
+"
+  if !exists( 'g:my.keybindings.netrw' )
+    return
+  endif
+
+  for key in keys( g:my.keybindings.netrw )
+    execute printf( 'map <buffer> <silent> %s %s', key, g:my.keybindings.netrw[key] )
+  endfor
+"
+endfunction
+" end setup buffer local keybinding for netrw
+"}}}
 " end self defined functions
 "}}}
 " auto commands{{{
@@ -190,6 +204,34 @@ endif
 "}}}
 if filereadable( g:my.localVimrc ) | exec 'source ' . g:my.localVimrc | endif
 " plugin settings  插件設定{{{
+" builtin plugin settings  內建插件設定{{{
+if !exists( 'g:loaded_netrw' ) || g:loaded_netrw != 1
+"
+  let g:netrw_banner    = 0
+  let g:netrw_keepdir   = 0         | " make current directory the same as browsing directory
+  let g:netrw_liststyle = 3         | " tree browser
+  let g:netrw_list_hide = '^\.\w\+'
+  let g:netrw_mousemaps = 0
+  let g:netrw_sizestyle = 'H'       | " human readable size, e.g. 5K
+
+  let g:netrw_use_errorwindow = 0 | " show error in message
+
+  noremap <C-x> :25Lexplore<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
+
+  " CD to make current directory the top directory
+  let g:my.keybindings.netrw =
+    \ {
+    \   'o':  '<Plug>NetrwLocalBrowseCheck',
+    \   'u':  '<Plug>NetrwBrowseUpDir',
+    \   'CD': 'gn',
+    \   '?':  ':help netrw-quickhelp<Enter>',
+    \ }
+
+  autocmd Filetype netrw call MyNetrwMaps()
+"
+endif
+" end builtin plugin settings
+"}}}
 " vim-plug settings  vim-plug 插件設定（用來管理其他插件的插件）  plugin for manage other plugins  https://github.com/junegunn/vim-plug{{{
 if filereadable( $HOME . '/.vim/autoload/plug.vim' )
 "
@@ -207,9 +249,8 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
 
   if !exists( 'g:vscode' )
   "
-    Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'        } " display directory as tree view  樹狀顯示資料夾
-    Plug 'majutsushi/tagbar',   { 'on': [ 'Tagbar',
-                                        \ 'TagbarCurrentTag' ]  } " display tags( depend on 'ctags' )  顯示 tag （需搭配 ctags ）
+    Plug 'majutsushi/tagbar', { 'on': [ 'Tagbar',
+                                      \ 'TagbarCurrentTag' ]  } " display tags( depend on 'ctags' )  顯示 tag （需搭配 ctags ）
   "
   endif
 
@@ -344,12 +385,6 @@ if MyPluginExistsAndInRtp( 'vim-venter' )
 "
 endif
 " end venter settings
-"}}}
-" nerdtree settings  nerdtree 插件設定{{{
-if MyPluginExists( 'nerdtree', 0 )
-  noremap <C-x> :NERDTreeToggle<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
-endif
-" end nerdtree settings
 "}}}
 " tagbar settings  tagbar 插件設定{{{
 if MyPluginExists( 'tagbar', 0 )
