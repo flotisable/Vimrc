@@ -327,8 +327,8 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
   " end code snippet
   "}}}
   " self use  個人使用的插件{{{
-  Plug 'flotisable/FlotisableStatusLine', {'branch':'develop'}  " self use statusline plugin  個人使用的狀態列設定插件
-  Plug 'flotisable/FlotisableVimSnippets'                       " self use code snippet  個人使用的程式碼片段
+  Plug 'flotisable/FlotisableStatusLine'  " self use statusline plugin  個人使用的狀態列設定插件
+  Plug 'flotisable/FlotisableVimSnippets' " self use code snippet  個人使用的程式碼片段
   " end self use}}}
   if exists( '*MyLocalPlugin' ) | call MyLocalPlugin() | endif
   call plug#end()
