@@ -179,14 +179,19 @@ nnoremap  <Space> <C-F>
 nnoremap  <BS>    <C-B>
 xnoremap  <Space> <C-F>
 xnoremap  <BS>    <C-B>
-noremap!  <C-a>   <Home>
-noremap!  <C-e>   <End>
-noremap!  <C-f>   <Right>
-noremap!  <C-b>   <Left>
-noremap!  <C-p>   <Up>
-noremap!  <C-n>   <Down>
-noremap!  <C-k>   <C-e><C-u>
-noremap!  <C-d>   <Del>
+
+if !exists( 'g:vscode' )
+"
+  noremap!  <C-a>   <Home>
+  noremap!  <C-e>   <End>
+  noremap!  <C-f>   <Right>
+  noremap!  <C-b>   <Left>
+  noremap!  <C-p>   <Up>
+  noremap!  <C-n>   <Down>
+  noremap!  <C-k>   <C-e><C-u>
+  noremap!  <C-d>   <Del>
+"
+endif
 
 if has( "cscope" )
 "
