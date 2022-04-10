@@ -175,13 +175,12 @@ noremap <Leader>L   :set list!<Enter>|                      " 設定 \L 開關�
 noremap <Leader>er  :edit $HOME/.vimrc<Enter>|              " 設定 \er 編輯 vimrc
 noremap <Leader>el  :exec 'edit' . g:my.localVimrc<Enter>|  " 設定 \el 編輯本地端 vimrc
 
-nnoremap  <Space> <C-F>
-nnoremap  <BS>    <C-B>
-xnoremap  <Space> <C-F>
-xnoremap  <BS>    <C-B>
-
 if !exists( 'g:vscode' )
 "
+  nnoremap  <Space> <C-F>
+  nnoremap  <BS>    <C-B>
+  xnoremap  <Space> <C-F>
+  xnoremap  <BS>    <C-B>
   noremap!  <C-a>   <Home>
   noremap!  <C-e>   <End>
   noremap!  <C-f>   <Right>
