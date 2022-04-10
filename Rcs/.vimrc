@@ -65,7 +65,8 @@ let g:my =
   \   'pluginRoot':           $HOME . '/.vim/plugged',
   \   'powershellBundlePath': $HOME . '/Applications/PowerShellEditorServices',
   \   'snippetAuthor':        'Flotisable',
-  \   'localVimrc':           $HOME . '/.vim/localVimrc'
+  \   'localVimrc':           $HOME . '/.vim/localVimrc',
+  \   'syntaxCompleteCache':  {}
   \ }
 " end self defined settings
 "}}}
@@ -146,6 +147,64 @@ function! MyNetrwMaps()
 endfunction
 " end setup buffer local keybinding for netrw
 "}}}
+" async syntax complete  非同步語法補全{{{
+" this function is to make syntaxcomplete#Complete become asynchronous. modified
+" from syntaxcomplete#Complete in neovim 0.6.1
+function! MyAsyncSyntaxComplete( findstart, base )
+"
+  if a:findstart || !has( 'nvim' ) && v:version < 800
+    return syntaxcomplete#Complete( a:findstart, a:base )
+  elseif exists( 's:buildSyntaxCompleteList' )
+    return []
+  endif
+
+  let s:filetype = substitute( &filetype, '\.', '_', 'g')
+
+  if exists( 'g:my.syntaxCompleteCache["' . s:filetype . '"]' )
+  "
+    let l:filterExpr = 'v:val =~ ' . '"^' . escape( a:base, '\\/.*$^~[]' ) . '"'
+
+    return filter( deepcopy( g:my.syntaxCompleteCache[s:filetype] ), l:filterExpr )
+  "
+  endif
+
+  if has( 'nvim' )
+  "
+    let s:completeList = []
+
+    function! s:AsyncSyntaxCompleteOnStdout( id, data, name )
+    "
+      let   s:completeList            += a:data
+      unlet s:buildSyntaxCompleteList
+    "
+    endfunction
+
+    function! s:AsyncSyntaxCompleteOnExit( id, exitCode, type )
+      let g:my.syntaxCompleteCache[s:filetype] = s:completeList
+    endfunction
+
+    call jobstart(
+      \ [
+      \   v:progpath, '--headless',expand( '%' ),
+      \   '-c', 'chansend( stdioopen( {} ), syntaxcomplete#OmniSyntaxList()',
+      \   '-c', 'quit'
+      \ ],
+      \ {
+      \   'on_stdout':  function( 's:AsyncSyntaxCompleteOnStdout' ),
+      \   'on_exit':    function( 's:AsyncSyntaxCompleteOnExit'   )
+      \ } )
+
+    let s:buildSyntaxCompleteList = 1
+  "
+  else
+  "
+    return syntaxcomplete#Complete( a:findstart, a:base )
+  "
+  endif
+"
+endfunction
+" end async syntax complete
+"}}}
 " end self defined functions
 "}}}
 " auto commands{{{
@@ -157,7 +216,7 @@ autocmd BufWinEnter * silent! loadview
 " end save and load view
 "}}}
 " minimal completion base on syntax  基於語法的補全{{{
-autocmd FileType * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
+autocmd FileType * if &omnifunc == "" | setlocal omnifunc=MyAsyncSyntaxComplete | endif
 " end minimal completion base on syntax
 "}}}
 autocmd ColorScheme * call MyCustomHighlight()
