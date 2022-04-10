@@ -210,7 +210,7 @@ endif
 if filereadable( g:my.localVimrc ) | exec 'source ' . g:my.localVimrc | endif
 " plugin settings  插件設定{{{
 " builtin plugin settings  內建插件設定{{{
-if !exists( 'g:loaded_netrw' ) || g:loaded_netrw != 1
+if ( !exists( 'g:loaded_netrw' ) || g:loaded_netrw != 1 ) && !exists( 'g:vscode' )
 "
   let g:netrw_banner    = 0
   let g:netrw_keepdir   = 0         | " make current directory the same as browsing directory
