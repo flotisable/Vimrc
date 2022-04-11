@@ -186,7 +186,18 @@ function! MyAsyncSyntaxComplete( findstart, base )
   "
   else
   "
-    return syntaxcomplete#Complete( a:findstart, a:base )
+    call job_start(
+      \ [
+      \   v:progpath, '-Esu', $MYVIMRC, expand( '%:p' ),
+      \   '-c', 'syntax on',
+      \   '-c', 'let g:buf = bufadd( "tmp" ) | call bufload( g:buf )',
+      \   '-c', 'call appendbufline( g:buf, 0, syntaxcomplete#OmniSyntaxList() )',
+      \   '-c', 'buffer tmp | %print | quit!'
+      \ ],
+      \ {
+      \   'out_cb':   function( 's:AsyncSyntaxCompleteOnStdout' ),
+      \   'exit_cb':  function( 's:AsyncSyntaxCompleteOnExit'   )
+      \ } )
   "
   endif
 "
@@ -194,16 +205,33 @@ endfunction
 " end async syntax complete
 "}}}
 " helper functions of async syntax complete{{{
-function! s:AsyncSyntaxCompleteOnStdout( id, data, name )
-  let s:completeList += a:data
-endfunction
+if has( 'nvim' )
+"
+  function! s:AsyncSyntaxCompleteOnStdout( id, data, name )
+    let s:completeList += a:data
+  endfunction
 
-function! s:AsyncSyntaxCompleteOnExit( id, exitCode, type )
+  function! s:AsyncSyntaxCompleteOnExit( id, exitCode, type )
+  "
+    let g:my.syntaxCompleteCache[s:filetype] = uniq( s:completeList )
+    unlet s:buildSyntaxCompleteList
+  "
+  endfunction
 "
-  let g:my.syntaxCompleteCache[s:filetype] = s:completeList
-  unlet s:buildSyntaxCompleteList
+elseif v:version >= 800
 "
-endfunction
+  function! s:AsyncSyntaxCompleteOnStdout( channel, message )
+    let s:completeList += split( a:message )[-1:]
+  endfunction
+
+  function! s:AsyncSyntaxCompleteOnExit( job, exitCode )
+  "
+    let g:my.syntaxCompleteCache[s:filetype] = uniq( s:completeList )
+    unlet s:buildSyntaxCompleteList
+  "
+  endfunction
+"
+endif
 " end helper functions of async syntax complete
 "}}}
 " end self defined functions
