@@ -168,33 +168,21 @@ function! MyAsyncSyntaxComplete( findstart, base )
   "
   endif
 
+  let s:completeList = []
+  let s:buildSyntaxCompleteList = 1
+
   if has( 'nvim' )
   "
-    let s:completeList = []
-
-    function! s:AsyncSyntaxCompleteOnStdout( id, data, name )
-    "
-      let   s:completeList            += a:data
-      unlet s:buildSyntaxCompleteList
-    "
-    endfunction
-
-    function! s:AsyncSyntaxCompleteOnExit( id, exitCode, type )
-      let g:my.syntaxCompleteCache[s:filetype] = s:completeList
-    endfunction
-
     call jobstart(
       \ [
-      \   v:progpath, '--headless',expand( '%' ),
-      \   '-c', 'chansend( stdioopen( {} ), syntaxcomplete#OmniSyntaxList()',
+      \   v:progpath, '--headless', expand( '%:p' ),
+      \   '-c', 'call chansend( stdioopen( {} ), syntaxcomplete#OmniSyntaxList() )',
       \   '-c', 'quit'
       \ ],
       \ {
       \   'on_stdout':  function( 's:AsyncSyntaxCompleteOnStdout' ),
       \   'on_exit':    function( 's:AsyncSyntaxCompleteOnExit'   )
       \ } )
-
-    let s:buildSyntaxCompleteList = 1
   "
   else
   "
@@ -204,6 +192,19 @@ function! MyAsyncSyntaxComplete( findstart, base )
 "
 endfunction
 " end async syntax complete
+"}}}
+" helper functions of async syntax complete{{{
+function! s:AsyncSyntaxCompleteOnStdout( id, data, name )
+  let s:completeList += a:data
+endfunction
+
+function! s:AsyncSyntaxCompleteOnExit( id, exitCode, type )
+"
+  let g:my.syntaxCompleteCache[s:filetype] = s:completeList
+  unlet s:buildSyntaxCompleteList
+"
+endfunction
+" end helper functions of async syntax complete
 "}}}
 " end self defined functions
 "}}}
