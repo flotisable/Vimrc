@@ -17,12 +17,6 @@ set listchars   =tab:>\ ,trail:-,nbsp:+
 set errorformat ^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ directory\ '%f'
 set viewoptions =folds,cursor
 
-if has( 'win32' )
-  set guifont=Consolas:h14
-else
-  set guifont=DejaVu\ Sans\ Mono:h14
-endif
-
 if has( 'nvim' )
   set jumpoptions=stack
 endif
@@ -33,6 +27,7 @@ endif
 
 if has( 'win32' )
 "
+  set guifont       =Consolas:h14
   set shell         =powershell
   let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
   let &shellredir   = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
@@ -40,6 +35,8 @@ if has( 'win32' )
   set shellquote    =
   set shellxquote   =
 "
+else
+  set guifont=DejaVu\ Sans\ Mono:h14
 endif
 
 if has( "cscope" )
@@ -162,7 +159,7 @@ function! MyAsyncSyntaxComplete( findstart, base )
 
   if exists( 'g:my.syntaxCompleteCache["' . s:filetype . '"]' )
   "
-    let l:filterExpr = 'v:val =~ ' . '"^' . escape( a:base, '\\/.*$^~[]' ) . '"'
+    let l:filterExpr = "v:val =~ '^" . escape( a:base, '\\/.*$^~[]' ) . "'"
 
     return filter( deepcopy( g:my.syntaxCompleteCache[s:filetype] ), l:filterExpr )
   "
@@ -297,7 +294,7 @@ endif
 if filereadable( g:my.localVimrc ) | exec 'source ' . g:my.localVimrc | endif
 " plugin settings  插件設定{{{
 " builtin plugin settings  內建插件設定{{{
-if ( !exists( 'g:loaded_netrw' ) || g:loaded_netrw != 1 ) && !exists( 'g:vscode' )
+if ( get( g:, 'loaded_netrw', 0 ) != 1 ) && !exists( 'g:vscode' )
 "
   let g:netrw_banner    = 0
   let g:netrw_keepdir   = 0         | " make current directory the same as browsing directory
@@ -631,7 +628,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
 
     local function myOnPublishDiagnosticCore( result )
 
-      if not result or not result.diagnostics or #result.diagnostics == 0 then
+      if not result or not result.diagnostics then
         do return end
       end
 
