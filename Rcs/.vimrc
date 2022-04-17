@@ -90,6 +90,22 @@ function! MyBuildInLspOmniFunc( findstart, base )
 endfunction
 " end wrapper of build in lsp omnifunc
 "}}}
+" setup buffer local keybinding  設定 buffer local 的按鍵{{{
+function! MyBufferLocalMaps( keyMapName, ... )
+"
+  let l:keyMap = get( g:my.keybindings, a:keyMapName, {} )
+
+  for l:keyMapName in a:000
+    let l:keyMap = get( l:keyMap, l:keyMapName, {} )
+  endfor
+
+  for l:key in keys( l:keyMap )
+    execute printf( 'map <buffer> <silent> %s %s', l:key, l:keyMap[key] )
+  endfor
+"
+endfunction
+" end setup buffer local keybinding
+"}}}
 " setup buffer local keybinding for lsp  設定 lsp buffer local 的按鍵{{{
 function! MyLspMaps( isNvimBuiltin )
 "
@@ -97,18 +113,8 @@ function! MyLspMaps( isNvimBuiltin )
     return
   endif
 
-  let l:mapFormat = 'map <buffer> <silent> %s %s'
-
   for scope in [ "global", &filetype ]
-  "
-    if !exists( 'g:my.keybindings.lsp["' . scope . '"]' )
-      continue
-    endif
-
-    for key in keys( g:my.keybindings.lsp[scope] )
-      execute printf( l:mapFormat, key, g:my.keybindings.lsp[scope][key] )
-    endfor
-  "
+    call MyBufferLocalMaps( 'lsp', scope )
   endfor
 "
 endfunction
@@ -129,20 +135,6 @@ function! MyCustomHighlight()
 "
 endfunction
 " end customize highlight
-"}}}
-" setup buffer local keybinding for netrw  設定 netrw 的按鍵{{{
-function! MyNetrwMaps()
-"
-  if !exists( 'g:my.keybindings.netrw' )
-    return
-  endif
-
-  for key in keys( g:my.keybindings.netrw )
-    execute printf( 'map <buffer> <silent> %s %s', key, g:my.keybindings.netrw[key] )
-  endfor
-"
-endfunction
-" end setup buffer local keybinding for netrw
 "}}}
 " async syntax complete  非同步語法補全{{{
 " this function is to make syntaxcomplete#Complete become asynchronous. modified
@@ -316,7 +308,7 @@ if ( get( g:, 'loaded_netrw', 0 ) != 1 ) && !exists( 'g:vscode' )
     \   '?':  ':help netrw-quickhelp<Enter>',
     \ }
 
-  autocmd Filetype netrw call MyNetrwMaps()
+  autocmd Filetype netrw call MyBufferLocalMaps( 'netrw' )
 "
 endif
 " end builtin plugin settings
