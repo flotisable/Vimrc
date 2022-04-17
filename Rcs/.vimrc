@@ -1,7 +1,7 @@
 " option settings  選項設定{{{
 set encoding    =utf-8  " set file encoding  設定編碼
 set number              " display line number  顯示行號
-set showcmd             " show command at the status bar  顯示指令在狀態列（知道自己輸入什麼）
+set showcmd             " show command in status bar  顯示指令在狀態列（知道自己輸入什麼）
 set laststatus  =2      " show the status line  顯示狀態列
 set autoindent          " automatic indent as last line  自動縮排（與上一行縮排相同
 set smartindent         " smart indent based on {}  根據大括號縮排
@@ -72,7 +72,7 @@ let g:my =
 "}}}
 " self defined functions  自定義的函式{{{
 " test pluggin existence  檢測插件是否存在{{{
-" this function is add since old vim not support optional argument
+" this function is added since old vim not support optional argument
 function! MyPluginExistsAndInRtp( name )
   return MyPluginExists( a:name, 1 )
 endfunction
@@ -643,7 +643,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
       vim.fn.setqflist( {}, ' ',
         {
           items = vim.diagnostic.toqflist( result.diagnostics ),
-          title = 'LSP Disgnostic'
+          title = 'LSP Diagnostic'
         }
       )
 
@@ -678,6 +678,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     local function noremap( lhs, rhs )
       vim.api.nvim_set_keymap( '', lhs, rhs, { noremap = true } )
     end
+
     noremap( '<Leader>lo', '<Cmd>LspStart<Enter>' ) -- set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
     noremap( '<Leader>lc', '<Cmd>LspStop<Enter>'  ) -- set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
