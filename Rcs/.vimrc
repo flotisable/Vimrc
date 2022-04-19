@@ -246,11 +246,15 @@ if has( 'nvim' ) || has( 'terminal' )
   tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
 endif
 
-noremap <Leader>r   :set relativenumber!<Enter>|            " 設定 \r 鍵開關相對行號設定
-noremap <Leader>c   :set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵開關游標高亮
-noremap <Leader>L   :set list!<Enter>|                      " 設定 \L 開關特殊字元顯示
+noremap <Leader>r   :set relativenumber!<Enter>|            " 設定 \r 鍵切換相對行號設定
+noremap <Leader>c   :set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵切換游標高亮
+noremap <Leader>L   :set list!<Enter>|                      " 設定 \L 切換特殊字元顯示
 noremap <Leader>er  :edit $HOME/.vimrc<Enter>|              " 設定 \er 編輯 vimrc
-noremap <Leader>el  :exec 'edit' . g:my.localVimrc<Enter>|  " 設定 \el 編輯本地端 vimrc
+noremap <Leader>el  :exec 'edit ' . g:my.localVimrc<Enter>| " 設定 \el 編輯本地端 vimrc
+
+if has( 'nvim-0.7' )
+  noremap <Leader>S :exec 'set laststatus=' . ( ( &laststatus == 2 )? 3: 2 )<Enter> | " 設定 \S 切換全域狀態列
+endif
 
 if !exists( 'g:vscode' )
 "
