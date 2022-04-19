@@ -123,8 +123,8 @@ endfunction
 " customize highlight  設定介面的顏色{{{
 function! MyCustomHighlight()
 "
-  highlight CursorColumn  cterm=NONE ctermbg=Grey
-  highlight CursorLine    cterm=NONE ctermbg=Grey
+  highlight CursorColumn  cterm=NONE ctermbg=DarkGrey
+  highlight CursorLine    cterm=NONE ctermbg=DarkGrey
 
   highlight DiffAdd     cterm=bold ctermfg=Yellow ctermbg=DarkGreen gui=bold guifg='Yellow' guibg='DarkGreen'
   highlight DiffChange  cterm=bold ctermfg=Blue   ctermbg=Yellow    gui=bold guifg='Blue'   guibg='Yellow'
