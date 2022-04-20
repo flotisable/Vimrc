@@ -327,10 +327,10 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
   Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
   Plug 'vim-scripts/zoom.vim'       " zoom gui font  縮放圖形介面字型
   Plug 'mhinz/vim-hugefile'         " handle large file  處理大檔案
+  Plug 'tpope/vim-commentary'       " comment plugin  註解插件
 
-  Plug 't9md/vim-quickhl',        { 'on': [ '<Plug>(quickhl-manual-this)',
-                                          \ '<Plug>(quickhl-manual-reset)' ]  } " mark plugin  標記插件
-  Plug 'preservim/nerdcommenter', { 'on': '<Plug>NERDCommenterToggle'         } " comment plugin  註解插件
+  Plug 't9md/vim-quickhl',  { 'on': [ '<Plug>(quickhl-manual-this)',
+                                    \ '<Plug>(quickhl-manual-reset)' ]  } " mark plugin  標記插件
 
   if !exists( 'g:vscode' )
   "
@@ -449,17 +449,6 @@ if MyPluginExistsAndInRtp( 'zoom.vim' )
 "
 endif
 " end gui font plugin settings
-"}}}
-" comment plugin settings  註解插件設定{{{
-if MyPluginExists( 'nerdcommenter', 0 )
-"
-  let g:NERDCreateDefaultMappings = 0
-  let g:NERDSpaceDelims           = 1
-
-  map gc <Plug>NERDCommenterToggle| " set gc key to toggle comments  設定 gc 切換註解
-"
-endif
-" end comment plugin settings
 "}}}
 " venter settings  venter 插件設定{{{
 if MyPluginExistsAndInRtp( 'vim-venter' )
