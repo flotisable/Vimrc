@@ -336,6 +336,7 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
   "
     Plug 'majutsushi/tagbar', { 'on': [ 'Tagbar',
                                       \ 'TagbarCurrentTag' ]  } " display tags( depend on 'ctags' )  顯示 tag （需搭配 ctags ）
+    Plug 'liuchengxu/vista.vim'
   "
   endif
 
@@ -466,6 +467,12 @@ if MyPluginExists( 'tagbar', 0 )
   noremap <Leader>T :TagbarCurrentTag<Enter>| " set \T to show current tag  設定 \T 顯示現在的 tag
 endif
 " end tagbar settings
+"}}}
+" vista settings  vista 插件設定{{{
+if MyPluginExistsAndInRtp( 'vista.vim' )
+  autocmd FileType vista_kind noremap <buffer> <Leader>t :Vista!!<Enter>| " set \t key to toggle vista  設定 \t 鍵開闔 vista
+endif
+" end vista settings
 "}}}
 " interactive finder plugin settings  互動式查詢插件設定{{{
 if MyPluginExistsAndInRtp( 'vim-clap' )
@@ -665,6 +672,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     noremap( '<Leader>lc', '<Cmd>LspStop<Enter>'  ) -- set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
     local my = vim.g.my
+
     my.keybindings.lsp =
     {
       global =
@@ -683,6 +691,17 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
         ['<Leader>a'] = '<Cmd>ClangdSwitchSourceHeader<Enter>'
       }
     }
+    if vim.fn.MyPluginExistsAndInRtp( 'vista.vim' ) then
+
+      local default = vim.g.vista_default_executive
+
+      default = 'nvim_lsp'
+
+      my.keybindings.lsp.global['<Leader>t'] = '<Cmd>Vista!!<Enter>'
+      vim.g.vista_default_executive = default
+
+    end
+
     vim.g.my = my
     -- end key mappings
     --}}}
@@ -727,6 +746,14 @@ elseif MyPluginExistsAndInRtp( 'LanguageClient-neovim' )
     \     '<Leader>a': ':call LanguageClient#textDocument_switchSourceHeader()<Enter>'
     \   }
     \ }
+
+  if MyPluginExistsAndInRtp( 'vista.vim' )
+  "
+    let g:vista_default_executive = 'lcn'
+
+    let g:my.keybindings.lsp.global['<Leader>t'] = ':Vista!!<Enter>'
+  "
+  endif
 
   autocmd Filetype * call MyLspMaps( v:false )
 "
