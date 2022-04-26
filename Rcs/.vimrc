@@ -654,11 +654,19 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     -- end show diagnostics in quick fix list
     --}}}
     -- language setup{{{
-    lsp.clangd.setup{}
-    lsp.bashls.setup{}
-    lsp.vimls.setup{}
-    lsp.perlls.setup{}
-    lsp.rust_analyzer.setup{}
+    local servers = {
+                      'clangd',
+                      'bashls',
+                      'vimls',
+                      'perlls',
+                      'rust_analyzer',
+                      'pylsp'
+                    }
+
+    for _, server in pairs( servers ) do
+      lsp[server].setup{}
+    end
+
     lsp.efm.setup
     {
       filetypes = { 'raku' }
@@ -667,7 +675,6 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     {
       bundle_path = vim.g.my.powershellBundlePath
     }
-    lsp.pylsp.setup{}
     -- language setup
     --}}}
     -- key mappings{{{
