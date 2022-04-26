@@ -589,8 +589,8 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     -- end sign setup
     --}}}
     -- use lsp omni function when a language server is attached{{{
-    local function mySetOmniFunc()
-      vim.api.nvim_buf_set_option( buffer, 'omnifunc', 'MyBuildInLspOmniFunc' )
+    local function mySetOmniFunc( args )
+      vim.api.nvim_buf_set_option( args.buf, 'omnifunc', 'MyBuildInLspOmniFunc' )
     end
 
     local function myOnAttach( client, buffer )
@@ -603,7 +603,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
 
       local group = vim.api.nvim_create_augroup( 'MyAutoCmds', { clear = false } )
 
-      mySetOmniFunc()
+      mySetOmniFunc( { buf = buffer } )
       vim.api.nvim_create_autocmd(
         'FileChangedShellPost',
         {
