@@ -632,7 +632,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
       end
 
       for _, d in ipairs( result.diagnostics ) do
-        d.lnum  = d.range.start.line + 1
+        d.lnum  = d.range.start.line      + 1
         d.col   = d.range.start.character + 1
       end
 
@@ -679,7 +679,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     --}}}
     -- key mappings{{{
     local function noremap( lhs, rhs )
-      vim.api.nvim_set_keymap( '', lhs, rhs, { noremap = true } )
+      vim.keymap.set( '', lhs, rhs, {} )
     end
 
     noremap( '<Leader>lo', '<Cmd>LspStart<Enter>' ) -- set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
