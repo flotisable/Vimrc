@@ -388,8 +388,7 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
         Plug 'autozimu/LanguageClient-neovim',
           \ {
           \   'branch': 'next',
-          \   'do':     has( 'win32' )  ? 'powershell -executionpolicy bypass -File install.ps1'
-          \                             : 'bash install.sh'
+          \   'do':     'bash install.sh'
           \ }
       "
       endif
