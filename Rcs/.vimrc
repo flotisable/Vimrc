@@ -628,7 +628,9 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     -- show diagnostics in quick fix list{{{
     local defaultHandler = vim.lsp.diagnostic.on_publish_diagnostics
 
-    local function myOnPublishDiagnosticCore( result )
+    vim.lsp.diagnostic.on_publish_diagnostics = function( error, result, context, config )
+
+      defaultHandler( error, result, context, config )
 
       if not result or not result.diagnostics then
         do return end
@@ -645,13 +647,6 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
           title = 'LSP Diagnostic'
         }
       )
-
-    end
-
-    vim.lsp.diagnostic.on_publish_diagnostics = function( error, result, context, config )
-
-      defaultHandler( error, result, context, config )
-      myOnPublishDiagnosticCore( result )
 
     end
     -- end show diagnostics in quick fix list
