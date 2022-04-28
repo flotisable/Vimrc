@@ -169,8 +169,7 @@ function! MyAsyncSyntaxComplete( findstart, base )
       \   '-c', 'quit'
       \ ],
       \ {
-      \   'on_stdout':  function( 's:AsyncSyntaxCompleteOnStdout' ),
-      \   'on_exit':    function( 's:AsyncSyntaxCompleteOnExit'   )
+      \   'on_stdout': function( 's:AsyncSyntaxCompleteOnStdout' )
       \ } )
   "
   else
@@ -185,7 +184,7 @@ function! MyAsyncSyntaxComplete( findstart, base )
       \ ],
       \ {
       \   'out_cb':   function( 's:AsyncSyntaxCompleteOnStdout' ),
-      \   'exit_cb':  function( 's:AsyncSyntaxCompleteOnExit'   )
+      \   'close_cb': function( 's:AsyncSyntaxCompleteOnClose'  )
       \ } )
   "
   endif
@@ -197,14 +196,14 @@ endfunction
 if has( 'nvim' )
 "
   function! s:AsyncSyntaxCompleteOnStdout( id, data, name )
-    let s:completeList += a:data
-  endfunction
-
-  function! s:AsyncSyntaxCompleteOnExit( id, exitCode, type )
-  "
-    let g:my.syntaxCompleteCache[s:filetype] = uniq( s:completeList )
-    unlet s:buildSyntaxCompleteList
-  "
+    if a:data == ['']
+    "
+      let g:my.syntaxCompleteCache[s:filetype] = uniq( s:completeList )
+      unlet s:buildSyntaxCompleteList
+    "
+    else
+      let s:completeList += a:data
+    endif
   endfunction
 "
 elseif v:version >= 800
@@ -213,7 +212,7 @@ elseif v:version >= 800
     let s:completeList += split( a:message )[-1:]
   endfunction
 
-  function! s:AsyncSyntaxCompleteOnExit( job, exitCode )
+  function! s:AsyncSyntaxCompleteOnClose( channel )
   "
     let g:my.syntaxCompleteCache[s:filetype] = uniq( s:completeList )
     unlet s:buildSyntaxCompleteList
