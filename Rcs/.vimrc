@@ -365,7 +365,6 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
     "
       Plug 'octol/vim-cpp-enhanced-highlight'
       Plug 'cespare/vim-toml'
-      Plug 'pprovost/vim-ps1'
     "
     endif
 
