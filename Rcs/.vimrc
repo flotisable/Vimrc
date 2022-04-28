@@ -337,85 +337,87 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
     Plug 'majutsushi/tagbar', { 'on': [ 'Tagbar',
                                       \ 'TagbarCurrentTag' ]  } " display tags( depend on 'ctags' )  顯示 tag （需搭配 ctags ）
     Plug 'liuchengxu/vista.vim'
-  "
-  endif
 
-  if v:version >= 800 && !exists( 'g:vscode' )
-    Plug 'JMcKiern/vim-venter' " center the text in a window  將視窗文字置中
-  endif
-  " end basic
-  "}}}
-  " interactive finder and dispatcher  互動式查詢{{{
-  if ( has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' ) ) && !exists( 'g:vscode' )
-    Plug 'liuchengxu/vim-clap', { 'do': { -> clap#installer#force_download() } }
-  endif
-  " end interactive finder and dispatcher  互動式查詢
-  "}}}
-  " terminal  終端機插件{{{
-  if ( has( 'nvim' ) || has( 'terminal' ) ) && !exists( 'g:vscode' )
-    Plug 'kassio/neoterm'
-  endif
-  " end terminal  終端機插件
-  "}}}
-  " language specific  特定語言的插件{{{
-  if has( 'nvim-0.5' ) && ( executable( 'gcc' ) || executable( 'clang' ) )
-    Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-  else
-  "
-    Plug 'octol/vim-cpp-enhanced-highlight'
-    Plug 'cespare/vim-toml'
-  "
-  endif
-
-  Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }
-  Plug 'pprovost/vim-ps1'
-  " end language specific
-  "}}}
-  " autocomplete  自動補全的插件{{{
-  if  v:version >= 702 && has( 'insert_expand' ) && has( 'menu' )
-    Plug 'lifepillar/vim-mucomplete'
-  else " when 'vim' version is older  當 vim 版本較低時
-    Plug 'shougo/neocomplcache.vim'
-  endif
-  " end autocomplete
-  "}}}
-  " language server protocal client  LSP 客戶端{{{
-  if has( 'nvim' ) || v:version >= 800
-  "
-    if has( 'nvim-0.5' )
-      Plug 'neovim/nvim-lspconfig'
-    else
-    "
-      Plug 'autozimu/LanguageClient-neovim',
-        \ {
-        \   'branch': 'next',
-        \   'do':     has( 'win32' )  ? 'powershell -executionpolicy bypass -File install.ps1'
-        \                             : 'bash install.sh'
-        \ }
-    "
+    if v:version >= 800
+      Plug 'JMcKiern/vim-venter' " center the text in a window  將視窗文字置中
     endif
   "
   endif
-  " end language server protocal client
+  " end basic
   "}}}
-  " VCS diff  版本控制差異插件{{{
-  if has( 'nvim' ) || has( 'patch-8.0.902' )
-    Plug 'mhinz/vim-signify'
-  else
-    Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+  if !exists( 'g:vscode' )
+    " interactive finder and dispatcher  互動式查詢{{{
+    if ( has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' ) )
+      Plug 'liuchengxu/vim-clap', { 'do': { -> clap#installer#force_download() } }
+    endif
+    " end interactive finder and dispatcher  互動式查詢
+    "}}}
+    " terminal  終端機插件{{{
+    if ( has( 'nvim' ) || has( 'terminal' ) )
+      Plug 'kassio/neoterm'
+    endif
+    " end terminal  終端機插件
+    "}}}
+    " language specific  特定語言的插件{{{
+    if has( 'nvim-0.5' ) && ( executable( 'gcc' ) || executable( 'clang' ) )
+      Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+    else
+    "
+      Plug 'octol/vim-cpp-enhanced-highlight'
+      Plug 'cespare/vim-toml'
+      Plug 'pprovost/vim-ps1'
+    "
+    endif
+
+    Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }
+    " end language specific
+    "}}}
+    " autocomplete  自動補全的插件{{{
+    if  v:version >= 702 && has( 'insert_expand' ) && has( 'menu' )
+      Plug 'lifepillar/vim-mucomplete'
+    else " when 'vim' version is older  當 vim 版本較低時
+      Plug 'shougo/neocomplcache.vim'
+    endif
+    " end autocomplete
+    "}}}
+    " language server protocal client  LSP 客戶端{{{
+    if has( 'nvim' ) || v:version >= 800
+    "
+      if has( 'nvim-0.5' )
+        Plug 'neovim/nvim-lspconfig'
+      else
+      "
+        Plug 'autozimu/LanguageClient-neovim',
+          \ {
+          \   'branch': 'next',
+          \   'do':     has( 'win32' )  ? 'powershell -executionpolicy bypass -File install.ps1'
+          \                             : 'bash install.sh'
+          \ }
+      "
+      endif
+    "
+    endif
+    " end language server protocal client
+    "}}}
+    " VCS diff  版本控制差異插件{{{
+    if has( 'nvim' ) || has( 'patch-8.0.902' )
+      Plug 'mhinz/vim-signify'
+    else
+      Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+    endif
+    " end VCS diff
+    "}}}
+    " code snippet  程式碼片段插件{{{
+    Plug 'MarcWeber/vim-addon-mw-utils'
+    Plug 'tomtom/tlib_vim'
+    Plug 'garbas/vim-snipmate'
+    " end code snippet
+    "}}}
+    " self use  個人使用的插件{{{
+    Plug 'flotisable/FlotisableStatusLine'  " self use statusline plugin  個人使用的狀態列設定插件
+    Plug 'flotisable/FlotisableVimSnippets' " self use code snippet  個人使用的程式碼片段
+    " end self use}}}
   endif
-  " end VCS diff
-  "}}}
-  " code snippet  程式碼片段插件{{{
-  Plug 'MarcWeber/vim-addon-mw-utils'
-  Plug 'tomtom/tlib_vim'
-  Plug 'garbas/vim-snipmate'
-  " end code snippet
-  "}}}
-  " self use  個人使用的插件{{{
-  Plug 'flotisable/FlotisableStatusLine'  " self use statusline plugin  個人使用的狀態列設定插件
-  Plug 'flotisable/FlotisableVimSnippets' " self use code snippet  個人使用的程式碼片段
-  " end self use}}}
   if exists( '*MyLocalPlugin' ) | call MyLocalPlugin() | endif
   call plug#end()
 "
