@@ -157,7 +157,7 @@ function! MyAsyncSyntaxComplete( findstart, base )
   "
   endif
 
-  let s:completeList = []
+  let s:completeList            = []
   let s:buildSyntaxCompleteList = 1
 
   if has( 'nvim' )
@@ -501,8 +501,8 @@ if MyPluginExistsAndInRtp( 'vim-clap' )
   else
   "
     let g:clap_popup_move_manager = {
-                                  \ "\<C-N>": "\<Down>",
-                                  \ "\<C-P>": "\<Up>",
+                                  \   "\<C-N>": "\<Down>",
+                                  \   "\<C-P>": "\<Up>",
                                   \ }
   "
   endif
@@ -666,7 +666,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
                       'pylsp'
                     }
 
-    for _, server in pairs( servers ) do
+    for _, server in ipairs( servers ) do
       lsp[server].setup{}
     end
 
@@ -805,8 +805,8 @@ if MyPluginExistsAndInRtp( 'vim-snipmate' )
   " use Ctrl+n, Ctrl+p to select multiple snippet  用 Ctrl+n, Ctrl+p 選擇程式片段
   let g:tlib_extend_keyagents_InputList_s =
     \ {
-    \ 16: 'tlib#agent#Up',
-    \ 14: 'tlib#agent#Down'
+    \   16: 'tlib#agent#Up',
+    \   14: 'tlib#agent#Down'
     \ }
 "
 endif
