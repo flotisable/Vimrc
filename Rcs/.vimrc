@@ -311,7 +311,7 @@ if ( get( g:, 'loaded_netrw', 0 ) != 1 ) && !exists( 'g:vscode' )
     \   '?':  ':help netrw-quickhelp<Enter>',
     \ }
 
-  autocmd Filetype netrw call MyBufferLocalMaps( 'netrw' )
+  autocmd MyAutoCmds Filetype netrw call MyBufferLocalMaps( 'netrw' )
 "
 endif
 " end builtin plugin settings
@@ -470,7 +470,7 @@ endif
 "}}}
 " vista settings  vista 插件設定{{{
 if MyPluginExistsAndInRtp( 'vista.vim' )
-  autocmd FileType vista_kind noremap <buffer> <Leader>t :Vista!!<Enter>| " set \t key to toggle vista  設定 \t 鍵開闔 vista
+  autocmd MyAutoCmds FileType vista_kind noremap <buffer> <Leader>t :Vista!!<Enter>| " set \t key to toggle vista  設定 \t 鍵開闔 vista
 endif
 " end vista settings
 "}}}
@@ -494,8 +494,10 @@ if MyPluginExistsAndInRtp( 'vim-clap' )
 
   if has( 'nvim' )
   "
+    augroup MyAutoCmds
     autocmd FileType clap_input inoremap <silent> <buffer> <C-n> <C-R>=clap#navigation#linewise( 'down' )<Enter>
     autocmd FileType clap_input inoremap <silent> <buffer> <C-p> <C-R>=clap#navigation#linewise( 'up'   )<Enter>
+    augroup END
   "
   else
   "
@@ -555,8 +557,10 @@ if MyPluginExistsAndInRtp( 'vim-mucomplete' )
   let g:mucomplete#no_mappings = 1
 
   " to work with vim-clap
+  augroup MyAutoCmds
   autocmd FileType    clap_input  MUcompleteAutoOff
   autocmd InsertEnter *           if &filetype != 'clap_input' | MUcompleteAutoOn | endif
+  augroup END
 "
 elseif MyPluginExistsAndInRtp( 'neocomplcache.vim' )
 "
@@ -564,7 +568,7 @@ elseif MyPluginExistsAndInRtp( 'neocomplcache.vim' )
   " noselect in completeopt
   let g:neocomplcache_omni_patterns = { '_': '\w\+' }
 
-  autocmd InsertEnter * NeoComplCacheEnable
+  autocmd MyAutoCmds InsertEnter * NeoComplCacheEnable
 "
 endif
 " end completion plugin settings
@@ -769,7 +773,7 @@ elseif MyPluginExistsAndInRtp( 'LanguageClient-neovim' )
   "
   endif
 
-  autocmd Filetype * call MyLspMaps( v:false )
+  autocmd MyAutoCmds Filetype * call MyLspMaps( v:false )
 "
 endif
 " end LSP client settings
