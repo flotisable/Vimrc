@@ -253,6 +253,7 @@ endif
 noremap <Leader>r   :set relativenumber!<Enter>|            " 設定 \r 鍵切換相對行號設定
 noremap <Leader>c   :set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵切換游標高亮
 noremap <Leader>L   :set list!<Enter>|                      " 設定 \L 切換特殊字元顯示
+noremap <Leader>w   :set wrap!<Enter>|                      " 設定 \w 切換 wrap
 noremap <Leader>er  :edit $HOME/.vimrc<Enter>|              " 設定 \er 編輯 vimrc
 noremap <Leader>el  :exec 'edit ' . g:my.localVimrc<Enter>| " 設定 \el 編輯本地端 vimrc
 
