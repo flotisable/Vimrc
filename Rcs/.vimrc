@@ -18,7 +18,12 @@ set errorformat ^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ direc
 set viewoptions =folds,cursor
 
 if has( 'nvim' )
+"
   set jumpoptions=stack
+
+  let g:do_filetype_lua     = 1
+  let g:did_load_filetypes  = 0
+"
 endif
 
 if has( 'patch-7.4.775' )
