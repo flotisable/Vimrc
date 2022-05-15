@@ -662,7 +662,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
                       'clangd',
                       'bashls',
                       'vimls',
-                      'perlls',
+                      'perlpls',
                       'rust_analyzer',
                       'pylsp'
                     }
@@ -732,6 +732,7 @@ elseif MyPluginExistsAndInRtp( 'LanguageClient-neovim' )
     \   'cpp':    ['clangd'],
     \   'sh':     ['bash-language-server','start'],
     \   'vim':    ['vim-language-server','--stdio'],
+    \   'perl':   ['pls'],
     \   'rust':   ['rust-analyzer'],
     \   'raku':   ['efm-langserver'],
     \   'python': ['pylsp']
