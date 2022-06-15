@@ -1,3 +1,7 @@
+[branch]
+main  = "master"
+local = "local"
+
 [dir]
 vim           = "${HOME}"
 nvim          = ""
