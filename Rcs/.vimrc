@@ -152,7 +152,7 @@ function! MyAsyncSyntaxComplete( findstart, base )
     return []
   endif
 
-  let s:filetype = substitute( &filetype, '\.', '_', 'g')
+  let s:filetype = substitute( &filetype, '\.', '_', 'g' )
 
   if exists( 'g:my.syntaxCompleteCache["' . s:filetype . '"]' )
   "
@@ -174,7 +174,8 @@ function! MyAsyncSyntaxComplete( findstart, base )
       \   '-c', 'quit'
       \ ],
       \ {
-      \   'on_stdout': function( 's:AsyncSyntaxCompleteOnStdout' )
+      \   'on_stdout':  function( 's:AsyncSyntaxCompleteOnStdout' ),
+      \   'on_exit':    function( 's:AsyncSyntaxCompleteOnExit'   )
       \ } )
   "
   else
@@ -189,7 +190,7 @@ function! MyAsyncSyntaxComplete( findstart, base )
       \ ],
       \ {
       \   'out_cb':   function( 's:AsyncSyntaxCompleteOnStdout' ),
-      \   'close_cb': function( 's:AsyncSyntaxCompleteOnClose'  )
+      \   'exit_cb':  function( 's:AsyncSyntaxCompleteOnExit'   )
       \ } )
   "
   endif
@@ -198,17 +199,21 @@ endfunction
 " end async syntax complete
 "}}}
 " helper functions of async syntax complete{{{
+function! s:AsyncSyntaxCompleteOnExitCore()
+"
+  let g:my.syntaxCompleteCache[s:filetype] = uniq( s:completeList )
+  unlet s:buildSyntaxCompleteList
+"
+endfunction
+
 if has( 'nvim' )
 "
   function! s:AsyncSyntaxCompleteOnStdout( id, data, name )
-    if a:data == ['']
-    "
-      let g:my.syntaxCompleteCache[s:filetype] = uniq( s:completeList )
-      unlet s:buildSyntaxCompleteList
-    "
-    else
-      let s:completeList += a:data
-    endif
+    let s:completeList += a:data
+  endfunction
+
+  function! s:AsyncSyntaxCompleteOnExit( id, exitCode, eventType )
+    call s:AsyncSyntaxCompleteOnExitCore()
   endfunction
 "
 elseif v:version >= 800
@@ -217,11 +222,8 @@ elseif v:version >= 800
     let s:completeList += split( a:message )[-1:]
   endfunction
 
-  function! s:AsyncSyntaxCompleteOnClose( channel )
-  "
-    let g:my.syntaxCompleteCache[s:filetype] = uniq( s:completeList )
-    unlet s:buildSyntaxCompleteList
-  "
+  function! s:AsyncSyntaxCompleteOnExit( job, exitCode )
+    call s:AsyncSyntaxCompleteOnExitCore()
   endfunction
 "
 endif
