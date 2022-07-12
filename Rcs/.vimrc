@@ -12,6 +12,7 @@ set shiftwidth  =2      " use same spaces num for indent as tabstop  設定縮�
 set expandtab           " expand TAB key to be spaces  將 tab 鍵展開為空白鍵
 set hlsearch            " highlight searched pattern  高亮搜尋的 pattern
 set incsearch           " enable incremental search  開啟遞增搜尋
+set wildmenu
 
 set listchars   =tab:>\ ,trail:-,nbsp:+
 set errorformat ^=%D%*[^:]:\ Entering\ directory\ '%f',%X%*[^:]:\ Leaving\ directory\ '%f'
@@ -23,6 +24,10 @@ if has( 'nvim' )
 
   let g:do_filetype_lua     = 1
   let g:did_load_filetypes  = 0
+"
+elseif v:version >= 900
+"
+  set wildoptions=pum
 "
 endif
 
