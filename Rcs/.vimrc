@@ -555,8 +555,9 @@ if MyPluginExistsAndInRtp( 'nvim-treesitter' )
   lua << EOF
     require'nvim-treesitter.configs'.setup
     {
-      ensure_installed  = { 'cpp', 'rust', 'toml', 'vim', 'lua', 'make' },
-      highlight         = { enable = true }
+      ensure_installed      = { 'cpp', 'rust', 'toml', 'vim', 'lua', 'make' },
+      highlight             = { enable = true },
+      incremental_selection = { enable = true }
     }
 EOF
 "
