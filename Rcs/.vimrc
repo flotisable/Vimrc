@@ -526,15 +526,16 @@ endif
 " neoterm settings  neoterm 插件設定{{{
 if MyPluginExistsAndInRtp( 'neoterm' )
 "
-  let g:neoterm_autoinsert  = 1       " enter terminal mode after open the terminal  開啟終端機後進入終端機模式
-  let g:neoterm_default_mod = ":tab"  " open terminal in a tab  設定以 tab 開啟終端機
+  let g:neoterm_autoinsert = 1 " enter terminal mode after open the terminal  開啟終端機後進入終端機模式
 
   if has( 'win32' )
     let g:neoterm_shell = &shell . ' #'
   endif
 
-  noremap   <C-s> :Ttoggle<Enter>|            " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
-  tnoremap  <C-s> <C-\><C-n>:Ttoggle<Enter>|  " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
+  " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
+  noremap   <C-s> :Ttoggle<Enter>
+  tnoremap  <C-s> <C-\><C-n>:edit #<Enter>
+  " end set Ctrl+s key to toggle terminal
 "
 endif
 " end neoterm settings
