@@ -234,6 +234,41 @@ elseif v:version >= 800
 endif
 " end helper functions of async syntax complete
 "}}}
+" toggle terminal  切換終端機{{{
+function! MyToggleTerminal()
+"
+  if !has( 'nvim' ) && !has( 'terminal' )
+    return
+  endif
+
+  if exists( 's:terminal' ) && bufname() == s:terminal
+    execute 'set laststatus='  . s:settings['laststatus']
+    execute 'set showtabline=' . s:settings['showtabline']
+    tabclose
+    return
+  endif
+
+  let s:settings =
+  \ {
+  \   'laststatus':   &laststatus,
+  \   'showtabline':  &showtabline
+  \ }
+
+  if !exists( 's:terminal' )
+    execute 'tabedit term://' . &shell
+    let s:terminal = bufname()
+  else
+    execute 'tabedit ' . s:terminal
+  endif
+
+  setlocal nonumber
+  set laststatus=0
+  set showtabline=0
+  startinsert
+"
+endfunction
+" end toggle terminal
+"}}}
 " end self defined functions
 "}}}
 " auto commands{{{
@@ -255,6 +290,11 @@ augroup END
 " key mapping  快捷鍵設定{{{
 if has( 'nvim' ) || has( 'terminal' )
   tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
+
+  " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
+  noremap   <C-s> :call MyToggleTerminal()<Enter>
+  tnoremap  <C-s> <C-\><C-n>:call MyToggleTerminal()<Enter>
+  " end set Ctrl+s key to toggle terminal
 endif
 
 noremap <Leader>r   :set relativenumber!<Enter>|            " 設定 \r 鍵切換相對行號設定
@@ -363,12 +403,6 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
       Plug 'liuchengxu/vim-clap', { 'do': { -> clap#installer#force_download() } }
     endif
     " end interactive finder and dispatcher  互動式查詢
-    "}}}
-    " terminal  終端機插件{{{
-    if ( has( 'nvim' ) || has( 'terminal' ) )
-      Plug 'kassio/neoterm'
-    endif
-    " end terminal  終端機插件
     "}}}
     " language specific  特定語言的插件{{{
     if has( 'nvim-0.5' ) && ( executable( 'gcc' ) || executable( 'clang' ) )
@@ -522,23 +556,6 @@ if MyPluginExistsAndInRtp( 'vim-clap' )
 "
 endif
 " end interactive finder plugin settings
-"}}}
-" neoterm settings  neoterm 插件設定{{{
-if MyPluginExistsAndInRtp( 'neoterm' )
-"
-  let g:neoterm_autoinsert = 1 " enter terminal mode after open the terminal  開啟終端機後進入終端機模式
-
-  if has( 'win32' )
-    let g:neoterm_shell = &shell . ' #'
-  endif
-
-  " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
-  noremap   <C-s> :Ttoggle<Enter>
-  tnoremap  <C-s> <C-\><C-n>:edit #<Enter>
-  " end set Ctrl+s key to toggle terminal
-"
-endif
-" end neoterm settings
 "}}}
 " vim-cpp-enhanced-highlight settings  C++ 語法高亮插件設定{{{
 if MyPluginExistsAndInRtp( 'vim-cpp-enhanced-highlight' )
