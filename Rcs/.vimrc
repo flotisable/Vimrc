@@ -453,9 +453,16 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
     " end VCS diff
     "}}}
     " code snippet  程式碼片段插件{{{
-    Plug 'MarcWeber/vim-addon-mw-utils'
-    Plug 'tomtom/tlib_vim'
-    Plug 'garbas/vim-snipmate'
+    let g:snipmateOn = [
+      \ '<Plug>snipMateNextOrTrigger',
+      \ '<Plug>snipMateShow',
+      \ '<Plug>snipMateVisual',
+      \ ]
+
+    Plug 'MarcWeber/vim-addon-mw-utils',  { 'on': g:snipmateOn }
+    Plug 'tomtom/tlib_vim',               { 'on': g:snipmateOn }
+    Plug 'garbas/vim-snipmate',           { 'on': g:snipmateOn }
+    unlet g:snipmateOn
     " end code snippet
     "}}}
     " self use  個人使用的插件{{{
@@ -822,12 +829,15 @@ endif
 " end VCS diff plugin settings
 "}}}
 " code snippet settings  code snippet 設定{{{
-if MyPluginExistsAndInRtp( 'vim-snipmate' )
+if MyPluginExists( 'vim-snipmate', 0 )
 "
   let g:snips_author              = g:my.snippetAuthor
   let g:snipMate                  = {}
   let g:snipMate.snippet_version  = 1
 
+  imap    <TAB>       <Plug>snipMateNextOrTrigger
+  smap    <TAB>       <Plug>snipMateNextOrTrigger
+  xmap    <TAB>       <Plug>snipMateVisual
   imap    <C-s>       <Plug>snipMateShow|               " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
   noremap <Leader>es  :SnipMateOpenSnippetFiles<Enter>| " set \es to open snippet files  設定 \es 開啟 snipprt 檔案
 
