@@ -262,6 +262,7 @@ function! MyToggleTerminal()
   endif
 
   setlocal nonumber
+  setlocal norelativenumber
   set laststatus=0
   set showtabline=0
   startinsert
