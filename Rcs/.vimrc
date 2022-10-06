@@ -666,23 +666,12 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     vim.lsp.diagnostic.on_publish_diagnostics = function( error, result, context, config )
 
       defaultHandler( error, result, context, config )
-
-      if not result or not result.diagnostics then
-        do return end
-      end
-
-      for _, d in ipairs( result.diagnostics ) do
-        d.lnum  = d.range.start.line      + 1
-        d.col   = d.range.start.character + 1
-      end
-
-      vim.fn.setqflist( {}, ' ',
+      vim.diagnostic.setqflist(
         {
-          items = vim.diagnostic.toqflist( result.diagnostics ),
+          open  = false,
           title = 'LSP Diagnostic'
         }
       )
-
     end
     -- end show diagnostics in quick fix list
     --}}}
@@ -712,7 +701,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     --}}}
     -- key mappings{{{
     local function noremap( lhs, rhs )
-      vim.keymap.set( '', lhs, rhs, {} )
+      vim.keymap.set( '', lhs, rhs )
     end
 
     noremap( '<Leader>lo', '<Cmd>LspStart<Enter>' ) -- set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
