@@ -291,20 +291,20 @@ if has( 'nvim' ) || has( 'terminal' )
   tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
 
   " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
-  noremap   <C-s> :call MyToggleTerminal()<Enter>
-  tnoremap  <C-s> <C-\><C-n>:call MyToggleTerminal()<Enter>
+  noremap   <silent> <C-s> :call MyToggleTerminal()<Enter>
+  tnoremap  <silent> <C-s> <C-\><C-n>:call MyToggleTerminal()<Enter>
   " end set Ctrl+s key to toggle terminal
 endif
 
-noremap <Leader>r   :set relativenumber!<Enter>|            " 設定 \r 鍵切換相對行號設定
-noremap <Leader>c   :set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵切換游標高亮
-noremap <Leader>L   :set list!<Enter>|                      " 設定 \L 切換特殊字元顯示
-noremap <Leader>w   :set wrap!<Enter>|                      " 設定 \w 切換 wrap
-noremap <Leader>er  :edit $HOME/.vimrc<Enter>|              " 設定 \er 編輯 vimrc
-noremap <Leader>el  :exec 'edit ' . g:my.localVimrc<Enter>| " 設定 \el 編輯本地端 vimrc
+noremap <silent> <Leader>r  :set relativenumber!<Enter>|            " 設定 \r 鍵切換相對行號設定
+noremap <silent> <Leader>c  :set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵切換游標高亮
+noremap <silent> <Leader>L  :set list!<Enter>|                      " 設定 \L 切換特殊字元顯示
+noremap <silent> <Leader>w  :set wrap!<Enter>|                      " 設定 \w 切換 wrap
+noremap <silent> <Leader>er :edit $HOME/.vimrc<Enter>|              " 設定 \er 編輯 vimrc
+noremap <silent> <Leader>el :exec 'edit ' . g:my.localVimrc<Enter>| " 設定 \el 編輯本地端 vimrc
 
 if has( 'nvim-0.7' )
-  noremap <Leader>S :exec 'set laststatus=' . ( ( &laststatus == 2 )? 3: 2 )<Enter> | " 設定 \S 切換全域狀態列
+  noremap <silent> <Leader>S :exec 'set laststatus=' . ( ( &laststatus == 2 )? 3: 2 )<Enter> | " 設定 \S 切換全域狀態列
 endif
 
 if !exists( 'g:vscode' )
@@ -352,7 +352,7 @@ if ( get( g:, 'loaded_netrw', 0 ) != 1 ) && !exists( 'g:vscode' )
 
   let g:netrw_use_errorwindow = 0 | " show error in message
 
-  noremap <C-x> :25Lexplore<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
+  noremap <silent> <C-x> :25Lexplore<Enter>| " set Ctrl+x key to toggle tree browser  設定 Ctrl+x 鍵開闔樹狀檢視器
 
   " CD to make current directory the top directory
   let g:my.keybindings.netrw =
@@ -497,9 +497,7 @@ endif
 "}}}
 " gui font plugin settings  圖形介面字型插件設定{{{
 if MyPluginExistsAndInRtp( 'zoom.vim' )
-"
-  noremap <C-0> :ZoomReset<Enter> | " set Ctrl+0 key to reset gui font  設定 Ctrl+0 重置圖形介面字型
-"
+  noremap <silent> <C-0> :ZoomReset<Enter>| " set Ctrl+0 key to reset gui font  設定 Ctrl+0 重置圖形介面字型
 endif
 " end gui font plugin settings
 "}}}
@@ -508,15 +506,15 @@ if MyPluginExistsAndInRtp( 'vim-venter' )
 "
   let g:venter_use_textwidth = v:true
 
-  nmap <Leader>C :VenterToggle<Enter>| " set \C key to center window text  設定 \C 鍵置中視窗文字
+  nmap <silent> <Leader>C :VenterToggle<Enter>| " set \C key to center window text  設定 \C 鍵置中視窗文字
 "
 endif
 " end venter settings
 "}}}
 " tagbar settings  tagbar 插件設定{{{
 if MyPluginExists( 'tagbar', 0 )
-  noremap <Leader>t :Tagbar<Enter>|           " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
-  noremap <Leader>T :TagbarCurrentTag<Enter>| " set \T to show current tag  設定 \T 顯示現在的 tag
+  noremap <silent> <Leader>t :Tagbar<Enter>|           " set \t key to toggle tagbar  設定 \t 鍵開闔 tagbar
+  noremap <silent> <Leader>T :TagbarCurrentTag<Enter>| " set \T to show current tag  設定 \T 顯示現在的 tag
 endif
 " end tagbar settings
 "}}}
@@ -538,11 +536,11 @@ if MyPluginExistsAndInRtp( 'vim-clap' )
                     \   'height':   '80%'
                     \ }
 
-  noremap <Leader>F :Clap providers<Enter>| " set \F key to open provider dispather  設定 \F 鍵開啟模糊搜尋選單
-  noremap g/        :Clap blines<Enter>|    " set g/ key to search in file  設定 g/ 鍵在檔案中搜尋
-  noremap gb        :Clap buffers<Enter>|   " set gb key to search buffer  設定 gb 鍵搜尋 buffer
-  noremap <Leader>f :Clap files |           " set \f key to search file  設定 \f 鍵搜尋檔案
-  noremap <Leader>g :Clap grep2 |           " set \g key to search file content  設定 \g 鍵搜尋檔案內容
+  noremap <silent> <Leader>F  :Clap providers<Enter>| " set \F key to open provider dispather  設定 \F 鍵開啟模糊搜尋選單
+  noremap <silent> g/         :Clap blines<Enter>|    " set g/ key to search in file  設定 g/ 鍵在檔案中搜尋
+  noremap <silent> gb         :Clap buffers<Enter>|   " set gb key to search buffer  設定 gb 鍵搜尋 buffer
+  noremap <Leader>f           :Clap files |           " set \f key to search file  設定 \f 鍵搜尋檔案
+  noremap <Leader>g           :Clap grep2 |           " set \g key to search file content  設定 \g 鍵搜尋檔案內容
 
   if has( 'nvim' )
   "
@@ -761,8 +759,8 @@ elseif MyPluginExistsAndInRtp( 'LanguageClient-neovim' )
     \   'python': ['pylsp']
     \ }
 
-  noremap <Leader>lo :LanguageClientStart<Enter>| " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
-  noremap <Leader>lc :LanguageClientStop<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
+  noremap <silent> <Leader>lo :LanguageClientStart<Enter>|  " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
+  noremap <silent> <Leader>lc :LanguageClientStop<Enter>|   " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
   " set gd key to go to definition  設定 gd 鍵跳至定義
   " set gr key to show reference  設定 gr 鍵顯示參照
@@ -809,10 +807,10 @@ if MyPluginExistsAndInRtp( 'vim-signify' )
 
   let g:signify_disable_by_default = 1
 
-  noremap <Leader>s :SignifyToggle<Enter>|    " set \s key to toggle VCS diff  設定 \s 鍵開闔版本控制差異
-  noremap <Leader>d :SignifyHunkDiff<Enter>|  " set \d key to show hunk diff  設定 \d 鍵顯示片段差異
-  noremap <Leader>u :SignifyHunkUndo<Enter>|  " set \u key to undo hunk  設定 \u 鍵回復片段
-  noremap <Leader>D :SignifyDiff<Enter>|      " set \D key to show full diff  設定 \D 鍵顯示檔案差異
+  noremap <silent> <Leader>s :SignifyToggle<Enter>|   " set \s key to toggle VCS diff  設定 \s 鍵開闔版本控制差異
+  noremap <silent> <Leader>d :SignifyHunkDiff<Enter>| " set \d key to show hunk diff  設定 \d 鍵顯示片段差異
+  noremap <silent> <Leader>u :SignifyHunkUndo<Enter>| " set \u key to undo hunk  設定 \u 鍵回復片段
+  noremap <silent> <Leader>D :SignifyDiff<Enter>|     " set \D key to show full diff  設定 \D 鍵顯示檔案差異
 "
 endif
 " end VCS diff plugin settings
@@ -824,11 +822,11 @@ if MyPluginExists( 'vim-snipmate', 0 )
   let g:snipMate                  = {}
   let g:snipMate.snippet_version  = 1
 
-  imap    <TAB>       <Plug>snipMateNextOrTrigger
-  smap    <TAB>       <Plug>snipMateNextOrTrigger
-  xmap    <TAB>       <Plug>snipMateVisual
-  imap    <C-s>       <Plug>snipMateShow|               " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
-  noremap <Leader>es  :SnipMateOpenSnippetFiles<Enter>| " set \es to open snippet files  設定 \es 開啟 snipprt 檔案
+  imap    <TAB>               <Plug>snipMateNextOrTrigger
+  smap    <TAB>               <Plug>snipMateNextOrTrigger
+  xmap    <TAB>               <Plug>snipMateVisual
+  imap    <C-s>               <Plug>snipMateShow|               " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
+  noremap <silent> <Leader>es :SnipMateOpenSnippetFiles<Enter>| " set \es to open snippet files  設定 \es 開啟 snipprt 檔案
 
   " use Ctrl+n, Ctrl+p to select multiple snippet  用 Ctrl+n, Ctrl+p 選擇程式片段
   let g:tlib_extend_keyagents_InputList_s =
