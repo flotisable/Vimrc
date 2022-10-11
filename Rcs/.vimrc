@@ -234,10 +234,10 @@ function! MyToggleTerminal()
     return
   endif
 
-  if exists( 's:terminal' ) && bufname() == s:terminal
+  if exists( 's:terminal' ) && bufnr() == s:terminal
     execute 'set laststatus='  . s:settings['laststatus']
     execute 'set showtabline=' . s:settings['showtabline']
-    tabclose
+    tabclose!
     return
   endif
 
@@ -248,17 +248,21 @@ function! MyToggleTerminal()
   \ }
 
   if !exists( 's:terminal' )
-    execute 'tabedit term://' . &shell
-    let s:terminal = bufname()
+    if has( 'nvim' )
+      execute 'tabedit term://' . &shell
+    else
+      execute 'tab term ++kill=kill'
+    endif
+    let s:terminal = bufnr()
   else
-    execute 'tabedit ' . s:terminal
+    execute 'silent tab sbuffer ' . s:terminal
+    normal i
   endif
 
   setlocal nonumber
   setlocal norelativenumber
   set laststatus=0
   set showtabline=0
-  startinsert
 "
 endfunction
 " end toggle terminal
