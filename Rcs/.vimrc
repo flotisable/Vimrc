@@ -250,6 +250,7 @@ function! MyToggleTerminal()
   if !exists( 's:terminal' )
     if has( 'nvim' )
       execute 'tabedit term://' . &shell
+      startinsert
     else
       execute 'tab term ++kill=kill'
     endif
