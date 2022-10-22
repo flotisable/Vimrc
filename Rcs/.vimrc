@@ -504,7 +504,10 @@ endif
 " venter settings  venter 插件設定{{{
 if MyPluginExistsAndInRtp( 'vim-venter' )
 "
-  let g:venter_use_textwidth = v:true
+  " make venter window max( &columns / 2, &textwidth )
+  let g:venter_width = min( [ &columns / 4, ( &columns - &textwidth ) / 2 ] )
+
+  autocmd MyAutoCmds VimResized * let g:venter_width = min( [ &columns / 4, ( &columns - &textwidth ) / 2 ] )
 
   nmap <silent> <Leader>C :VenterToggle<Enter>| " set \C key to center window text  設定 \C 鍵置中視窗文字
 "
