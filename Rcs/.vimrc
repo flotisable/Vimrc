@@ -543,7 +543,8 @@ if MyPluginExistsAndInRtp( 'vim-clap' )
   noremap <silent> g/         :Clap blines<Enter>|    " set g/ key to search in file  設定 g/ 鍵在檔案中搜尋
   noremap <silent> gb         :Clap buffers<Enter>|   " set gb key to search buffer  設定 gb 鍵搜尋 buffer
   noremap <Leader>f           :Clap files |           " set \f key to search file  設定 \f 鍵搜尋檔案
-  noremap <Leader>g           :Clap grep2 |           " set \g key to search file content  設定 \g 鍵搜尋檔案內容
+  noremap <Leader>G           :Clap live_grep |       " set \G key to search file content    in real time  設定 \G 鍵即時搜尋檔案內容
+  noremap <Leader>g           :Clap grep |            " set \g key to search file content with cache  設定 \g 鍵利用緩衝輔助搜尋檔案內容
 
   if has( 'nvim' )
   "
