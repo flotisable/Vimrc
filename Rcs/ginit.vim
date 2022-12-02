@@ -24,6 +24,8 @@ endfunction
 " end zoom GUI font
 "}}}
 " end self defined functions
+"}}}
+" nvim-qt specific settings{{{
 if exists( 'g:GuiLoaded' )
 "
   function! MyToggleFullScreen()
@@ -37,12 +39,16 @@ if exists( 'g:GuiLoaded' )
   noremap <F11> <Cmd>call MyToggleFullScreen()<Enter>
 "
 endif
-
+" nvim-qt specific settings
+"}}}
+" highlight setup  高亮設定{{{
 if MyPluginExistsAndInRtp( 'nord-vim' )
   colorscheme nord
 else
   colorscheme desert
 endif
+" end highlight setup
+"}}}
 " key mapping  快捷鍵設定{{{
 noremap <silent> <C-0>  :call MyZoom( 0, 1 )<Enter>| " reset guifont
 noremap <silent> -      :call MyZoom( 0, 0 )<Enter>| " zoom out
