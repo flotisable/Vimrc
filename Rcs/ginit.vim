@@ -27,13 +27,7 @@ endfunction
 if exists( 'g:GuiLoaded' )
 "
   function! MyToggleFullScreen()
-  "
-    if g:GuiWindowFullScreen == 1
-      call GuiWindowFullScreen( 0 )
-    else
-      call GuiWindowFullScreen( 1 )
-    endif
-  "
+    call GuiWindowFullScreen( g:GuiWindowFullScreen ? 0: 1 )
   endfunction
 
   call GuiWindowMaximized( 1 )
