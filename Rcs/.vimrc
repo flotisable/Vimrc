@@ -808,9 +808,7 @@ endif
 " highlight setup  高亮設定{{{
 if MyPluginExistsAndInRtp( 'nord-vim' )
   colorscheme nord
-elseif has( 'gui_running' ) " colorscheme in gui  圖形介面顏色主題
-  colorscheme desert
-else                        " colorscheme in terminal  終端機顏色主題
+else
   colorscheme elflord
 endif
 
