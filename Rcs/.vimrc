@@ -370,7 +370,6 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
   " basic  基本的插件{{{
   Plug 'arcticicestudio/nord-vim'
   Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
-  Plug 'vim-scripts/zoom.vim'       " zoom gui font  縮放圖形介面字型
   Plug 'mhinz/vim-hugefile'         " handle large file  處理大檔案
   Plug 'tpope/vim-commentary'       " comment plugin  註解插件
 
@@ -487,12 +486,6 @@ if MyPluginExists( 'vim-quickhl', 0 )
 "
 endif
 " end mark plugin settings
-"}}}
-" gui font plugin settings  圖形介面字型插件設定{{{
-if MyPluginExistsAndInRtp( 'zoom.vim' )
-  noremap <silent> <C-0> :ZoomReset<Enter>| " set Ctrl+0 key to reset gui font  設定 Ctrl+0 重置圖形介面字型
-endif
-" end gui font plugin settings
 "}}}
 " venter settings  venter 插件設定{{{
 if MyPluginExistsAndInRtp( 'vim-venter' )
