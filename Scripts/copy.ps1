@@ -11,9 +11,10 @@ ForEach( $target in $settings['target'].keys )
 
   Switch -regex ( $target )
   {
-    'vimrc'                     { $dirType = 'vim'      }
-    'pluginManager|vimrcLocal'  { $dirType = 'vimShare' }
-    default                     { $dirType = 'nvim'     }
+    'nvim'                      { $dirType = 'nvim';      Break }
+    'pluginManager|vimrcLocal'  { $dirType = 'vimShare';  Break }
+    'vimrc'                     { $dirType = 'vim';       Break }
+    default                     { $dirType = 'nvim';      Break }
   }
   $dir = Invoke-Expression "Write-Output $($settings['dir'][$dirType])"
 
