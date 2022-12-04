@@ -280,16 +280,9 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
       Plug 'hrsh7th/vim-vsnip'
     else
     "
-      let g:snipmateOn = [
-        \ '<Plug>snipMateNextOrTrigger',
-        \ '<Plug>snipMateShow',
-        \ '<Plug>snipMateVisual',
-        \ ]
-
-      Plug 'MarcWeber/vim-addon-mw-utils',  { 'on': g:snipmateOn }
-      Plug 'tomtom/tlib_vim',               { 'on': g:snipmateOn }
-      Plug 'garbas/vim-snipmate',           { 'on': g:snipmateOn }
-      unlet g:snipmateOn
+      Plug 'MarcWeber/vim-addon-mw-utils'
+      Plug 'tomtom/tlib_vim'
+      Plug 'garbas/vim-snipmate'
     "
     endif
     " end code snippet
