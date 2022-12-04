@@ -60,7 +60,6 @@ let g:my =
   \   'powershellBundlePath': $HOME . '/Applications/PowerShellEditorServices',
   \   'snippetAuthor':        'Flotisable',
   \   'localVimrc':           $HOME . '/.vim/localVimrc',
-  \   'syntaxCompleteCache':  {}
   \ }
 " end self defined settings
 "}}}
@@ -80,43 +79,6 @@ function! MyPluginExists( name, isCheckRtp )
 endfunction
 " end test pluggin existence
 "}}}
-" wrapper of build in lsp omnifunc  內建 lsp omnifunc 的 wrapper{{{
-" this function is to make neovim build in lsp omnifunc work with neocomplcache
-function! MyBuildInLspOmniFunc( findstart, base )
-  return v:lua.vim.lsp.omnifunc( a:findstart, a:base )
-endfunction
-" end wrapper of build in lsp omnifunc
-"}}}
-" setup buffer local keybinding  設定 buffer local 的按鍵{{{
-function! MyBufferLocalMaps( keyMapName, ... )
-"
-  let l:keyMap = get( g:my.keybindings, a:keyMapName, {} )
-
-  for l:keyMapName in a:000
-    let l:keyMap = get( l:keyMap, l:keyMapName, {} )
-  endfor
-
-  for l:key in keys( l:keyMap )
-    execute printf( 'map <buffer> <silent> %s %s', l:key, l:keyMap[key] )
-  endfor
-"
-endfunction
-" end setup buffer local keybinding
-"}}}
-" setup buffer local keybinding for lsp  設定 lsp buffer local 的按鍵{{{
-function! MyLspMaps( isNvimBuiltin )
-"
-  if !a:isNvimBuiltin && !has_key( g:LanguageClient_serverCommands, &filetype )
-    return
-  endif
-
-  for scope in [ "global", &filetype ]
-    call MyBufferLocalMaps( 'lsp', scope )
-  endfor
-"
-endfunction
-" end setup buffer local keybinding for lsp
-"}}}
 " customize highlight  設定介面的顏色{{{
 function! MyCustomHighlight()
 "
@@ -133,135 +95,6 @@ function! MyCustomHighlight()
 endfunction
 " end customize highlight
 "}}}
-" async syntax complete  非同步語法補全{{{
-" this function is to make syntaxcomplete#Complete become asynchronous. modified
-" from syntaxcomplete#Complete in neovim 0.6.1
-function! MyAsyncSyntaxComplete( findstart, base )
-"
-  if a:findstart || !has( 'nvim' ) && v:version < 800
-    return syntaxcomplete#Complete( a:findstart, a:base )
-  elseif exists( 's:buildSyntaxCompleteList' )
-    return []
-  endif
-
-  let s:filetype = substitute( &filetype, '\.', '_', 'g' )
-
-  if exists( 'g:my.syntaxCompleteCache["' . s:filetype . '"]' )
-  "
-    let l:filterExpr = "v:val =~ '^" . escape( a:base, '\\/.*$^~[]' ) . "'"
-
-    return filter( deepcopy( g:my.syntaxCompleteCache[s:filetype] ), l:filterExpr )
-  "
-  endif
-
-  let s:completeList            = []
-  let s:buildSyntaxCompleteList = 1
-
-  if has( 'nvim' )
-  "
-    call jobstart(
-      \ [
-      \   v:progpath, '--headless', expand( '%:p' ),
-      \   '-c', 'call chansend( stdioopen( {} ), syntaxcomplete#OmniSyntaxList() )',
-      \   '-c', 'quit'
-      \ ],
-      \ {
-      \   'on_stdout':  function( 's:AsyncSyntaxCompleteOnStdout' ),
-      \   'on_exit':    function( 's:AsyncSyntaxCompleteOnExit'   )
-      \ } )
-  "
-  else
-  "
-    call job_start(
-      \ [
-      \   v:progpath, '-Esu', $MYVIMRC, expand( '%:p' ),
-      \   '-c', 'syntax on',
-      \   '-c', 'let g:buf = bufadd( "tmp" ) | call bufload( g:buf )',
-      \   '-c', 'call appendbufline( g:buf, 0, syntaxcomplete#OmniSyntaxList() )',
-      \   '-c', 'buffer tmp | %print | quit!'
-      \ ],
-      \ {
-      \   'out_cb':   function( 's:AsyncSyntaxCompleteOnStdout' ),
-      \   'exit_cb':  function( 's:AsyncSyntaxCompleteOnExit'   )
-      \ } )
-  "
-  endif
-"
-endfunction
-" end async syntax complete
-"}}}
-" helper functions of async syntax complete{{{
-function! s:AsyncSyntaxCompleteOnExitCore()
-"
-  let g:my.syntaxCompleteCache[s:filetype] = uniq( s:completeList )
-  unlet s:buildSyntaxCompleteList
-"
-endfunction
-
-if has( 'nvim' )
-"
-  function! s:AsyncSyntaxCompleteOnStdout( id, data, name )
-    let s:completeList += a:data
-  endfunction
-
-  function! s:AsyncSyntaxCompleteOnExit( id, exitCode, eventType )
-    call s:AsyncSyntaxCompleteOnExitCore()
-  endfunction
-"
-elseif v:version >= 800
-"
-  function! s:AsyncSyntaxCompleteOnStdout( channel, message )
-    let s:completeList += split( a:message )[-1:]
-  endfunction
-
-  function! s:AsyncSyntaxCompleteOnExit( job, exitCode )
-    call s:AsyncSyntaxCompleteOnExitCore()
-  endfunction
-"
-endif
-" end helper functions of async syntax complete
-"}}}
-" toggle terminal  切換終端機{{{
-function! MyToggleTerminal()
-"
-  if !has( 'nvim' ) && !has( 'terminal' )
-    return
-  endif
-
-  if exists( 's:terminal' ) && bufnr() == s:terminal
-    execute 'set laststatus='  . s:settings['laststatus']
-    execute 'set showtabline=' . s:settings['showtabline']
-    tabclose!
-    return
-  endif
-
-  let s:settings =
-  \ {
-  \   'laststatus':   &laststatus,
-  \   'showtabline':  &showtabline
-  \ }
-
-  if !exists( 's:terminal' )
-    if has( 'nvim' )
-      execute 'tabedit term://' . &shell
-      startinsert
-    else
-      execute 'tab term ++kill=kill'
-    endif
-    let s:terminal = bufnr()
-  else
-    execute 'silent tab sbuffer ' . s:terminal
-    normal i
-  endif
-
-  setlocal nonumber
-  setlocal norelativenumber
-  set laststatus=0
-  set showtabline=0
-"
-endfunction
-" end toggle terminal
-"}}}
 " end self defined functions
 "}}}
 " auto commands{{{
@@ -273,7 +106,7 @@ autocmd BufWinEnter * silent! loadview
 " end save and load view
 "}}}
 " minimal completion base on syntax  基於語法的補全{{{
-autocmd FileType * if &omnifunc == "" | setlocal omnifunc=MyAsyncSyntaxComplete | endif
+autocmd FileType * if &omnifunc == "" | setlocal omnifunc=ft#asyncSyntaxComplete | endif
 " end minimal completion base on syntax
 "}}}
 autocmd ColorScheme * call MyCustomHighlight()
@@ -285,8 +118,8 @@ if has( 'nvim' ) || has( 'terminal' )
   tnoremap  <C-q> <C-\><C-n>| " set Ctrl+q key to exit terminal mode  設定 Ctrl+q 鍵離開 terminal 模式
 
   " set Ctrl+s key to toggle terminal  設定 Ctrl+s 鍵開闔終端機
-  noremap   <silent> <C-s> :call MyToggleTerminal()<Enter>
-  tnoremap  <silent> <C-s> <C-\><C-n>:call MyToggleTerminal()<Enter>
+  noremap   <silent> <C-s> :call ft#toggleTerminal()<Enter>
+  tnoremap  <silent> <C-s> <C-\><C-n>:call ft#toggleTerminal()<Enter>
   " end set Ctrl+s key to toggle terminal
 endif
 
@@ -357,7 +190,7 @@ if ( get( g:, 'loaded_netrw', 0 ) != 1 ) && !exists( 'g:vscode' )
     \   '?':  ':help netrw-quickhelp<Enter>',
     \ }
 
-  autocmd MyAutoCmds Filetype netrw call MyBufferLocalMaps( 'netrw' )
+  autocmd MyAutoCmds Filetype netrw call ft#bufferLocalMaps( 'netrw' )
 "
 endif
 " end builtin plugin settings
@@ -613,7 +446,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     --}}}
     -- use lsp omni function when a language server is attached{{{
     local function mySetOmniFunc()
-      vim.bo.omnifunc = 'MyBuildInLspOmniFunc'
+      vim.bo.omnifunc = 'ft#buildInLspOmniFunc'
     end
 
     local group = vim.api.nvim_create_augroup( 'MyAutoCmds', { clear = false } )
@@ -622,7 +455,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
 
       local client = vim.lsp.get_client_by_id( args.data.client_id )
 
-      vim.fn.MyLspMaps( true )
+      vim.fn['ft#lspMaps']( true )
 
       if not client.server_capabilities.completionProvider then
         return
@@ -760,7 +593,7 @@ elseif MyPluginExistsAndInRtp( 'LanguageClient-neovim' )
     \   }
     \ }
 
-  autocmd MyAutoCmds Filetype * call MyLspMaps( v:false )
+  autocmd MyAutoCmds Filetype * call ft#lspMaps( v:false )
 "
 endif
 " end LSP client settings

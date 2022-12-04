@@ -26,6 +26,7 @@ ForEach( $target in $settings['target'].keys )
         Continue
       }
     }
+    'ft'          { $dirType = 'vimShare' }
     'vimrcLocal'  { $dirType = 'vimShare' }
     'vimrc'       { $dirType = 'vim'      }
     default       { $dirType = 'nvim'     }

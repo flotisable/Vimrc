@@ -31,6 +31,7 @@ for target in $(mapKeys "$targetTableName"); do
       fi
       ;;
 
+    'ft')         dirType='vimShare';;
     'vimrcLocal') dirType='vimShare';;
     'vimrc')      dirType='vim';;
     *)            dirType='nvim';;

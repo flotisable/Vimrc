@@ -16,9 +16,11 @@ for target in $(mapKeys "$targetTableName"); do
 
   case $target in
 
-    'vimrc')                        dirType='vim';;
-    'pluginManager' | 'vimrcLocal') dirType='vimShare';;
-    *)                              dirType='nvim';;
+    'pluginManager')  dirType='vimShare';;
+    'vimrcLocal')     dirType='vimShare';;
+    'ft')             dirType='vimShare';;
+    'vimrc')          dirType='vim';;
+    *)                dirType='nvim';;
 
   esac
 
