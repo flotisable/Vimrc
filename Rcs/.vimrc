@@ -276,16 +276,22 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
     " end VCS diff
     "}}}
     " code snippet  程式碼片段插件{{{
-    let g:snipmateOn = [
-      \ '<Plug>snipMateNextOrTrigger',
-      \ '<Plug>snipMateShow',
-      \ '<Plug>snipMateVisual',
-      \ ]
+    if has( 'nvim-0.4.4' ) || has( 'patch-8.0.1567' )
+      Plug 'hrsh7th/vim-vsnip'
+    else
+    "
+      let g:snipmateOn = [
+        \ '<Plug>snipMateNextOrTrigger',
+        \ '<Plug>snipMateShow',
+        \ '<Plug>snipMateVisual',
+        \ ]
 
-    Plug 'MarcWeber/vim-addon-mw-utils',  { 'on': g:snipmateOn }
-    Plug 'tomtom/tlib_vim',               { 'on': g:snipmateOn }
-    Plug 'garbas/vim-snipmate',           { 'on': g:snipmateOn }
-    unlet g:snipmateOn
+      Plug 'MarcWeber/vim-addon-mw-utils',  { 'on': g:snipmateOn }
+      Plug 'tomtom/tlib_vim',               { 'on': g:snipmateOn }
+      Plug 'garbas/vim-snipmate',           { 'on': g:snipmateOn }
+      unlet g:snipmateOn
+    "
+    endif
     " end code snippet
     "}}}
     " self use  個人使用的插件{{{
@@ -614,7 +620,33 @@ endif
 " end VCS diff plugin settings
 "}}}
 " code snippet settings  code snippet 設定{{{
-if MyPluginExists( 'vim-snipmate', 0 )
+if MyPluginExistsAndInRtp( 'vim-vsnip' )
+"
+  let g:vsnip_snippet_dirs  =
+    \ [
+    \   g:my.pluginRoot . "/FlotisableVimSnippets/snippets"
+    \ ]
+
+  function! s:MyVsnipVisual( context ) abort
+  "
+    let l:selected_text = vsnip#selected_text()
+
+    if empty( l:selected_text )
+      return v:null
+    endif
+
+    return vsnip#indent#trim_base_indent( l:selected_text )
+  "
+  endfunction
+
+  autocmd MyAutoCmds SourcePost * if stridx( expand( "<afile>" ), 'vsnip' ) != -1 | call vsnip#variable#register( 'VISUAL', function( 's:MyVsnipVisual' ) ) | endif
+
+  imap    <expr> <TAB>        vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
+  smap    <expr> <TAB>        vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
+  xmap    <TAB>               <Plug>(vsnip-cut-text)
+  noremap <silent> <Leader>es :VsnipOpenEdit -format snipmate<Enter>| " set \es to open snippet files  設定 \es 開啟 snipprt 檔案
+"
+elseif MyPluginExists( 'vim-snipmate', 0 )
 "
   let g:snips_author              = g:my.snippetAuthor
   let g:snipMate                  = {}
@@ -624,7 +656,7 @@ if MyPluginExists( 'vim-snipmate', 0 )
   smap    <TAB>               <Plug>snipMateNextOrTrigger
   xmap    <TAB>               <Plug>snipMateVisual
   imap    <C-s>               <Plug>snipMateShow|               " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
-  noremap <silent> <Leader>es :SnipMateOpenSnippetFiles<Enter>| " set \es to open snippet files  設定 \es 開啟 snipprt 檔案
+  noremap <silent> <Leader>es :SnipMateOpenSnippetFiles<Enter>| " set \es to open snippet files  設定 \es 開啟 snippet 檔案
 
   " use Ctrl+n, Ctrl+p to select multiple snippet  用 Ctrl+n, Ctrl+p 選擇程式片段
   let g:tlib_extend_keyagents_InputList_s =
