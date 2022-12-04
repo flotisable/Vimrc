@@ -254,6 +254,8 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
     "
       if has( 'nvim-0.5' )
         Plug 'neovim/nvim-lspconfig'
+      elseif 1
+        Plug 'natebosch/vim-lsc'
       else
       "
         Plug 'autozimu/LanguageClient-neovim',
@@ -550,6 +552,54 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     -- end key mappings
     --}}}
 EOF
+"
+elseif MyPluginExistsAndInRtp( 'vim-lsc' )
+"
+  let g:lsc_server_commands =
+    \ {
+    \   'cpp':
+    \     {
+    \       'command':          'clangd',
+    \       'suppress_stderr':  1
+    \     },
+    \   'sh':     'bash-language-server start',
+    \   'vim':    'vim-language-server --stdio',
+    \   'perl':   'pls',
+    \   'rust':   'rust-analyzer',
+    \   'raku':   'efm-langserver',
+    \   'python': 'pylsp'
+    \ }
+  let g:lsc_enable_autocomplete = v:false
+
+  noremap <silent> <Leader>lo :LSClientEnable<Enter>|   " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
+  noremap <silent> <Leader>lc :LSClientDisable<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
+
+  " set gd key to go to definition  設定 gd 鍵跳至定義
+  " set gr key to show reference  設定 gr 鍵顯示參照
+  " set K key to show hover  設定 K 鍵顯示文檔
+  " set gi key to go to implementation  設定 gi 鍵跳至實作
+  " set = key to format range  設定 = 鍵排版程式碼
+  " set \lr key to rename symbol  設定 \lr 鍵將符號改名
+  " set \la key to run code action  設定 \la 鍵執行 code action
+  let g:my.keybindings.lsp =
+    \ {
+    \   'global':
+    \   {
+    \     'gd':         ':LSClientGoToDefinition<Enter>',
+    \     'gr':         ':LSClientFindReferences<Enter>',
+    \     'K':          ':LSClientShowHover<Enter>',
+    \     'gi':         ':LSClientFindImplementations<Enter>',
+    \     '=':          ':call LanguageClient#textDocument_rangeFormatting()<Enter>',
+    \     '<Leader>lr': ':LSClientRename<Enter>',
+    \     '<Leader>la': ':LSClientFindCodeActions<Enter>',
+    \   },
+    \   'cpp':
+    \   {
+    \     '<Leader>a': ':call LanguageClient#textDocument_switchSourceHeader()<Enter>'
+    \   }
+    \ }
+
+  autocmd MyAutoCmds Filetype * call ft#lspMaps( v:false )
 "
 elseif MyPluginExistsAndInRtp( 'LanguageClient-neovim' )
 "

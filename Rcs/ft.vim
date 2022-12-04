@@ -26,7 +26,9 @@ endfunction
 " setup buffer local keybinding for lsp  設定 lsp buffer local 的按鍵{{{
 function! ft#lspMaps( isNvimBuiltin )
 "
-  if !a:isNvimBuiltin && !has_key( g:LanguageClient_serverCommands, &filetype )
+  if  !a:isNvimBuiltin &&
+      \ ( !exists( 'g:LanguageClient_serverCommands' ) || !has_key( g:LanguageClient_serverCommands, &filetype ) ) &&
+      \ ( !exists( 'g:lsc_server_commands' ) || !has_key( g:lsc_server_commands, &filetype ) )
     return
   endif
 
