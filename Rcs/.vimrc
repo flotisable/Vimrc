@@ -279,12 +279,12 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
     "}}}
     " code snippet  程式碼片段插件{{{
     if has( 'nvim-0.4.4' ) || has( 'patch-8.0.1567' )
-      Plug 'hrsh7th/vim-vsnip'
+      Plug 'hrsh7th/vim-vsnip', { 'on': [] }
     else
     "
-      Plug 'MarcWeber/vim-addon-mw-utils'
-      Plug 'tomtom/tlib_vim'
-      Plug 'garbas/vim-snipmate'
+      Plug 'MarcWeber/vim-addon-mw-utils',  { 'on': [] }
+      Plug 'tomtom/tlib_vim',               { 'on': [] }
+      Plug 'garbas/vim-snipmate',           { 'on': [] }
     "
     endif
     " end code snippet
@@ -682,7 +682,10 @@ if MyPluginExistsAndInRtp( 'vim-vsnip' )
   "
   endfunction
 
-  autocmd MyAutoCmds SourcePost * if stridx( expand( "<afile>" ), 'vsnip' ) != -1 | call vsnip#variable#register( 'VISUAL', function( 's:MyVsnipVisual' ) ) | endif
+  augroup MyAutoCmds
+  autocmd InsertEnter * call plug#load( 'vim-vsnip' )
+  autocmd SourcePost * if stridx( expand( "<afile>" ), 'vsnip' ) != -1 | call vsnip#variable#register( 'VISUAL', function( 's:MyVsnipVisual' ) ) | endif
+  augroup END
 
   imap    <expr> <TAB>        vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
   smap    <expr> <TAB>        vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
@@ -707,6 +710,8 @@ elseif MyPluginExists( 'vim-snipmate', 0 )
     \   16: 'tlib#agent#Up',
     \   14: 'tlib#agent#Down'
     \ }
+
+  autocmd MyAutoCmds InsertEnter * call plug#load( 'vim-addon-mw-utils', 'tlib_vim', 'vim-snipmate' )
 "
 endif
 " end code snippet settings
