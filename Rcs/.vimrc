@@ -663,28 +663,32 @@ endif
 " end VCS diff plugin settings
 "}}}
 " code snippet settings  code snippet 設定{{{
-if MyPluginExistsAndInRtp( 'vim-vsnip' )
+if MyPluginExists( 'vim-vsnip', 0 )
 "
-  let g:vsnip_snippet_dirs  =
-    \ [
-    \   g:my.pluginRoot . "/FlotisableVimSnippets/snippets"
-    \ ]
+  let g:snips_author        = g:my.snippetAuthor
+  let g:vsnip_snippet_dirs  = [ g:my.pluginRoot . "/FlotisableVimSnippets/vsnip" ]
 
-  function! s:MyVsnipVisual( context ) abort
+  function MyAddVsnipDir( dir )
   "
-    let l:selected_text = vsnip#selected_text()
+    for dir in readdir( a:dir )
+    "
+      let l:fullDir = a:dir . '/' . dir
 
-    if empty( l:selected_text )
-      return v:null
-    endif
+      if !isdirectory( l:fullDir )
+        continue
+      endif
 
-    return vsnip#indent#trim_base_indent( l:selected_text )
+      let g:vsnip_snippet_dirs += [ l:fullDir ]
+    "
+    endfor
   "
   endfunction
 
+  call MyAddVsnipDir( g:vsnip_snippet_dirs[0] )
+
   augroup MyAutoCmds
   autocmd InsertEnter * call plug#load( 'vim-vsnip' )
-  autocmd SourcePost * if stridx( expand( "<afile>" ), 'vsnip' ) != -1 | call vsnip#variable#register( 'VISUAL', function( 's:MyVsnipVisual' ) ) | endif
+  autocmd SourcePost * if stridx( expand( "<afile>" ), 'vsnip' ) != -1 | call vsnip#variable#register( 'VISUAL', function( 'ft#vsnipVisual' ) ) | endif
   augroup END
 
   imap    <expr> <TAB>        vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
@@ -694,9 +698,8 @@ if MyPluginExistsAndInRtp( 'vim-vsnip' )
 "
 elseif MyPluginExists( 'vim-snipmate', 0 )
 "
-  let g:snips_author              = g:my.snippetAuthor
-  let g:snipMate                  = {}
-  let g:snipMate.snippet_version  = 1
+  let g:snips_author  = g:my.snippetAuthor
+  let g:snipMate      = { 'snippet_version': 1 }
 
   imap    <TAB>               <Plug>snipMateNextOrTrigger
   smap    <TAB>               <Plug>snipMateNextOrTrigger
