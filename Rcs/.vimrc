@@ -666,10 +666,12 @@ endif
 if MyPluginExists( 'vim-vsnip', 0 )
 "
   let g:snips_author        = g:my.snippetAuthor
-  let g:vsnip_snippet_dirs  = [ g:my.pluginRoot . "/FlotisableVimSnippets/vsnip" ]
+  let g:vsnip_snippet_dirs  = []
 
   function MyAddVsnipDir( dir )
   "
+    let g:vsnip_snippet_dirs += [ a:dir ]
+
     for dir in readdir( a:dir )
     "
       let l:fullDir = a:dir . '/' . dir
@@ -684,7 +686,7 @@ if MyPluginExists( 'vim-vsnip', 0 )
   "
   endfunction
 
-  call MyAddVsnipDir( g:vsnip_snippet_dirs[0] )
+  call MyAddVsnipDir( g:my.pluginRoot . "/FlotisableVimSnippets/vsnip" )
 
   augroup MyAutoCmds
   autocmd InsertEnter * call plug#load( 'vim-vsnip' )
