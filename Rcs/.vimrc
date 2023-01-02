@@ -279,7 +279,10 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
     "}}}
     " code snippet  程式碼片段插件{{{
     if has( 'nvim-0.4.4' ) || has( 'patch-8.0.1567' )
-      Plug 'hrsh7th/vim-vsnip', { 'on': [] }
+    "
+      Plug 'hrsh7th/vim-vsnip',       { 'on': [] }
+      Plug 'hrsh7th/vim-vsnip-integ', { 'on': [] }
+    "
     else
     "
       Plug 'MarcWeber/vim-addon-mw-utils',  { 'on': [] }
@@ -689,7 +692,7 @@ if MyPluginExists( 'vim-vsnip', 0 )
   call MyAddVsnipDir( g:my.pluginRoot . "/FlotisableVimSnippets/vsnip" )
 
   augroup MyAutoCmds
-  autocmd InsertEnter * call plug#load( 'vim-vsnip' )
+  autocmd InsertEnter * call plug#load( 'vim-vsnip', 'vim-vsnip-integ' )
   autocmd SourcePost * if stridx( expand( "<afile>" ), 'vsnip' ) != -1 | call vsnip#variable#register( 'VISUAL', function( 'ft#vsnipVisual' ) ) | endif
   augroup END
 
