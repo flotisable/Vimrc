@@ -74,7 +74,7 @@ function! MyPluginExists( name, isCheckRtp )
 "
   let l:fullName = g:my.pluginRoot . '/' . a:name
 
-  return isdirectory( l:fullName ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
+  return exists( 'g:plugs["' . a:name . '"]' ) && isdirectory( l:fullName ) && ( !a:isCheckRtp || stridx( &runtimepath, a:name ) != -1 )
 "
 endfunction
 " end test pluggin existence
