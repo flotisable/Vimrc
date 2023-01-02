@@ -697,9 +697,7 @@ if MyPluginExists( 'vim-vsnip', 0 )
     "
       let l:fullDir = a:dir . '/' . dir
 
-      if !isdirectory( l:fullDir )
-        continue
-      endif
+      if !isdirectory( l:fullDir ) | continue | endif
 
       let g:vsnip_snippet_dirs += [ l:fullDir ]
     "
@@ -724,9 +722,6 @@ elseif MyPluginExists( 'vim-snipmate', 0 )
   let g:snips_author  = g:my.snippetAuthor
   let g:snipMate      = { 'snippet_version': 1 }
 
-  imap    <TAB>               <Plug>snipMateNextOrTrigger
-  smap    <TAB>               <Plug>snipMateNextOrTrigger
-  xmap    <TAB>               <Plug>snipMateVisual
   imap    <C-s>               <Plug>snipMateShow|               " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
   noremap <silent> <Leader>es :SnipMateOpenSnippetFiles<Enter>| " set \es to open snippet files  設定 \es 開啟 snippet 檔案
 
