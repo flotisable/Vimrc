@@ -410,7 +410,25 @@ endif
 " completion plugin settings  補全插件設定{{{
 if MyPluginExistsAndInRtp( 'vim-mucomplete' )
 "
-  let g:mucomplete#no_mappings = 1
+  let g:mucomplete#no_mappings  = 1
+  let g:mucomplete#chains       =
+    \ {
+    \   'default': [ 'path', 'omni', 'keyn', 'dict', 'uspl' ],
+    \ }
+
+  if MyPluginExists( 'vim-vsnip-integ', 0 )
+    let g:mucomplete#chains.default += [ 'vsnip' ]
+  elseif MyPluginExists( 'vim-snipmate', 0 )
+    let g:mucomplete#chains.default += [ 'snip' ]
+  endif
+
+  let g:mucomplete#chains.vim     = deepcopy( g:mucomplete#chains.default )
+  let g:mucomplete#chains.vim[1]  = 'cmd'
+
+  inoremap <silent> <plug>(MUcompleteFwdKey) <C-j>
+  imap <C-j> <plug>(MUcompleteCycFwd)
+  inoremap <silent> <plug>(MUcompleteBwdKey) <C-h>
+  imap <C-h> <plug>(MUcompleteCycBwd)
 
   " to work with vim-clap
   augroup MyAutoCmds
