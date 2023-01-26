@@ -18,15 +18,25 @@
 
 # Files
   - **vim** and **neovim** setting files
-    - **.vimrc**              : settings for [vim](https://github.com/vim/vim)
-    - **init.vim**            : settings for [neovim](https://github.com/neovim/neovim)
-    - **ginit.vim**           : settings for gui of **neovim**
+
+    ├── .config  
+    │   └── nvim  
+    │       ├── ginit.vim : settings for gui of **neovim**  
+    │       └── init.vim  : settings for [neovim](https://github.com/neovim/neovim)  
+    ├── .vim  
+    │   ├── autoload  
+    │   │   ├── ft.vim    : helper functions which can be lazy loaded  
+    │   │   └── plug.vim  : [vim-plug](https://github.com/junegunn/vim-plug) plugin manager  
+    │   └── localVimrc    : settings for local machine  
+    └── .vimrc            : settings for [vim](https://github.com/vim/vim)  
   - repository usage settings
-    - **settings.toml**       : settings for installation/uninstallation
-    - **defaultPath.toml**    : settings for default paths in different os
+    - **settings.toml**       : settings for scripts
   - repository usage scripts
     - unified UI
-      - **makefile**          : makefile for **.vimrc** and **init.vim**
+      - **makefile**          : makefile wrapper for scripts
+    - sync scripts
+      - **sync.ps1**          : powershell sync script for Windows
+      - **sync.sh**           : bash sync script for Linux and MacOS
     - install scripts
       - **install.ps1**       : powershell install script for Windows
       - **install.sh**        : bash install script for Linux and MacOS
@@ -72,12 +82,10 @@
    The install settings can be configured by modifying the **settings.toml** file,
    it is a normal [toml](https://toml.io/en/) file
 
-   | Table          | Controled Setting                                                 |
-   | -------------- | ----------------------------------------------------------------- |
-   | dir            | the installed directory                                           |
-   | source         | the files name in the repository                                  |
-   | target         | the installed files name                                          |
-   | pluginManager  | whether to install and the installed directory of plugin manager  |
+   | Table          | Controled Setting                 |
+   | -------------- | --------------------------------- |
+   | dir            | the installed root directory      |
+   | pluginManager  | whether to install plugin manager |
 
 ## Using Install Script
    The scripts are written in **bash** and **powershell** script,
@@ -87,24 +95,26 @@
 
    1. `chmod u+x install.sh` to make the script executable if use bash script
    2. modify **settings.toml** if neccessary
-   3. if you don't use neovim, just comment the **nvimrc** and **gnvimrc** line in **settings.toml** with `#` at the beginning of the line
+   3. if you don't use neovim, just remove the **Rcs/Root/.config/nvim** directory in the repo
    4. type `./install.sh` or `pwsh ./install.ps1` to install
 
 ## Using Makefile
-   Makefile is written for those who want to use **make** to finish the tasks.
+   Makefile is written for those who want to use **make** to finish the tasks,
+   for example, me.
    It is also used to ease the update of source file from me.
-   The makefile just wrap the scripts in the repository and use
+   The makefile just wrap the scripts in the **Scripts** directory and use
    `make <target>` format command for unified UI,
-   so make sure the install script is executable before using makefile.
+   so make sure the scripts are executable before using makefile.
 
    Currently, the makefile support the following target
 
-   | Target     | Action                                                              |
-   | ---------- | ------------------------------------------------------------------- |
-   | default    | alias of copy target, this is `make` without target                 |
-   | copy       | update the source file                                              |
-   | install    | install vimrc files, make sure the install script is executable     |
-   | uninstall  | uninstall vimrc files, make sure the uninstall script is executable |
+   | Target     | Action                                                |
+   | ---------- | ----------------------------------------------------- |
+   | default    | alias of copy target, this is `make` without target   |
+   | sync       | sync the vimrc files between remote and local machine |
+   | copy       | update the vimrc file                                 |
+   | install    | install vimrc files                                   |
+   | uninstall  | uninstall vimrc files                                 |
 
 # Getting Start
   For using the vimrc first time
@@ -118,7 +128,7 @@
        1. install plugin manager
           - automatically install plugin manager
 
-            make sure the **install** key of **pluginManager** is **ture** in **settings.toml** before installation
+            make sure the **install** key of **pluginManager** is **true** in **settings.toml** before installation
 
           - manually install plugin manager
 
@@ -138,8 +148,6 @@
   | \<Leader> bn  | bufferize.vim                           |                   | bufferize normal mode command         |
   | \<Leader> m   | vim-quickhl                             |                   | set mark highlight                    |
   | \<Leader> M   | vim-quickhl                             |                   | clear mark highlight                  |
-  | Ctrl + 0      | zoom.vim                                |                   | reset gui font                        |
-  | gc            | nerdcommenter                           |                   | comment code                          |
   | \<Leader> C   | vim-venter                              |                   | center window text                    |
   | \<Leader> t   | tagbar                                  | ctags             | toggle tagbar, show the tags overview |
   | \<Leader> T   | tagbar                                  | ctags             | show tag in current cursor position   |
@@ -148,7 +156,6 @@
   | gb            | vim-clap                                |                   | search buffer                         |
   | \<Leader> f   | vim-clap                                |                   | search file                           |
   | \<Leader> g   | vim-clap                                | ripgrep           | grep files                            |
-  | Ctrl + s      | neoterm                                 | builtin terminal  | toggle builtin terminal               |
   | \<Leader> lo  | nvim-lspconfig or LanguageClient-neovim |                   | start language client                 |
   | \<Leader> lc  | nvim-lspconfig or LanguageClient-neovim |                   | stop language client                  |
   |  gd           | nvim-lspconfig or LanguageClient-neovim | language server   | go to definition                      |
@@ -159,16 +166,18 @@
   | \<Leader> lr  | nvim-lspconfig or LanguageClient-neovim | language server   | rename symbol                         |
   | \<Leader> la  | nvim-lspconfig or LanguageClient-neovim | language server   | code action                           |
   | \<Leader> a   | nvim-lspconfig or LanguageClient-neovim | clangd            | switch c++ header, source file        |
-  | \<Leader> s   | vim-signify                             |                   | toggle VCS diff                       |
+  | \<Leader> s   | vim-signify                             | VCS               | toggle VCS diff                       |
   | \<Leader> d   | vim-signify                             | VCS               | show VCS hunk diff                    |
   | \<Leader> u   | vim-signify                             | VCS               | undo VCS hunk                         |
   | \<Leader> D   | vim-signify                             | VCS               | show VCS full diff                    |
   | Ctrl + s      | vim-snipmate                            | insert mode       | show available snippets               |
   | Ctrl + x      | netrw                                   |                   | toggle the tree browser               |
   | Ctrl + q      |                                         | builtin terminal  | exit terminal mode                    |
+  | Ctrl + s      |                                         | builtin terminal  | toggle terminal                       |
   | \<Leader> r   |                                         |                   | toggle relative line number           |
   | \<Leader> c   |                                         |                   | toggle cursor line, column highlight  |
   | \<Leader> L   |                                         |                   | toggle show special characters        |
+  | \<Leader> w   |                                         |                   | toggle line wrap                      |
   | \<Leader> er  |                                         |                   | edit vimrc                            |
   | \<Leader> el  |                                         |                   | edit local vimrc                      |
   | space         |                                         |                   | scroll forward                        |
@@ -189,46 +198,47 @@
   | Ctrl + _ f    |                                         | cscope            | cscope find file                      |
   | Ctrl + _ i    |                                         | cscope            | cscope find includes                  |
   | Ctrl + _ d    |                                         | cscope            | cscope find function called           |
+  | Ctrl + 0      |                                         | neovim GUI        | reset guifont                         |
+  | +             |                                         | neovim GUI        | zoom in                               |
+  | -             |                                         | neovim GUI        | zoom out                              |
 
 # Self Defined Functions
-  | Function                                | Description                                             |
-  | --------------------------------------- | ------------------------------------------------------- |
-  | MyPluginExistsAndInRtp( name )          | test pluggin existence and in runtimepath               |
-  | MyPluginExists( name, isCheckRtp )      | test pluggin existence                                  |
-  | MyBuildInLspOmniFunc( findstart, base ) | wrapper of builtin lsp omnifunc                         |
-  | MyLspMaps( isNvimBuiltin )              | setup buffer local keybinding for lsp                   |
-  | MyCustomHighlight()                     | setup custom highlight to overwrite colorscheme         |
-  | MyNetrwMaps()                           | setup buffer local keybinding for netrw                 |
+  | Function                            | Description                                     |
+  | ----------------------------------- | ----------------------------------------------- |
+  | MyPluginExistsAndInRtp( name )      | test pluggin existence and in runtimepath       |
+  | MyPluginExists( name, isCheckRtp )  | test pluggin existence                          |
+  | MyCustomHighlight()                 | setup custom highlight to overwrite colorscheme |
 
 # Plugins
-  | Category          | Plugin                                                                            | Purpose                                                                     | Requirement                                                         |
-  | ----------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-  | Plugin Manager    | [vim-plug](https://github.com/junegunn/vim-plug)                                  | vim plugins manager                                                         |                                                                     |
-  | Colorscheme       | [nord-vim](https://github.com/arcticicestudio/nord-vim)                           | dark, smooth colorscheme                                                    |                                                                     |
-  | UI                | [tagbar](https://github.com/majutsushi/tagbar)                                    | to display tags                                                             | [ctags](#for-ctags)                                                 |
-  |                   | [bufferize.vim](https://github.com/AndrewRadev/bufferize.vim)                     | make command output a buffer                                                |                                                                     |
-  |                   | [vim-clap](https://github.com/liuchengxu/vim-clap)                                | plugin for interactive finder and dispatcher                                | nvim 0.4.2 or patch 8.1.2114                                        |
-  |                   | [neoterm](https://github.com/kassio/neoterm)                                      | terminal plugin                                                             | builtin terminal                                                    |
-  |                   | [zoom.vim](https://github.com/vim-scripts/zoom.vim)                               | zoom gui font                                                               | gui                                                                 |
-  |                   | [vim-venter](https://github.com/JMcKiern/vim-venter)                              | center window text                                                          | nvim or vim 8.0                                                     |
-  | Language Specific | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)             | treesitter syntax highlight                                                 | nvim 0.5, c compiler                                                |
-  |                   | [vim-cpp-enhanced-highlight](http://github.com/octol/vim-cpp-enhanced-highlight)  | to add some highlight feature of C++                                        |                                                                     |
-  |                   | [vim-toml](https://github.com/cespare/vim-toml)                                   | syntax highlight of [toml](https://toml.io/en/)                             |                                                                     |
-  |                   | [vim-perl](https://github.com/vim-perl/vim-perl)                                  | syntax highlight of [perl](https://www.perl.org/)                           |                                                                     |
-  |                   | [vim-ps1](https://github.com/pprovost/vim-ps1)                                    | syntax highlgiht of [powershell](https://github.com/PowerShell/PowerShell)  |                                                                     |
-  | Autocomplete      | [vim-mucomplete](https://github.com/lifepillar/vim-mucomplete)                    | autocomplete plugin, to replace neocomplcache                               | vim 7.2, has( insert_expand ), has( menu )                          |
-  |                   | [neocomplcache](https://github.com/shougo/neocomplcache.vim)                      | autocomplete plugin                                                         |                                                                     |
-  | LSP               | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)                        | builtin language server client configuration                                | nvim 0.5                                                            |
-  |                   | [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim)        | language server client                                                      |                                                                     |
-  | VCS               | [vim-signify](https://github.com/mhinz/vim-signify)                               | VCS diff plugin                                                             |                                                                     |
-  | Code Snippet      | [vim-snipmate](https://github.com/garbas/vim-snipmate)                            | code snippet plugin                                                         | vim-addon-mw-utils, tlibs                                           |
-  |                   | [vim-addon-mw-utils](https://github.com/MarcWeber/vim-addon-mw-utils)             | dependency of vim-snipmate                                                  |                                                                     |
-  |                   | [tlibs](https://github.com/tomtom/tlib_vim)                                       | dependency of vim-snipmate                                                  |                                                                     |
-  | Mark              | [vim-quickhl](https://github.com/t9md/vim-quickhl)                                | mark highlight plugin                                                       |                                                                     |
-  | Misc              | [vim-hugefile](https://github.com/mhinz/vim-hugefile)                             | disable some feature when edit large file                                   |                                                                     |
-  |                   | [nerdcommenter](https://github.com/preservim/nerdcommenter)                       | comment code                                                                |                                                                     |
-  | Self Used         | [FlotisableStatusLine](https://github.com/flotisable/FlotisableStatusLine)        | a self use plugin to set up the status line                                 |                                                                     |
-  |                   | [FlotisableVimSnipets](https://github.com/flotisable/FlotisableVimSnippets)       | a self use code snippets                                                    | vim-snipmate                                                        |
+  | Category          | Plugin                                                                            | Purpose                                                                     | Requirement                                 |
+  | ----------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------- |
+  | Plugin Manager    | [vim-plug](https://github.com/junegunn/vim-plug)                                  | vim plugins manager                                                         |                                             |
+  | Colorscheme       | [nord-vim](https://github.com/arcticicestudio/nord-vim)                           | dark, smooth colorscheme                                                    |                                             |
+  | UI                | [tagbar](https://github.com/majutsushi/tagbar)                                    | to display tags                                                             | [ctags](#for-ctags)                         |
+  |                   | [bufferize.vim](https://github.com/AndrewRadev/bufferize.vim)                     | make command output a buffer                                                |                                             |
+  |                   | [vim-clap](https://github.com/liuchengxu/vim-clap)                                | plugin for interactive finder and dispatcher                                | nvim 0.4.2 or patch 8.1.2114                |
+  |                   | [vim-venter](https://github.com/JMcKiern/vim-venter)                              | center window text                                                          | nvim or vim 8.0                             |
+  | Language Specific | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)             | treesitter syntax highlight                                                 | nvim 0.5, c compiler                        |
+  |                   | [vim-cpp-enhanced-highlight](http://github.com/octol/vim-cpp-enhanced-highlight)  | to add some highlight feature of C++                                        |                                             |
+  |                   | [vim-toml](https://github.com/cespare/vim-toml)                                   | syntax highlight of [toml](https://toml.io/en/)                             |                                             |
+  |                   | [vim-perl](https://github.com/vim-perl/vim-perl)                                  | syntax highlight of [perl](https://www.perl.org/)                           |                                             |
+  |                   | [vim-ps1](https://github.com/pprovost/vim-ps1)                                    | syntax highlgiht of [powershell](https://github.com/PowerShell/PowerShell)  |                                             |
+  | Autocomplete      | [vim-mucomplete](https://github.com/lifepillar/vim-mucomplete)                    | autocomplete plugin, to replace neocomplcache                               | vim 7.2, has( insert_expand ), has( menu )  |
+  |                   | [neocomplcache](https://github.com/shougo/neocomplcache.vim)                      | autocomplete plugin                                                         |                                             |
+  | LSP               | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)                        | builtin language server client configuration                                | nvim 0.5                                    |
+  |                   | [vim-lsc](https://github.com/natebosch/vim-lsc)                                   | language server client                                                      |                                             |
+  |                   | [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim)        | language server client                                                      |                                             |
+  | VCS               | [vim-signify](https://github.com/mhinz/vim-signify)                               | VCS diff plugin                                                             |                                             |
+  | Code Snippet      | [vim-vsnip](https://github.com/hrsh7th/vim-vsnip)                                 | code snippet plugin                                                         |                                             |
+  |                   | [vim-vsnip-integ](https://github.com/hrsh7th/vim-vsnip-integ)                     | integration with other plugin for vim-vsnip                                 | vim-vsnip                                   |
+  |                   | [vim-snipmate](https://github.com/garbas/vim-snipmate)                            | code snippet plugin                                                         | vim-addon-mw-utils, tlibs                   |
+  |                   | [vim-addon-mw-utils](https://github.com/MarcWeber/vim-addon-mw-utils)             | dependency of vim-snipmate                                                  |                                             |
+  |                   | [tlibs](https://github.com/tomtom/tlib_vim)                                       | dependency of vim-snipmate                                                  |                                             |
+  | Mark              | [vim-quickhl](https://github.com/t9md/vim-quickhl)                                | mark highlight plugin                                                       |                                             |
+  | Misc              | [vim-hugefile](https://github.com/mhinz/vim-hugefile)                             | disable some feature when edit large file                                   |                                             |
+  |                   | [vim-commentary](https://github.com/tpope/vim-commentary)                         | comment code                                                                |                                             |
+  | Self Used         | [FlotisableStatusLine](https://github.com/flotisable/FlotisableStatusLine)        | a self use plugin to set up the status line                                 |                                             |
+  |                   | [FlotisableVimSnipets](https://github.com/flotisable/FlotisableVimSnippets)       | a self use code snippets                                                    | vim-snipmate or vim-vsnip                   |
 
 ## For ctags
    ctags only support c/c++ language, for other language you can try
