@@ -10,7 +10,7 @@ removeFile()
   local file=$1
 
   echo "remove $file"
-  rm $file
+  rm -f $file
 }
 
 dirTableName=$(mapFind "settings" "dir")
