@@ -15,35 +15,20 @@ installFile()
   cp $sourceFile $targetFile 
 }
 
-targetTableName=$(mapFind "settings" "target")
-sourceTableName=$(mapFind "settings" "source")
 dirTableName=$(mapFind "settings" "dir")
 pluginManagerTableName=$(mapFind "settings" "pluginManager")
 
-for target in $(mapKeys "$targetTableName"); do
+root=$(mapFind "$dirTableName" "root")
 
-  targetFile=$(mapFind "$targetTableName" "$target")
-  sourceFile=$(mapFind "$sourceTableName" "$target")
+for file in $(find -L "Rcs/$os" -type f -printf '%P\n'); do
 
-  case $target in
+  targetFile="$root/$file"
+  sourceFile="Rcs/$os/$file"
 
-    'pluginManager')
+  if echo $file | grep -q 'plug' && [ "$(mapFind "$pluginManagerTableName" "install")" != "1" ]; then
+    continue
+  fi
 
-      dirType='vimShare'
-      if [ "$(mapFind "$pluginManagerTableName" "install")" != "1" ]; then
-        continue
-      fi
-      ;;
-
-    'ft')         dirType='vimShare';;
-    'vimrcLocal') dirType='vimShare';;
-    'vimrc')      dirType='vim';;
-    *)            dirType='nvim';;
-
-  esac
-
-  dir=$(mapFind "$dirTableName" "$dirType")
-
-  installFile $sourceFile $dir/$targetFile $target
+  installFile $sourceFile $targetFile $file
 
 done

@@ -4,25 +4,20 @@ $scriptDir = "$(Split-Path $PSCommandPath)"
 
 . ${scriptDir}/readSettings.ps1 $settingFile
 
-ForEach( $target in $settings['target'].keys )
+$root           = Invoke-Expression "Write-Output $($settings['dir']['root'])"
+$rcRoot         = ( Get-Item ${scriptDir}/../Rcs/$os ).FullName
+$rcRootPattern  = "$( $rcRoot -replace '\\', '\\' )\\"
+
+ForEach( $file in ( Get-ChildItem -Recurse -File $rcRoot ).FullName )
 {
-  $targetFile = Invoke-Expression "Write-Output $($settings['target'][$target])"
-  $sourceFile = Invoke-Expression "Write-Output $($settings['source'][$target])"
+  $file       = $file -replace $rcRootPattern, ""
+  $sourceFile = "$rcRoot/$file"
+  $targetFile = "$root/$file"
 
-  Switch( $target )
-  {
-    'pluginManager' { $dirType = 'vimShare';  Break }
-    'vimrcLocal'    { $dirType = 'vimShare';  Break }
-    'ft'            { $dirType = 'vimShare';  Break }
-    'vimrc'         { $dirType = 'vim';       Break }
-    default         { $dirType = 'nvim';      Break }
-  }
-  $dir = Invoke-Expression "Write-Output $($settings['dir'][$dirType])"
-
-  If( !( Get-Item -Force -ErrorAction SilentlyContinue $dir/$targetFile ) )
+  If( !( Get-Item -Force -ErrorAction SilentlyContinue $targetFile ) )
   {
     Continue
   }
-  Write-Host "copy $dir/$targetFile to $sourceFile"
-  Copy-Item $dir/$targetFile $sourceFile
+  Write-Host "copy $targetFile to $sourceFile"
+  Copy-Item $targetFile $sourceFile
 }

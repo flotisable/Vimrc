@@ -3,28 +3,7 @@ main  = "master"
 local = "local"
 
 [dir]
-vim           = "${HOME}"
-nvim          = ""
-vimShare      = "${HOME}/.vim"
-
-[source]
-vimrc         = "Rcs/.vimrc"
-nvimrc        = "Rcs/init.vim"
-gnvimrc       = "Rcs/ginit.vim"
-vimrcLocal    = "Rcs/localVimrc"
-pluginManager = "Rcs/plug.vim"
-ft            = "Rcs/ft.vim"
-
-[target]
-# in vim dir
-vimrc         = ".vimrc"
-# in nvim dir
-nvimrc        = "init.vim"
-gnvimrc       = "ginit.vim"
-# in vimShare dir
-vimrcLocal    = "localVimrc"
-ft            = "autoload/ft.vim"
-pluginManager = "autoload/plug.vim"
+root = "${HOME}"
 
 [pluginManager]
 install = true

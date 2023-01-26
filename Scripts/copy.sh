@@ -5,32 +5,20 @@ scriptDir="$(dirname $0)"
 
 . ${scriptDir}/readSettings.sh ${settingFile}
 
-targetTableName=$(mapFind "settings" "target")
-sourceTableName=$(mapFind "settings" "source")
 dirTableName=$(mapFind "settings" "dir")
 
-for target in $(mapKeys "$targetTableName"); do
+root=$(mapFind "$dirTableName" "root")
 
-  targetFile=$(mapFind "$targetTableName" "$target")
-  sourceFile=$(mapFind "$sourceTableName" "$target")
+for file in $(find -L "Rcs/$os" -type f -printf '%P\n'); do
 
-  case $target in
+  targetFile="$root/$file"
+  sourceFile="Rcs/$os/$file"
 
-    'pluginManager')  dirType='vimShare';;
-    'vimrcLocal')     dirType='vimShare';;
-    'ft')             dirType='vimShare';;
-    'vimrc')          dirType='vim';;
-    *)                dirType='nvim';;
-
-  esac
-
-  dir=$(mapFind "$dirTableName" "$dirType")
-
-  if [ -r "$dir/$targetFile" ]; then
-
-    echo "copy $dir/$targetFile to $sourceFile"
-    cp $dir/$targetFile $sourceFile
-
+  if [ ! -r "$targetFile" ]; then
+    continue
   fi
+
+  echo "copy $targetFile to $sourceFile"
+  cp $targetFile $sourceFile
 
 done

@@ -4,29 +4,20 @@ $scriptDir = "$(Split-Path $PSCommandPath )"
 
 . ${scriptDir}/readSettings.ps1 $settingFile
 
-ForEach( $target in $settings['target'].keys )
+$root           = Invoke-Expression "Write-Output $($settings['dir']['root'])"
+$rcRoot         = ( Get-Item ${scriptDir}/../Rcs/$os ).FullName
+$rcRootPattern  = "$( $rcRoot -replace '\\', '\\' )\\"
+
+ForEach( $file in ( Get-ChildItem -Recurse -File $rcRoot ).FullName )
 {
-  $targetFile = Invoke-Expression "Write-Output $($settings['target'][$target])"
-  $sourceFile = Invoke-Expression "Write-Output $($settings['source'][$target])"
+  $file       = $file -replace $rcRootPattern, ""
+  $sourceFile = "$rcRoot/$file"
+  $targetFile = "$root/$file"
 
-  Switch( $target )
+  If( $file -match 'plug' -and !$settings['pluginManager']['install'] )
   {
-    'pluginManager'
-    {
-      $dirType = 'vimShare'
-      If( !$settings['pluginManager']['install'] )
-      {
-        Continue
-      }
-    }
-    'ft'          { $dirType = 'vimShare' }
-    'vimrcLocal'  { $dirType = 'vimShare' }
-    'vimrc'       { $dirType = 'vim'      }
-    default       { $dirType = 'nvim'     }
+    Continue
   }
-
-  $dir = Invoke-Expression "Write-Output $($settings['dir'][$dirType])"
-
-  Write-Host "install $sourceFile"
-  Copy-Item $sourceFile $dir/$targetFile 
+  Write-Host "install $file"
+  Copy-Item $sourceFile $targetFile 
 }

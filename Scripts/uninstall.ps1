@@ -4,6 +4,10 @@ $scriptDir = "$(Split-Path $PSCommandPath )"
 
 . ${scriptDir}/readSettings.ps1 $settingFile
 
+$root           = Invoke-Expression "Write-Output $($settings['dir']['root'])"
+$rcRoot         = ( Get-Item ${scriptDir}/../Rcs/$os ).FullName
+$rcRootPattern  = "$( $rcRoot -replace '\\', '\\' )\\"
+
 Function removeFile()
 {
   $file = $args[0]
@@ -12,26 +16,14 @@ Function removeFile()
   Remove-Item -Force -ErrorAction SilentlyContinue $file
 }
 
-ForEach( $target in $settings['target'].keys )
+ForEach( $file in ( Get-ChildItem -Recurse -File $rcRoot ).FullName )
 {
-  $targetFile = Invoke-Expression "Write-Output $($settings['target'][$target])"
+  $file       = $file -replace $rcRootPattern, ""
+  $targetFile = "$root/$file"
 
-  Switch( $target )
+  If( $file -match 'plug' -and !$settings['pluginManager']['install'] )
   {
-    'pluginManager'
-    {
-      $dirType = 'vimShare'
-      If( !$settings['pluginManager']['install'] )
-      {
-        Continue
-      }
-    }
-    'ft'          { $dirType = 'vimShare' }
-    'vimrcLocal'  { $dirType = 'vimShare' }
-    'vimrc'       { $dirType = 'vim'      }
-    default       { $dirType = 'nvim'     }
+    Continue
   }
-  $dir = Invoke-Expression "Write-Output $($settings['dir'][$dirType])"
-
-  removeFile $dir/$targetFile 
+  removeFile $targetFile 
 }
