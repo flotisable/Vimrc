@@ -11,6 +11,10 @@ installFile()
   local targetFile=$2
   local fileMessage=$3
 
+  local dir
+  dir="$(dirname $targetFile)"
+
+  mkdir -vp $dir  
   echo "install $fileMessage"
   cp $sourceFile $targetFile 
 }
