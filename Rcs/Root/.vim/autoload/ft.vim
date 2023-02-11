@@ -182,4 +182,10 @@ function! ft#vsnipVisual( context )
 endfunction
 " end vsnip visual
 "}}}
+" vim-lsc callback for switchSourceHeader  切換 header, source 的 callback{{{
+function! ft#vimLscSwitchSourceHeader( file )
+  exec 'edit ' . a:file
+endfunction
+" end vim-lsc callback for switchSourceHeader
+"}}}
 " vim: foldmethod=marker foldmarker={{{,}}}

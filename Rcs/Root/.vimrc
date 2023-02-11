@@ -616,7 +616,7 @@ elseif MyPluginExistsAndInRtp( 'vim-lsc' )
     \   },
     \   'cpp':
     \   {
-    \     '<Leader>a': ':call LanguageClient#textDocument_switchSourceHeader()<Enter>'
+    \     '<Leader>a': ':call lsc#server#userCall("textDocument/switchSourceHeader", { "uri": lsc#uri#documentUri() }, lsc#util#gateResult("MySwitchSourceHeader", function("ft#vimLscSwitchSourceHeader")))<Enter>'
     \   }
     \ }
 
