@@ -590,7 +590,6 @@ elseif MyPluginExistsAndInRtp( 'vim-lsc' )
     \   'raku':   'efm-langserver',
     \   'python': 'pylsp'
     \ }
-  let g:lsc_enable_autocomplete = v:false
 
   noremap <silent> <Leader>lo :LSClientEnable<Enter>|   " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <silent> <Leader>lc :LSClientDisable<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
