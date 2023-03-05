@@ -255,7 +255,8 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
       if has( 'nvim-0.5' )
         Plug 'neovim/nvim-lspconfig'
       elseif 1
-        Plug 'natebosch/vim-lsc'
+        Plug 'prabirshrestha/vim-lsp'
+        Plug 'mattn/vim-lsp-settings'
       else
       "
         Plug 'autozimu/LanguageClient-neovim',
@@ -574,25 +575,19 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
     --}}}
 EOF
 "
-elseif MyPluginExistsAndInRtp( 'vim-lsc' )
+elseif MyPluginExistsAndInRtp( 'vim-lsp' )
 "
-  let g:lsc_server_commands =
+  let g:lsp_settings =
     \ {
-    \   'cpp':
-    \     {
-    \       'command':          'clangd',
-    \       'suppress_stderr':  1
-    \     },
-    \   'sh':     'bash-language-server start',
-    \   'vim':    'vim-language-server --stdio',
-    \   'perl':   'pls',
-    \   'rust':   'rust-analyzer',
-    \   'raku':   'efm-langserver',
-    \   'python': 'pylsp'
+    \   'efm-langserver':
+    \   {
+    \     'disabled':   0
+    \   }
     \ }
+    " \     'allowlist':  [ 'raku' ],
 
-  noremap <silent> <Leader>lo :LSClientEnable<Enter>|   " set \lo key to statr language client  設定 \lo 鍵啟動 LSP 客戶端
-  noremap <silent> <Leader>lc :LSClientDisable<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
+  noremap <silent> <Leader>lo :call lsp#enable()<Enter>|   " set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
+  noremap <silent> <Leader>lc :call lsp#disalbe()<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
   " set gd key to go to definition  設定 gd 鍵跳至定義
   " set gr key to show reference  設定 gr 鍵顯示參照
@@ -605,21 +600,22 @@ elseif MyPluginExistsAndInRtp( 'vim-lsc' )
     \ {
     \   'global':
     \   {
-    \     'gd':         ':LSClientGoToDefinition<Enter>',
-    \     'gr':         ':LSClientFindReferences<Enter>',
-    \     'K':          ':LSClientShowHover<Enter>',
-    \     'gi':         ':LSClientFindImplementations<Enter>',
-    \     '=':          ':call LanguageClient#textDocument_rangeFormatting()<Enter>',
-    \     '<Leader>lr': ':LSClientRename<Enter>',
-    \     '<Leader>la': ':LSClientFindCodeActions<Enter>',
+    \     'gd':         '<plug>(lsp-definition)',
+    \     'gr':         '<plug>(lsp-references)',
+    \     'K':          '<plug>(lsp-hover)',
+    \     'gi':         '<plug>(lsp-implementation)',
+    \     '=':          '<plug>(lsp-document-range-format)',
+    \     '<Leader>lr': '<plug>(lsp-rename)',
+    \     '<Leader>la': '<plug>(lsp-code-action)',
     \   },
     \   'cpp':
     \   {
-    \     '<Leader>a': ':call lsc#server#userCall("textDocument/switchSourceHeader", { "uri": lsc#uri#documentUri() }, lsc#util#gateResult("MySwitchSourceHeader", function("ft#vimLscSwitchSourceHeader")))<Enter>'
+    \     '<Leader>a': ':call lsp#send_request( "clangd", { "method": "textDocument/switchSourceHeader", "params": { "uri": lsp#utils#get_buffer_uri() }, "on_notification": function( "ft#vimLspSwitchSourceHeader" ) } )<Enter>'
     \   }
     \ }
 
-  autocmd MyAutoCmds Filetype * call ft#lspMaps( v:false )
+  " autocmd MyAutoCmds User lsp_buffer_enabled call ft#lspMaps( v:false )
+  autocmd User lsp_buffer_enabled call ft#lspMaps( v:true )
 "
 elseif MyPluginExistsAndInRtp( 'LanguageClient-neovim' )
 "

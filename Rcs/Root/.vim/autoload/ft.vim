@@ -24,9 +24,9 @@ endfunction
 " end setup buffer local keybinding
 "}}}
 " setup buffer local keybinding for lsp  設定 lsp buffer local 的按鍵{{{
-function! ft#lspMaps( isNvimBuiltin )
+function! ft#lspMaps( isNvimBuiltinOrVimLsp )
 "
-  if  !a:isNvimBuiltin &&
+  if  !a:isNvimBuiltinOrVimLsp &&
       \ ( !exists( 'g:LanguageClient_serverCommands' ) || !has_key( g:LanguageClient_serverCommands, &filetype ) ) &&
       \ ( !exists( 'g:lsc_server_commands' ) || !has_key( g:lsc_server_commands, &filetype ) )
     return
@@ -182,10 +182,17 @@ function! ft#vsnipVisual( context )
 endfunction
 " end vsnip visual
 "}}}
-" vim-lsc callback for switchSourceHeader  切換 header, source 的 callback{{{
-function! ft#vimLscSwitchSourceHeader( file )
-  exec 'edit ' . a:file
+" vim-lsp callback for switchSourceHeader  切換 header, source 的 callback{{{
+function! ft#vimLspSwitchSourceHeader( data )
+"
+  if lsp#client#is_error( a:data['response']) || !has_key( a:data['response'], 'result' )
+    call lsp#utils#error( 'Can not found corresponding header or source file' )
+    return
+  endif
+
+  execute 'silent edit ' . lsp#utils#uri_to_path( a:data['response']['result'] )
+"
 endfunction
-" end vim-lsc callback for switchSourceHeader
+" end vim-lsp callback for switchSourceHeader
 "}}}
 " vim: foldmethod=marker foldmarker={{{,}}}
