@@ -124,9 +124,11 @@ if has( 'nvim' ) || has( 'terminal' )
 endif
 
 noremap <silent> <Leader>r  :set relativenumber!<Enter>|            " 設定 \r 鍵切換相對行號設定
+noremap <silent> <Leader>n  :set number!<Enter>|                    " 設定 \n 鍵切換行號設定
 noremap <silent> <Leader>c  :set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵切換游標高亮
 noremap <silent> <Leader>L  :set list!<Enter>|                      " 設定 \L 切換特殊字元顯示
 noremap <silent> <Leader>w  :set wrap!<Enter>|                      " 設定 \w 切換 wrap
+noremap <silent> <Leader>zs :set spell!<Enter>|                     " 設定 \zs 切換拼字檢查
 noremap <silent> <Leader>er :edit $HOME/.vimrc<Enter>|              " 設定 \er 編輯 vimrc
 noremap <silent> <Leader>el :exec 'edit ' . g:my.localVimrc<Enter>| " 設定 \el 編輯本地端 vimrc
 
