@@ -588,6 +588,11 @@ elseif MyPluginExistsAndInRtp( 'vim-lsp' )
     \ }
     " \     'allowlist':  [ 'raku' ],
 
+  let g:lsp_diagnostics_signs_error       = { 'text': "✖" }
+  let g:lsp_diagnostics_signs_warning     = { 'text': "⚠" }
+  let g:lsp_diagnostics_signs_hint        = { 'text': "➤" }
+  let g:lsp_diagnostics_signs_information = { 'text': "ℹ" }
+
   noremap <silent> <Leader>lo :call lsp#enable()<Enter>|   " set \lo key to start language client  設定 \lo 鍵啟動 LSP 客戶端
   noremap <silent> <Leader>lc :call lsp#disalbe()<Enter>|  " set \lc key to stop language client  設定 \lc 鍵關閉 LSP 客戶端
 
