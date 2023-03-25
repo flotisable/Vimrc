@@ -369,8 +369,8 @@ if MyPluginExistsAndInRtp( 'vim-clap' )
   if has( 'nvim' )
   "
     augroup MyAutoCmds
-    autocmd FileType clap_input inoremap <silent> <buffer> <C-n> <C-R>=clap#navigation#linewise( 'down' )<Enter>
-    autocmd FileType clap_input inoremap <silent> <buffer> <C-p> <C-R>=clap#navigation#linewise( 'up'   )<Enter>
+    autocmd FileType clap_input inoremap <silent> <buffer> <C-n> <C-R>=clap#navigation#linewise_scroll( 'down' )<Enter>
+    autocmd FileType clap_input inoremap <silent> <buffer> <C-p> <C-R>=clap#navigation#linewise_scroll( 'up'   )<Enter>
     augroup END
   "
   else
