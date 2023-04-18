@@ -421,8 +421,6 @@ if MyPluginExistsAndInRtp( 'vim-mucomplete' )
 
   if MyPluginExists( 'vim-vsnip-integ', 0 )
     let g:mucomplete#chains.default += [ 'vsnip' ]
-  elseif MyPluginExists( 'vim-snipmate', 0 )
-    let g:mucomplete#chains.default += [ 'snip' ]
   endif
 
   let g:mucomplete#chains.vim     = deepcopy( g:mucomplete#chains.default )
