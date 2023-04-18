@@ -699,7 +699,7 @@ if MyPluginExists( 'vim-vsnip', 0 )
 
       if !isdirectory( l:fullDir ) | continue | endif
 
-      let g:vsnip_snippet_dirs += [ l:fullDir ]
+      call insert( g:vsnip_snippet_dirs, l:fullDir )
     "
     endfor
   "
