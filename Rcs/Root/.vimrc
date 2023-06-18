@@ -60,6 +60,19 @@ let g:my =
   \   'powershellBundlePath': $HOME . '/Applications/PowerShellEditorServices',
   \   'snippetAuthor':        'Flotisable',
   \   'localVimrc':           $HOME . '/.vim/localVimrc',
+  \   'pluginConditions':
+  \   {
+  \     'ui':               !exists( 'g:vscode' ),
+  \     'vim8':             v:version >= 800,
+  \     'vim-clap':         has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' ),
+  \     'tree-sitter':      has( 'nvim-0.5' ) && ( executable( 'gcc' ) || executable( 'clang' ) ),
+  \     'vim-mucomplete':   v:version >= 702 && has( 'insert_expand' ) && has( 'menu' ),
+  \     'lsp':              has( 'nvim' ) || v:version >= 800,
+  \     'nvim-lsp':         has( 'nvim-0.5' ),
+  \     'vim-signify-new':  has( 'nvim' ) || has( 'patch-8.0.902' ),
+  \     'vim-vsnip':        has( 'nvim-0.4.4' ) || has( 'patch-8.0.1567' )
+  \   },
+  \   'tagAdded': {}
   \ }
 " end self defined settings
 "}}}
@@ -94,6 +107,49 @@ function! MyCustomHighlight()
 "
 endfunction
 " end customize highlight
+"}}}
+" add plugin  新增插件{{{
+function! MyAddPlugin( name, tags, options )
+"
+  let l:subTagDemiliter = ':'
+  let l:tags            = a:tags + [ fnamemodify( a:name, ':t' ) ]
+
+  for l:tag in l:tags
+  "
+    if stridx( l:tag, l:subTagDemiliter ) != -1
+    "
+      let l:splits = split( l:tag, l:subTagDemiliter )
+      let l:rootTag = l:splits[0]
+      let l:subTags = l:splits[1:]
+
+      for l:subTag in l:subTags
+        if l:subTag == 'single' && get( g:my.tagAdded, l:rootTag, 0 )
+          return
+        endif
+        if l:subTag == 'depend' && !get( g:my.tagAdded, l:rootTag, 0 )
+          return
+        endif
+      endfor
+    "
+    endif
+
+    if !get( g:my.pluginConditions, l:tag, 1 )
+      return
+    endif
+  "
+  endfor
+
+  for l:tag in l:tags
+  "
+    let l:rootTag                 = split( l:tag, l:subTagDemiliter )[0]
+    let g:my.tagAdded[l:rootTag]  = 1
+  "
+  endfor
+
+  execute "Plug '" . a:name . "', " . string( a:options )
+"
+endfunction
+" end add plugin
 "}}}
 " end self defined functions
 "}}}
@@ -202,104 +258,56 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
 "
   call plug#begin( g:my.pluginRoot )
 
-  " basic  基本的插件{{{
-  Plug 'arcticicestudio/nord-vim'
-  Plug 'AndrewRadev/bufferize.vim'  " make command output a buffer  將指令輸出變成 buffer
-  Plug 'mhinz/vim-hugefile'         " handle large file  處理大檔案
-  Plug 'tpope/vim-commentary'       " comment plugin  註解插件
+  call MyAddPlugin( 'arcticicestudio/nord-vim',   [], {} )
+  call MyAddPlugin( 'AndrewRadev/bufferize.vim',  [], {} ) " make command output a buffer  將指令輸出變成 buffer
+  call MyAddPlugin( 'mhinz/vim-hugefile',         [], {} ) " handle large file  處理大檔案
+  call MyAddPlugin( 'tpope/vim-commentary',       [], {} ) " comment plugin  註解插件
 
-  Plug 't9md/vim-quickhl',  { 'on': [ '<Plug>(quickhl-manual-this)',
-                                    \ '<Plug>(quickhl-manual-reset)' ]  } " mark plugin  標記插件
+  " mark plugin  標記插件
+  call MyAddPlugin( 't9md/vim-quickhl',     [],
+                  \ { 'on': [ '<Plug>(quickhl-manual-this)',
+                  \           '<Plug>(quickhl-manual-reset)' ]  } )
+  " display tags( depend on 'ctags' )  顯示 tag （需搭配 ctags ）
+  call MyAddPlugin( 'majutsushi/tagbar',    [ 'ui' ],
+                  \ { 'on': [ 'Tagbar',
+                  \           'TagbarCurrentTag' ] } )
+  " center the text in a window  將視窗文字置中
+  call MyAddPlugin( 'JMcKiern/vim-venter',  [ 'ui', 'vim8' ], {} )
+  " interactive finder and dispatcher  互動式查詢
+  call MyAddPlugin( 'liuchengxu/vim-clap',  [ 'ui' ],
+                  \ { 'do': { -> clap#installer#force_download() } } )
 
-  if !exists( 'g:vscode' )
-  "
-    Plug 'majutsushi/tagbar', { 'on': [ 'Tagbar',
-                                      \ 'TagbarCurrentTag' ]  } " display tags( depend on 'ctags' )  顯示 tag （需搭配 ctags ）
+  call MyAddPlugin( 'nvim-treesitter/nvim-treesitter',
+                  \ [ 'ui', 'language-cpp:single', 'language-toml:single', 'treesitter' ],
+                  \ { 'do': ':TSUpdate' }  )
+  call MyAddPlugin( 'octol/vim-cpp-enhanced-highlight', [ 'ui', 'language-cpp:single'   ], {} )
+  call MyAddPlugin( 'cespare/vim-toml',                 [ 'ui', 'language-toml:single'  ], {} )
+  call MyAddPlugin( 'vim-perl/vim-perl',                [ 'ui', 'language-perl:single'  ],
+                  \ { 'do': 'make clean moose' } )
 
-    if v:version >= 800
-      Plug 'JMcKiern/vim-venter' " center the text in a window  將視窗文字置中
-    endif
-  "
-  endif
-  " end basic
-  "}}}
-  if !exists( 'g:vscode' )
-    " interactive finder and dispatcher  互動式查詢{{{
-    if ( has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' ) )
-      Plug 'liuchengxu/vim-clap', { 'do': { -> clap#installer#force_download() } }
-    endif
-    " end interactive finder and dispatcher  互動式查詢
-    "}}}
-    " language specific  特定語言的插件{{{
-    if has( 'nvim-0.5' ) && ( executable( 'gcc' ) || executable( 'clang' ) )
-      Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-    else
-    "
-      Plug 'octol/vim-cpp-enhanced-highlight'
-      Plug 'cespare/vim-toml'
-    "
-    endif
+  call MyAddPlugin( 'lifepillar/vim-mucomplete',  [ 'ui', 'auto-complete:single' ], {} )
+  call MyAddPlugin( 'shougo/neocomplcache.vim',   [ 'ui', 'auto-complete:single' ], {} )
 
-    Plug 'vim-perl/vim-perl', { 'do': 'make clean moose' }
-    " end language specific
-    "}}}
-    " autocomplete  自動補全的插件{{{
-    if  v:version >= 702 && has( 'insert_expand' ) && has( 'menu' )
-      Plug 'lifepillar/vim-mucomplete'
-    else " when 'vim' version is older  當 vim 版本較低時
-      Plug 'shougo/neocomplcache.vim'
-    endif
-    " end autocomplete
-    "}}}
-    " language server protocal client  LSP 客戶端{{{
-    if has( 'nvim' ) || v:version >= 800
-    "
-      if has( 'nvim-0.5' )
-        Plug 'neovim/nvim-lspconfig'
-      elseif 1
-        Plug 'prabirshrestha/vim-lsp'
-        Plug 'mattn/vim-lsp-settings'
-      else
-      "
-        Plug 'autozimu/LanguageClient-neovim',
-          \ {
-          \   'branch': 'next',
-          \   'do':     'bash install.sh'
-          \ }
-      "
-      endif
-    "
-    endif
-    " end language server protocal client
-    "}}}
-    " VCS diff  版本控制差異插件{{{
-    if has( 'nvim' ) || has( 'patch-8.0.902' )
-      Plug 'mhinz/vim-signify'
-    else
-      Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
-    endif
-    " end VCS diff
-    "}}}
-    " code snippet  程式碼片段插件{{{
-    if has( 'nvim-0.4.4' ) || has( 'patch-8.0.1567' )
-    "
-      Plug 'hrsh7th/vim-vsnip',       { 'on': [] }
-      Plug 'hrsh7th/vim-vsnip-integ', { 'on': [] }
-    "
-    else
-    "
-      Plug 'MarcWeber/vim-addon-mw-utils',  { 'on': [] }
-      Plug 'tomtom/tlib_vim',               { 'on': [] }
-      Plug 'garbas/vim-snipmate',           { 'on': [] }
-    "
-    endif
-    " end code snippet
-    "}}}
-    " self use  個人使用的插件{{{
-    Plug 'flotisable/FlotisableStatusLine'  " self use statusline plugin  個人使用的狀態列設定插件
-    Plug 'flotisable/FlotisableVimSnippets' " self use code snippet  個人使用的程式碼片段
-    " end self use}}}
-  endif
+  call MyAddPlugin( 'neovim/nvim-lspconfig',          [ 'ui', 'lsp:single', 'nvim-lsp'  ], {} )
+  call MyAddPlugin( 'prabirshrestha/vim-lsp',         [ 'ui', 'lsp:single'              ], {} )
+  call MyAddPlugin( 'mattn/vim-lsp-settings',         [ 'ui', 'vim-lsp:depend'          ], {} )
+  call MyAddPlugin( 'autozimu/LanguageClient-neovim', [ 'ui', 'lsp:single'              ],
+                  \ { 'branch': 'next', 'do': 'bash install.sh' } )
+
+  call MyAddPlugin( 'mhinz/vim-signify', [ 'ui', 'vcs-diff:single', 'vim-signify-new' ], {}                     )
+  call MyAddPlugin( 'mhinz/vim-signify', [ 'ui', 'vcs-diff:single'                    ], { 'branch': 'legacy' } )
+
+  call MyAddPlugin( 'hrsh7th/vim-vsnip',            [ 'ui', 'code-snippet:single' ], { 'on': [] } )
+  call MyAddPlugin( 'hrsh7th/vim-vsnip-integ',      [ 'ui', 'vim-vsnip:depend'    ], { 'on': [] } )
+  call MyAddPlugin( 'garbas/vim-snipmate',          [ 'ui', 'code-snippet:single' ], { 'on': [] } )
+  call MyAddPlugin( 'MarcWeber/vim-addon-mw-utils', [ 'ui', 'vim-snipmate:depend' ], { 'on': [] } )
+  call MyAddPlugin( 'tomtom/tlib_vim',              [ 'ui', 'vim-snipmate:depend' ], { 'on': [] } )
+
+  " self use statusline plugin  個人使用的狀態列設定插件
+  call MyAddPlugin( 'flotisable/FlotisableStatusLine',  [ 'ui' ], {} )
+  " self use code snippet  個人使用的程式碼片段
+  call MyAddPlugin( 'flotisable/FlotisableVimSnippets', [ 'ui' ], {} )
+
   if exists( '*MyLocalPlugin' ) | call MyLocalPlugin() | endif
   call plug#end()
 "
