@@ -116,34 +116,28 @@ function! MyAddPlugin( name, tags, options )
 
   for l:tag in l:tags
   "
-    if stridx( l:tag, l:subTagDemiliter ) != -1
-    "
-      let l:splits = split( l:tag, l:subTagDemiliter )
-      let l:rootTag = l:splits[0]
-      let l:subTags = l:splits[1:]
+    let l:splits = split( l:tag, l:subTagDemiliter )
+    let l:rootTag = l:splits[0]
+    let l:subTags = l:splits[1:]
 
-      for l:subTag in l:subTags
-        if l:subTag == 'single' && get( g:my.tagAdded, l:rootTag, 0 )
-          return
-        endif
-        if l:subTag == 'depend' && !get( g:my.tagAdded, l:rootTag, 0 )
-          return
-        endif
-      endfor
-    "
-    endif
+    for l:subTag in l:subTags
+      if l:subTag == 'single' && get( g:my.tagAdded, l:rootTag, 0 )
+        return
+      endif
+      if l:subTag == 'depend' && !get( g:my.tagAdded, l:rootTag, 0 )
+        return
+      endif
+    endfor
 
-    if !get( g:my.pluginConditions, l:tag, 1 )
+    if !get( g:my.pluginConditions, l:rootTag, 1 )
       return
     endif
   "
   endfor
 
   for l:tag in l:tags
-  "
     let l:rootTag                 = split( l:tag, l:subTagDemiliter )[0]
     let g:my.tagAdded[l:rootTag]  = 1
-  "
   endfor
 
   execute "Plug '" . a:name . "', " . string( a:options )
