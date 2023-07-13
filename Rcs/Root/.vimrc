@@ -272,7 +272,7 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
                   \ { 'do': { -> clap#installer#force_download() } } )
 
   call MyAddPlugin( 'nvim-treesitter/nvim-treesitter',
-                  \ [ 'ui', 'language-cpp:single', 'language-toml:single', 'treesitter' ],
+                  \ [ 'ui', 'language-cpp:single', 'language-toml:single', 'tree-sitter' ],
                   \ { 'do': ':TSUpdate' }  )
   call MyAddPlugin( 'octol/vim-cpp-enhanced-highlight', [ 'ui', 'language-cpp:single'   ], {} )
   call MyAddPlugin( 'cespare/vim-toml',                 [ 'ui', 'language-toml:single'  ], {} )
