@@ -709,10 +709,7 @@ if MyPluginExists( 'vim-vsnip', 0 )
 
   call MyAddVsnipDir( g:my.pluginRoot . "/FlotisableVimSnippets/vsnip" )
 
-  augroup MyAutoCmds
-  autocmd InsertEnter * call plug#load( 'vim-vsnip', 'vim-vsnip-integ' )
-  autocmd SourcePost * if stridx( expand( "<afile>" ), 'vsnip' ) != -1 | call vsnip#variable#register( 'VISUAL', function( 'ft#vsnipVisual' ) ) | endif
-  augroup END
+  autocmd MyAutoCmds InsertEnter * call plug#load( 'vim-vsnip', 'vim-vsnip-integ' )
 
   imap    <expr> <TAB>        vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
   smap    <expr> <TAB>        vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'

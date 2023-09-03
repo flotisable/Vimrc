@@ -168,20 +168,6 @@ function! ft#toggleTerminal()
 endfunction
 " end toggle terminal
 "}}}
-" vsnip visual{{{
-function! ft#vsnipVisual( context )
-"
-  let l:selected_text = vsnip#selected_text()
-
-  if empty( l:selected_text )
-    return v:null
-  endif
-
-  return vsnip#indent#trim_base_indent( l:selected_text )
-"
-endfunction
-" end vsnip visual
-"}}}
 " vim-lsp callback for switchSourceHeader  切換 header, source 的 callback{{{
 function! ft#vimLspSwitchSourceHeader( data )
 "
