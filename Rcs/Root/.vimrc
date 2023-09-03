@@ -59,6 +59,7 @@ let g:my =
   \   'pluginRoot':           $HOME . '/.vim/plugged',
   \   'powershellBundlePath': $HOME . '/Applications/PowerShellEditorServices',
   \   'snippetAuthor':        'Flotisable',
+  \   'snippetRoot':          $HOME . '/Program/Vim/FlotisableVimSnippets/snippets',
   \   'localVimrc':           $HOME . '/.vim/localVimrc',
   \   'pluginConditions':
   \   {
@@ -173,14 +174,15 @@ if has( 'nvim' ) || has( 'terminal' )
   " end set Ctrl+s key to toggle terminal
 endif
 
-noremap <silent> <Leader>r  :set relativenumber!<Enter>|            " 設定 \r 鍵切換相對行號設定
-noremap <silent> <Leader>n  :set number!<Enter>|                    " 設定 \n 鍵切換行號設定
-noremap <silent> <Leader>c  :set cursorline! cursorcolumn!<Enter>|  " 設定 \c 鍵切換游標高亮
-noremap <silent> <Leader>L  :set list!<Enter>|                      " 設定 \L 切換特殊字元顯示
-noremap <silent> <Leader>w  :set wrap!<Enter>|                      " 設定 \w 切換 wrap
-noremap <silent> <Leader>zs :set spell!<Enter>|                     " 設定 \zs 切換拼字檢查
-noremap <silent> <Leader>er :edit $HOME/.vimrc<Enter>|              " 設定 \er 編輯 vimrc
-noremap <silent> <Leader>el :exec 'edit ' . g:my.localVimrc<Enter>| " 設定 \el 編輯本地端 vimrc
+noremap <silent> <Leader>r  :set relativenumber!<Enter>|              " 設定 \r 鍵切換相對行號設定
+noremap <silent> <Leader>n  :set number!<Enter>|                      " 設定 \n 鍵切換行號設定
+noremap <silent> <Leader>c  :set cursorline! cursorcolumn!<Enter>|    " 設定 \c 鍵切換游標高亮
+noremap <silent> <Leader>L  :set list!<Enter>|                        " 設定 \L 切換特殊字元顯示
+noremap <silent> <Leader>w  :set wrap!<Enter>|                        " 設定 \w 切換 wrap
+noremap <silent> <Leader>zs :set spell!<Enter>|                       " 設定 \zs 切換拼字檢查
+noremap <silent> <Leader>er :edit $HOME/.vimrc<Enter>|                " 設定 \er 編輯 vimrc
+noremap <silent> <Leader>el :exec 'edit ' . g:my.localVimrc<Enter>|   " 設定 \el 編輯本地端 vimrc
+noremap <silent> <Leader>es :exec 'edit ' . g:my.snippetRoot<Enter>|  " 設定 \es 開啟 snippet 檔案
 
 if has( 'nvim-0.7' )
   noremap <silent> <Leader>S :exec 'set laststatus=' . ( ( &laststatus == 2 )? 3: 2 )<Enter> | " 設定 \S 切換全域狀態列
@@ -711,18 +713,16 @@ if MyPluginExists( 'vim-vsnip', 0 )
 
   autocmd MyAutoCmds InsertEnter * call plug#load( 'vim-vsnip', 'vim-vsnip-integ' )
 
-  imap    <expr> <TAB>        vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
-  smap    <expr> <TAB>        vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
-  xmap    <TAB>               <Plug>(vsnip-cut-text)
-  noremap <silent> <Leader>es :VsnipOpenEdit -format snipmate<Enter>| " set \es to open snippet files  設定 \es 開啟 snipprt 檔案
+  imap <expr> <TAB> vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
+  smap <expr> <TAB> vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
+  xmap <TAB>        <Plug>(vsnip-cut-text)
 "
 elseif MyPluginExists( 'vim-snipmate', 0 )
 "
   let g:snips_author  = g:my.snippetAuthor
   let g:snipMate      = { 'snippet_version': 1 }
 
-  imap    <C-s>               <Plug>snipMateShow|               " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
-  noremap <silent> <Leader>es :SnipMateOpenSnippetFiles<Enter>| " set \es to open snippet files  設定 \es 開啟 snippet 檔案
+  imap <C-s> <Plug>snipMateShow| " set C-s to show snip candidates  設定 C-s 顯示可用程式碼片段
 
   " use Ctrl+n, Ctrl+p to select multiple snippet  用 Ctrl+n, Ctrl+p 選擇程式片段
   let g:tlib_extend_keyagents_InputList_s =
