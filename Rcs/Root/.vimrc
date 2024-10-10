@@ -176,7 +176,8 @@ endif
 
 noremap <silent> <Leader>r  :set relativenumber!<Enter>|              " 設定 \r 鍵切換相對行號設定
 noremap <silent> <Leader>n  :set number!<Enter>|                      " 設定 \n 鍵切換行號設定
-noremap <silent> <Leader>c  :set cursorline! cursorcolumn!<Enter>|    " 設定 \c 鍵切換游標高亮
+noremap <silent> <Leader>c  :set cursorline! cursorcolumn!
+  \ \| let &colorcolumn = &colorcolumn == ""? "+0": ""<Enter>|        " 設定 \c 鍵切換游標高亮
 noremap <silent> <Leader>L  :set list!<Enter>|                        " 設定 \L 切換特殊字元顯示
 noremap <silent> <Leader>w  :set wrap!<Enter>|                        " 設定 \w 切換 wrap
 noremap <silent> <Leader>zs :set spell!<Enter>|                       " 設定 \zs 切換拼字檢查
