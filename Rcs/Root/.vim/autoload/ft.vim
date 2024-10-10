@@ -1,4 +1,6 @@
 let s:syntaxCompleteCache = {}
+let s:isSharing           = 0
+let s:sharingOrigSettings = {}
 
 " wrapper of build in lsp omnifunc  內建 lsp omnifunc 的 wrapper{{{
 " this function is to make neovim build in lsp omnifunc work with neocomplcache
@@ -180,5 +182,37 @@ function! ft#vimLspSwitchSourceHeader( data )
 "
 endfunction
 " end vim-lsp callback for switchSourceHeader
+"}}}
+" toggle sharing setup  切換分享設定{{{
+function! ft#toggleSharingSetup()
+"
+  let s:isSharing = !s:isSharing
+
+  if s:isSharing
+  "
+    let s:sharingOrigSettings.relativenumber  = &relativenumber
+    let s:sharingOrigSettings.number          = &number
+    let s:sharingOrigSettings.cursorline      = &cursorline
+    let s:sharingOrigSettings.cursorcolumn    = &cursorcolumn
+    let s:sharingOrigSettings.colorcolumn     = &colorcolumn
+
+    set norelativenumber
+    set number
+    set cursorline
+    set cursorcolumn
+    set colorcolumn=+0
+  "
+  else
+  "
+    let &relativenumber = s:sharingOrigSettings.relativenumber
+    let &number         = s:sharingOrigSettings.number
+    let &cursorline     = s:sharingOrigSettings.cursorline
+    let &cursorcolumn   = s:sharingOrigSettings.cursorcolumn
+    let &colorcolumn    = s:sharingOrigSettings.colorcolumn
+  "
+  endif
+"
+endfunction
+" end toggle sharing setup
 "}}}
 " vim: foldmethod=marker foldmarker={{{,}}}
