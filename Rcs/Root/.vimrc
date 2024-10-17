@@ -99,12 +99,17 @@ function! MyCustomHighlight()
   highlight CursorColumn  cterm=NONE ctermbg=DarkGrey
   highlight CursorLine    cterm=NONE ctermbg=DarkGrey
 
-  highlight DiffAdd     cterm=bold ctermfg=DarkYellow   ctermbg=DarkGreen   gui=bold guifg='DarkYellow'   guibg='DarkGreen'
-  highlight DiffChange  cterm=bold ctermfg=DarkBlue     ctermbg=DarkYellow  gui=bold guifg='DarkBlue'     guibg='DarkYellow'
-  highlight DiffText    cterm=bold ctermfg=DarkYellow   ctermbg=DarkRed     gui=bold guifg='DarkYellow'   guibg='DarkRed'
-  highlight DiffDelete  cterm=bold ctermfg=Magenta      ctermbg=DarkRed     gui=bold guifg='Magenta'      guibg='DarkRed'
+  if !MyPluginExistsAndInRtp( 'nord-vim' )
+  "
+    highlight DiffAdd     cterm=bold ctermfg=DarkYellow   ctermbg=DarkGreen   gui=bold guifg='DarkYellow'   guibg='DarkGreen'
+    highlight DiffChange  cterm=bold ctermfg=DarkBlue     ctermbg=DarkYellow  gui=bold guifg='DarkBlue'     guibg='DarkYellow'
+    highlight DiffText    cterm=bold ctermfg=DarkYellow   ctermbg=DarkRed     gui=bold guifg='DarkYellow'   guibg='DarkRed'
+    highlight DiffDelete  cterm=bold ctermfg=Magenta      ctermbg=DarkRed     gui=bold guifg='Magenta'      guibg='DarkRed'
 
-  highlight Pmenu gui=NONE guibg=Grey
+    highlight Pmenu gui=NONE guibg=Grey
+  "
+  endif
+
 "
 endfunction
 " end customize highlight
