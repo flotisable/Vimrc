@@ -536,21 +536,29 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
                       'vimls',
                       'perlpls',
                       'rust_analyzer',
-                      'pylsp'
+                      'pylsp',
                     }
 
     for _, server in ipairs( servers ) do
-      lsp[server].setup{}
+      if vim.fn.executable( lsp[server].config_def.default_config.cmd[1] ) ~= 0 then
+        lsp[server].setup{}
+      end
     end
 
-    lsp.efm.setup
-    {
-      filetypes = { 'raku' }
-    }
-    lsp.powershell_es.setup
-    {
-      bundle_path = vim.g.my.powershellBundlePath
-    }
+    if vim.fn.executable( lsp.efm.config_def.default_config.cmd[1] ) ~= 0 then
+      lsp.efm.setup
+      {
+        filetypes = { 'raku' }
+      }
+    end
+
+    if  vim.fn.executable( lsp.powershell_es.config_def.default_config.shell ) ~= 0 and
+        vim.fm.isdirectory( vim.g.my.powershellBundlePath ) then
+      lsp.powershell_es.setup
+      {
+        bundle_path = vim.g.my.powershellBundlePath
+      }
+    end
     -- language setup
     --}}}
     -- key mappings{{{
