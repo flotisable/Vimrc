@@ -188,7 +188,7 @@ noremap <silent> <Leader>L  :set list!<Enter>|                        " 設定 \
 noremap <silent> <Leader>w  :set wrap!<Enter>|                        " 設定 \w 切換 wrap
 noremap <silent> <Leader>zs :set spell!<Enter>|                       " 設定 \zs 切換拼字檢查
 noremap <silent> <Leader>R  :call ft#toggleSharingSetup()<Enter>|     " 設定 \R 鍵切換分享設定
-noremap <silent> <Leader>er :edit $HOME/.vimrc<Enter>|                " 設定 \er 編輯 vimrc
+noremap <silent> <Leader>er :edit $MYVIMRC<Enter>|                    " 設定 \er 編輯 vimrc
 noremap <silent> <Leader>el :exec 'edit ' . g:my.localVimrc<Enter>|   " 設定 \el 編輯本地端 vimrc
 noremap <silent> <Leader>ea :exec 'edit ' . g:my.autoload<Enter>|     " 設定 \el 編輯本地端 vimrc
 noremap <silent> <Leader>es :exec 'edit ' . g:my.snippetRoot<Enter>|  " 設定 \es 開啟 snippet 檔案
