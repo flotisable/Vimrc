@@ -12,7 +12,6 @@ if exists( 'g:vscode' )
   noremap <Leader>p   <Cmd>call VSCodeCall( 'markdown.showPreviewToSide'              )<Enter>
   noremap <Leader>er  <Cmd>call VSCodeCall( 'workbench.action.openSettings'           )<Enter>
   noremap <Leader>ek  <Cmd>call VSCodeCall( 'workbench.action.openGlobalKeybindings'  )<Enter>
-
 "
 endif
 " end vscode specific settings
