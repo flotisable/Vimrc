@@ -1,6 +1,4 @@
 let s:syntaxCompleteCache = {}
-let s:isSharing           = 0
-let s:sharingOrigSettings = {}
 
 " wrapper of build in lsp omnifunc  內建 lsp omnifunc 的 wrapper{{{
 " this function is to make neovim build in lsp omnifunc work with neocomplcache
@@ -186,15 +184,22 @@ endfunction
 " toggle sharing setup  切換分享設定{{{
 function! ft#toggleSharingSetup()
 "
-  let s:isSharing = !s:isSharing
-
-  if s:isSharing
+  if !exists( 'w:isSharing' )
   "
-    let s:sharingOrigSettings.relativenumber  = &relativenumber
-    let s:sharingOrigSettings.number          = &number
-    let s:sharingOrigSettings.cursorline      = &cursorline
-    let s:sharingOrigSettings.cursorcolumn    = &cursorcolumn
-    let s:sharingOrigSettings.colorcolumn     = &colorcolumn
+    let w:isSharing           = 0
+    let w:sharingOrigSettings = {}
+  "
+  endif
+
+  let w:isSharing = !w:isSharing
+
+  if w:isSharing
+  "
+    let w:sharingOrigSettings.relativenumber  = &relativenumber
+    let w:sharingOrigSettings.number          = &number
+    let w:sharingOrigSettings.cursorline      = &cursorline
+    let w:sharingOrigSettings.cursorcolumn    = &cursorcolumn
+    let w:sharingOrigSettings.colorcolumn     = &colorcolumn
 
     set norelativenumber
     set number
@@ -204,11 +209,11 @@ function! ft#toggleSharingSetup()
   "
   else
   "
-    let &relativenumber = s:sharingOrigSettings.relativenumber
-    let &number         = s:sharingOrigSettings.number
-    let &cursorline     = s:sharingOrigSettings.cursorline
-    let &cursorcolumn   = s:sharingOrigSettings.cursorcolumn
-    let &colorcolumn    = s:sharingOrigSettings.colorcolumn
+    let &relativenumber = w:sharingOrigSettings.relativenumber
+    let &number         = w:sharingOrigSettings.number
+    let &cursorline     = w:sharingOrigSettings.cursorline
+    let &cursorcolumn   = w:sharingOrigSettings.cursorcolumn
+    let &colorcolumn    = w:sharingOrigSettings.colorcolumn
   "
   endif
 "
