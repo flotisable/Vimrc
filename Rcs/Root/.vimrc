@@ -66,6 +66,7 @@ let g:my =
   \   {
   \     'ui':               !exists( 'g:vscode' ),
   \     'vim8':             v:version >= 800,
+  \     'vim-commentary':   !has( 'nvim-0.10' ),
   \     'vim-clap':         has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' ),
   \     'tree-sitter':      has( 'nvim-0.5' ) && ( executable( 'gcc' ) || executable( 'clang' ) ),
   \     'vim-mucomplete':   v:version >= 702 && has( 'insert_expand' ) && has( 'menu' ),
