@@ -1,10 +1,10 @@
--- include vim resource  引入 vim 的資源
+-- include vim resource  引入 vim 的資源 {{{
 vim.opt.runtimepath:append{ '~/.vim', '~/.vim/after'  }
 vim.opt.packpath:append   { '~/.vim' }
 vim.cmd.source( '~/.vimrc' )
 -- end include vim resource
-
--- vscode specific settings
+-- }}}
+-- vscode specific settings {{{
 if vim.g.vscode then
 
   vim.keymap.set( '', '<Space>',      [[<Cmd>call VSCodeCall( 'vscode-neovim.ctrl-f'                    )<Enter>]] )
@@ -15,3 +15,21 @@ if vim.g.vscode then
 
 end
 -- end vscode specific settings
+-- }}}
+-- sign setup  符號設定 {{{
+vim.diagnostic.config
+{
+  signs =
+  {
+    text =
+    {
+      [vim.diagnostic.severity.ERROR] = "✖",
+      [vim.diagnostic.severity.WARN ] = "⚠",
+      [vim.diagnostic.severity.HINT ] = "➤",
+      [vim.diagnostic.severity.INFO ] = "ℹ",
+    }
+  }
+}
+-- end sign setup
+-- }}}
+-- vim: foldmethod=marker foldmarker={{{,}}}

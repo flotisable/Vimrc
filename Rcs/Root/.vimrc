@@ -466,19 +466,6 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
   lua << EOF
     local lsp = require'lspconfig'
 
-    -- sign setup  符號設定{{{
-    local signs = {
-                    DiagnosticSignError = "✖",
-                    DiagnosticSignWarn  = "⚠",
-                    DiagnosticSignHint  = "➤",
-                    DiagnosticSignInfo  = "ℹ"
-                  }
-
-    for type, sign in pairs( signs ) do
-      vim.fn.sign_define( type, { text = sign, texthl = type } )
-    end
-    -- end sign setup
-    --}}}
     -- use lsp omni function when a language server is attached{{{
     local function mySetOmniFunc()
       vim.bo.omnifunc = 'ft#buildInLspOmniFunc'
