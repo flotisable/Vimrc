@@ -701,13 +701,11 @@ if MyPluginExists( 'vim-vsnip', 0 )
   "
     let g:vsnip_snippet_dirs += [ a:dir ]
 
-    for dir in readdir( a:dir )
+    for l:dir in split( glob( a:dir . '/*' ) )
     "
-      let l:fullDir = a:dir . '/' . dir
+      if !isdirectory( l:dir ) | continue | endif
 
-      if !isdirectory( l:fullDir ) | continue | endif
-
-      call insert( g:vsnip_snippet_dirs, l:fullDir )
+      call insert( g:vsnip_snippet_dirs, l:dir )
     "
     endfor
   "
