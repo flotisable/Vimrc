@@ -281,7 +281,7 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
   call MyAddPlugin( 'JMcKiern/vim-venter',  [ 'ui', 'vim8' ], {} )
   " interactive finder and dispatcher  互動式查詢
   call MyAddPlugin( 'liuchengxu/vim-clap',  [ 'ui' ],
-                  \ { 'do': { -> clap#installer#force_download() } } )
+                  \ { 'do': ':call clap#installer#force_download()' } )
 
   call MyAddPlugin( 'nvim-treesitter/nvim-treesitter',
                   \ [ 'ui', 'language-cpp:single', 'language-toml:single', 'tree-sitter' ],
