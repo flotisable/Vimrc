@@ -628,7 +628,7 @@ elseif MyPluginExistsAndInRtp( 'vim-lsp' )
     \ }
 
   " autocmd MyAutoCmds User lsp_buffer_enabled call ft#lspMaps( v:false )
-  autocmd User lsp_buffer_enabled call ft#lspMaps( v:true )
+  autocmd User lsp_buffer_enabled call ft#lspMaps( v:true ) | set omnifunc=lsp#complete
 "
 elseif MyPluginExistsAndInRtp( 'LanguageClient-neovim' )
 "
