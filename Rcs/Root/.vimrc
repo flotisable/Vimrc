@@ -713,7 +713,7 @@ if MyPluginExists( 'vim-vsnip', 0 )
 
   call MyAddVsnipDir( g:my.pluginRoot . "/FlotisableVimSnippets/vsnip" )
 
-  autocmd MyAutoCmds InsertEnter * call plug#load( 'vim-vsnip', 'vim-vsnip-integ' )
+  autocmd MyAutoCmds InsertEnter * ++once filetype off | call plug#load( 'vim-vsnip', 'vim-vsnip-integ' ) | filetype on
 
   imap <expr> <TAB> vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
   smap <expr> <TAB> vsnip#available( 1 )? '<Plug>(vsnip-expand-or-jump)' :'<TAB>'
@@ -733,7 +733,7 @@ elseif MyPluginExists( 'vim-snipmate', 0 )
     \   14: 'tlib#agent#Down'
     \ }
 
-  autocmd MyAutoCmds InsertEnter * call plug#load( 'vim-addon-mw-utils', 'tlib_vim', 'vim-snipmate' )
+  autocmd MyAutoCmds InsertEnter * ++once filetype off | call plug#load( 'vim-addon-mw-utils', 'tlib_vim', 'vim-snipmate' ) | filetype on
 "
 endif
 " end code snippet settings
