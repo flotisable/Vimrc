@@ -485,7 +485,7 @@ if MyPluginExistsAndInRtp( 'nvim-lspconfig' )
       end
 
       mySetOmniFunc()
-      vim.api.nvim_create_autocmd( 'FileChangedShellPost',
+      vim.api.nvim_create_autocmd( 'FileType',
         {
           group     = group,
           buffer    = args.buf,
