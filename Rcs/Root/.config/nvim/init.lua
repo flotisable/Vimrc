@@ -32,4 +32,14 @@ vim.diagnostic.config
 }
 -- end sign setup
 -- }}}
+-- load local init file {{{
+local my            = vim.g.my
+local localInitFile = vim.fs.joinpath( vim.fn.stdpath( 'config' ), '/localInit.lua' )
+
+my.localVimrc = localInitFile
+vim.g.my      = my
+
+loadfile( localInitFile )
+-- end load local init file
+-- }}}
 -- vim: foldmethod=marker foldmarker={{{,}}}

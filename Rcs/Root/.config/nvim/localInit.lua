@@ -1,0 +1,1 @@
+-- ~/.vim/localVimrc  this is to make switching to vim local init file easier
