@@ -41,10 +41,7 @@ if vim.version().major >= 0 and vim.version().minor >= 7 then
   -- 設定 \S 切換全域狀態列
   vim.keymap.set( '',
     '<Leader>S',
-    [[<Cmd>exec 'set laststatus=' . ( ( &laststatus == 2 )? 3: 2 )<Enter>]],
-    {
-      silent = true,
-    }
+    [[<Cmd>exec 'set laststatus=' . ( ( &laststatus == 2 )? 3: 2 )<Enter>]]
   )
 end
 -- end key mapping
