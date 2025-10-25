@@ -68,8 +68,7 @@ let g:my =
   \     'vim-clap':         has( 'nvim-0.4.2' ) || has( 'patch-8.1.2114' ),
   \     'tree-sitter':      has( 'nvim-0.5' ) && ( executable( 'gcc' ) || executable( 'clang' ) ),
   \     'vim-mucomplete':   v:version >= 702 && has( 'insert_expand' ) && has( 'menu' ),
-  \     'lsp':              has( 'nvim' ) || v:version >= 800,
-  \     'nvim-lsp':         has( 'nvim-0.5' ),
+  \     'lsp':              !has( 'nvim' ) && v:version >= 800,
   \     'vim-signify-new':  has( 'nvim' ) || has( 'patch-8.0.902' ),
   \     'vim-vsnip':        has( 'nvim-0.4.4' ) || has( 'patch-8.0.1567' )
   \   },
@@ -288,10 +287,9 @@ if filereadable( $HOME . '/.vim/autoload/plug.vim' )
   call MyAddPlugin( 'lifepillar/vim-mucomplete',  [ 'ui', 'auto-complete:single' ], {} )
   call MyAddPlugin( 'shougo/neocomplcache.vim',   [ 'ui', 'auto-complete:single' ], {} )
 
-  call MyAddPlugin( 'neovim/nvim-lspconfig',          [ 'ui', 'lsp:single', 'nvim-lsp'  ], {} )
-  call MyAddPlugin( 'prabirshrestha/vim-lsp',         [ 'ui', 'lsp:single'              ], {} )
-  call MyAddPlugin( 'mattn/vim-lsp-settings',         [ 'ui', 'vim-lsp:depend'          ], {} )
-  call MyAddPlugin( 'autozimu/LanguageClient-neovim', [ 'ui', 'lsp:single'              ],
+  call MyAddPlugin( 'prabirshrestha/vim-lsp',         [ 'ui', 'lsp:single'      ], {} )
+  call MyAddPlugin( 'mattn/vim-lsp-settings',         [ 'ui', 'vim-lsp:depend'  ], {} )
+  call MyAddPlugin( 'autozimu/LanguageClient-neovim', [ 'ui', 'lsp:single'      ],
                   \ { 'branch': 'next', 'do': 'bash install.sh' } )
 
   call MyAddPlugin( 'mhinz/vim-signify', [ 'ui', 'vcs-diff:single', 'vim-signify-new' ], {}                     )
