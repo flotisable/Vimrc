@@ -7,11 +7,14 @@ vim.cmd.source( '~/.vimrc' )
 -- vscode specific settings {{{
 if vim.g.vscode then
 
-  vim.keymap.set( '', '<Space>',      [[<Cmd>call VSCodeCall( 'vscode-neovim.ctrl-f'                    )<Enter>]] )
-  vim.keymap.set( '', '<BS>',         [[<Cmd>call VSCodeCall( 'vscode-neovim.ctrl-b'                    )<Enter>]] )
-  vim.keymap.set( '', '<Leader>p',    [[<Cmd>call VSCodeCall( 'markdown.showPreviewToSide'              )<Enter>]] )
-  vim.keymap.set( '', '<Leader>er',   [[<Cmd>call VSCodeCall( 'workbench.action.openSettings'           )<Enter>]] )
-  vim.keymap.set( '', '<Leader>ek',   [[<Cmd>call VSCodeCall( 'workbench.action.openGlobalKeybindings'  )<Enter>]] )
+  vscode = require( 'vscode' )
+
+  vim.keymap.set( '', '<Space>',    function() vscode.call( 'vscode-neovim.ctrl-f'                   ) end )
+  vim.keymap.set( '', '<BS>',       function() vscode.call( 'vscode-neovim.ctrl-b'                   ) end )
+  vim.keymap.set( '', '<Leader>p',  function() vscode.call( 'markdown.showPreviewToSide'             ) end )
+  vim.keymap.set( '', '<Leader>w',  function() vscode.call( 'editor.action.toggleWordWrap'           ) end )
+  vim.keymap.set( '', '<Leader>er', function() vscode.call( 'workbench.action.openSettings'          ) end )
+  vim.keymap.set( '', '<Leader>ek', function() vscode.call( 'workbench.action.openGlobalKeybindings' ) end )
 
 end
 -- end vscode specific settings
