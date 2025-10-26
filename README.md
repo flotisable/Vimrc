@@ -142,66 +142,71 @@
   2. have fun with this vimrc
 
 # Key Bindings
-  | Keybinding    | Required Plugin                         | Other Requirement | Action                                |
-  | ------------- | --------------------------------------- | ----------------- | ------------------------------------- |
-  | \<Leader> bb  | bufferize.vim                           |                   | bufferize command                     |
-  | \<Leader> bs  | bufferize.vim                           |                   | bufferize system command              |
-  | \<Leader> bn  | bufferize.vim                           |                   | bufferize normal mode command         |
-  | \<Leader> m   | vim-quickhl                             |                   | set mark highlight                    |
-  | \<Leader> M   | vim-quickhl                             |                   | clear mark highlight                  |
-  | \<Leader> C   | vim-venter                              |                   | center window text                    |
-  | \<Leader> t   | tagbar                                  | ctags             | toggle tagbar, show the tags overview |
-  | \<Leader> T   | tagbar                                  | ctags             | show tag in current cursor position   |
-  | \<Leader> F   | vim-clap                                |                   | open fuzzy finder providers           |
-  | g/            | vim-clap                                |                   | search in file                        |
-  | gb            | vim-clap                                |                   | search buffer                         |
-  | \<Leader> f   | vim-clap                                |                   | search file                           |
-  | \<Leader> g   | vim-clap                                | ripgrep           | grep files                            |
-  | \<Leader> lo  | nvim-lspconfig or LanguageClient-neovim |                   | start language client                 |
-  | \<Leader> lc  | nvim-lspconfig or LanguageClient-neovim |                   | stop language client                  |
-  |  gd           | nvim-lspconfig or LanguageClient-neovim | language server   | go to definition                      |
-  |  gr           | nvim-lspconfig or LanguageClient-neovim | language server   | find reference                        |
-  |  K            | nvim-lspconfig or LanguageClient-neovim | language server   | show hover                            |
-  |  gi           | nvim-lspconfig or LanguageClient-neovim | language server   | go to implementation                  |
-  |  =            | nvim-lspconfig or LanguageClient-neovim | language server   | format range                          |
-  | \<Leader> lr  | nvim-lspconfig or LanguageClient-neovim | language server   | rename symbol                         |
-  | \<Leader> la  | nvim-lspconfig or LanguageClient-neovim | language server   | code action                           |
-  | \<Leader> a   | nvim-lspconfig or LanguageClient-neovim | clangd            | switch c++ header, source file        |
-  | \<Leader> s   | vim-signify                             | VCS               | toggle VCS diff                       |
-  | \<Leader> d   | vim-signify                             | VCS               | show VCS hunk diff                    |
-  | \<Leader> u   | vim-signify                             | VCS               | undo VCS hunk                         |
-  | \<Leader> D   | vim-signify                             | VCS               | show VCS full diff                    |
-  | Ctrl + s      | vim-snipmate                            | insert mode       | show available snippets               |
-  | Ctrl + x      | netrw                                   |                   | toggle the tree browser               |
-  | Ctrl + q      |                                         | builtin terminal  | exit terminal mode                    |
-  | Ctrl + s      |                                         | builtin terminal  | toggle terminal                       |
-  | \<Leader> r   |                                         |                   | toggle relative line number           |
-  | \<Leader> c   |                                         |                   | toggle cursor line, column highlight  |
-  | \<Leader> L   |                                         |                   | toggle show special characters        |
-  | \<Leader> w   |                                         |                   | toggle line wrap                      |
-  | \<Leader> er  |                                         |                   | edit vimrc                            |
-  | \<Leader> el  |                                         |                   | edit local vimrc                      |
-  | space         |                                         |                   | scroll forward                        |
-  | backspace     |                                         |                   | scroll backward                       |
-  | Ctrl + a      |                                         | insert mode       | home                                  |
-  | Ctrl + e      |                                         | insert mode       | end                                   |
-  | Ctrl + f      |                                         | insert mode       | right                                 |
-  | Ctrl + b      |                                         | insert mode       | left                                  |
-  | Ctrl + p      |                                         | insert mode       | up                                    |
-  | Ctrl + n      |                                         | insert mode       | down                                  |
-  | Ctrl + k      |                                         | insert mode       | delete to the end of line             |
-  | Ctrl + d      |                                         | insert mode       | delete                                |
-  | Ctrl + _ s    |                                         | cscope            | cscope find C symbol                  |
-  | Ctrl + _ g    |                                         | cscope            | cscope find definition                |
-  | Ctrl + _ c    |                                         | cscope            | cscope find function call             |
-  | Ctrl + _ t    |                                         | cscope            | cscope find string                    |
-  | Ctrl + _ e    |                                         | cscope            | cscope find egrep pattern             |
-  | Ctrl + _ f    |                                         | cscope            | cscope find file                      |
-  | Ctrl + _ i    |                                         | cscope            | cscope find includes                  |
-  | Ctrl + _ d    |                                         | cscope            | cscope find function called           |
-  | Ctrl + 0      |                                         | neovim GUI        | reset guifont                         |
-  | +             |                                         | neovim GUI        | zoom in                               |
-  | -             |                                         | neovim GUI        | zoom out                              |
+  | Keybinding    | Required Plugin                                   | Other Requirement | Action                                |
+  | ------------- | ------------------------------------------------- | ----------------- | ------------------------------------- |
+  | \<Leader> bb  | bufferize.vim                                     |                   | bufferize command                     |
+  | \<Leader> bs  | bufferize.vim                                     |                   | bufferize system command              |
+  | \<Leader> bn  | bufferize.vim                                     |                   | bufferize normal mode command         |
+  | \<Leader> m   | vim-quickhl                                       |                   | set mark highlight                    |
+  | \<Leader> M   | vim-quickhl                                       |                   | clear mark highlight                  |
+  | \<Leader> C   | vim-venter                                        |                   | center window text                    |
+  | \<Leader> t   | tagbar                                            | ctags             | toggle tagbar, show the tags overview |
+  | \<Leader> T   | tagbar                                            | ctags             | show tag in current cursor position   |
+  | \<Leader> F   | vim-clap                                          |                   | open fuzzy finder providers           |
+  | g/            | vim-clap                                          |                   | search in file                        |
+  | gb            | vim-clap                                          |                   | search buffer                         |
+  | \<Leader> f   | vim-clap                                          |                   | search file                           |
+  | \<Leader> g   | vim-clap                                          | ripgrep           | grep files                            |
+  | \<Leader> lo  | nvim-lspconfig, vim-lsp or LanguageClient-neovim  |                   | start language client                 |
+  | \<Leader> lc  | nvim-lspconfig, vim-lsp or LanguageClient-neovim  |                   | stop language client                  |
+  |  gd           | nvim-lspconfig, vim-lsp or LanguageClient-neovim  | language server   | go to definition                      |
+  |  gr           | nvim-lspconfig, vim-lsp or LanguageClient-neovim  | language server   | find reference                        |
+  |  K            | nvim-lspconfig, vim-lsp or LanguageClient-neovim  | language server   | show hover                            |
+  |  gi           | nvim-lspconfig, vim-lsp or LanguageClient-neovim  | language server   | go to implementation                  |
+  |  =            | nvim-lspconfig, vim-lsp or LanguageClient-neovim  | language server   | format range                          |
+  | \<Leader> lr  | nvim-lspconfig, vim-lsp or LanguageClient-neovim  | language server   | rename symbol                         |
+  | \<Leader> la  | nvim-lspconfig, vim-lsp or LanguageClient-neovim  | language server   | code action                           |
+  | \<Leader> a   | nvim-lspconfig, vim-lsp or LanguageClient-neovim  | clangd            | switch c++ header, source file        |
+  | \<Leader> s   | vim-signify                                       | VCS               | toggle VCS diff                       |
+  | \<Leader> d   | vim-signify                                       | VCS               | show VCS hunk diff                    |
+  | \<Leader> u   | vim-signify                                       | VCS               | undo VCS hunk                         |
+  | \<Leader> D   | vim-signify                                       | VCS               | show VCS full diff                    |
+  | Ctrl + s      | vim-snipmate                                      | insert mode       | show available snippets               |
+  | Ctrl + x      | netrw                                             |                   | toggle the tree browser               |
+  | Ctrl + q      |                                                   | builtin terminal  | exit terminal mode                    |
+  | Ctrl + s      |                                                   | builtin terminal  | toggle terminal                       |
+  | \<Leader> r   |                                                   |                   | toggle relative line number           |
+  | \<Leader> n   |                                                   |                   | toggle line number                    |
+  | \<Leader> c   |                                                   |                   | toggle cursor line, column highlight  |
+  | \<Leader> L   |                                                   |                   | toggle show special characters        |
+  | \<Leader> w   |                                                   |                   | toggle line wrap                      |
+  | \<Leader> zs  |                                                   |                   | toggle spell check                    |
+  | \<Leader> R   |                                                   |                   | toggle sharing setup                  |
+  | \<Leader> er  |                                                   |                   | edit vimrc                            |
+  | \<Leader> el  |                                                   |                   | edit local vimrc                      |
+  | \<Leader> ea  |                                                   |                   | edit autoload file                    |
+  | \<Leader> es  |                                                   |                   | edit snippets                         |
+  | space         |                                                   |                   | scroll forward                        |
+  | backspace     |                                                   |                   | scroll backward                       |
+  | Ctrl + a      |                                                   | insert mode       | home                                  |
+  | Ctrl + e      |                                                   | insert mode       | end                                   |
+  | Ctrl + f      |                                                   | insert mode       | right                                 |
+  | Ctrl + b      |                                                   | insert mode       | left                                  |
+  | Ctrl + p      |                                                   | insert mode       | up                                    |
+  | Ctrl + n      |                                                   | insert mode       | down                                  |
+  | Ctrl + k      |                                                   | insert mode       | delete to the end of line             |
+  | Ctrl + d      |                                                   | insert mode       | delete                                |
+  | Ctrl + _ s    |                                                   | cscope            | cscope find C symbol                  |
+  | Ctrl + _ g    |                                                   | cscope            | cscope find definition                |
+  | Ctrl + _ c    |                                                   | cscope            | cscope find function call             |
+  | Ctrl + _ t    |                                                   | cscope            | cscope find string                    |
+  | Ctrl + _ e    |                                                   | cscope            | cscope find egrep pattern             |
+  | Ctrl + _ f    |                                                   | cscope            | cscope find file                      |
+  | Ctrl + _ i    |                                                   | cscope            | cscope find includes                  |
+  | Ctrl + _ d    |                                                   | cscope            | cscope find function called           |
+  | Ctrl + 0      |                                                   | neovim GUI        | reset guifont                         |
+  | +             |                                                   | neovim GUI        | zoom in                               |
+  | -             |                                                   | neovim GUI        | zoom out                              |
 
 # Self Defined Functions
   | Function                            | Description                                     |
@@ -209,6 +214,7 @@
   | MyPluginExistsAndInRtp( name )      | test pluggin existence and in runtimepath       |
   | MyPluginExists( name, isCheckRtp )  | test pluggin existence                          |
   | MyCustomHighlight()                 | setup custom highlight to overwrite colorscheme |
+  | MyAddPlugin( name, tags, options )  | add plugin with tags                            |
 
 # Plugins
   | Category          | Plugin                                                                            | Purpose                                                                     | Requirement                                 |
@@ -226,8 +232,8 @@
   |                   | [vim-ps1](https://github.com/pprovost/vim-ps1)                                    | syntax highlgiht of [powershell](https://github.com/PowerShell/PowerShell)  |                                             |
   | Autocomplete      | [vim-mucomplete](https://github.com/lifepillar/vim-mucomplete)                    | autocomplete plugin, to replace neocomplcache                               | vim 7.2, has( insert_expand ), has( menu )  |
   |                   | [neocomplcache](https://github.com/shougo/neocomplcache.vim)                      | autocomplete plugin                                                         |                                             |
-  | LSP               | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)                        | builtin language server client configuration                                | nvim 0.5                                    |
-  |                   | [vim-lsc](https://github.com/natebosch/vim-lsc)                                   | language server client                                                      |                                             |
+  | LSP               | [vim-lsp](https://github.com/prabirshrestha/vim-lsp)                              | language server client                                                      | vim 8.0                                     |
+  |                   | [vim-lsp-settings](https://github.com/mattn/vim-lsp-settings)                     | language server client configuration of vim-lsp                             | vim-lsp                                     |
   |                   | [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim)        | language server client                                                      |                                             |
   | VCS               | [vim-signify](https://github.com/mhinz/vim-signify)                               | VCS diff plugin                                                             |                                             |
   | Code Snippet      | [vim-vsnip](https://github.com/hrsh7th/vim-vsnip)                                 | code snippet plugin                                                         |                                             |

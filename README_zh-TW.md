@@ -173,11 +173,16 @@
   | Ctrl + q      |                                         | 內建終端機      | 離開終端機模式            |
   | Ctrl + s      |                                         | 內建終端機      | 切換終端機                |
   | \<Leader> r   |                                         |                 | 切換相對行號顯示          |
+  | \<Leader> n   |                                         |                 | 切換行號顯示              |
   | \<Leader> c   |                                         |                 | 切換游標高亮              |
   | \<Leader> L   |                                         |                 | 切換顯示特殊字元          |
   | \<Leader> w   |                                         |                 | 切換換行                  |
+  | \<Leader> zs  |                                         |                 | 切換拼字檢查              |
+  | \<Leader> R   |                                         |                 | 切換分享設定              |
   | \<Leader> er  |                                         |                 | 編輯 vimrc                |
   | \<Leader> el  |                                         |                 | 編輯本地端 vimrc          |
+  | \<Leader> ea  |                                         |                 | 編輯 autoload 檔          |
+  | \<Leader> es  |                                         |                 | 編輯程式碼片段            |
   | 空白鍵        |                                         |                 | 向下滾動                  |
   | backspace 鍵  |                                         |                 | 向上滾動                  |
   | Ctrl + a      |                                         | 插入模式        | home 鍵                   |
@@ -206,6 +211,7 @@
   | MyPluginExistsAndInRtp( name )      | 檢測插件是否存在與在 runtimepath  |
   | MyPluginExists( name, isCheckRtp )  | 檢測插件是否存在                  |
   | MyCustomHighlight()                 | 自訂顏色                          |
+  | MyAddPlugin( name, tags, options )  | 新增插件及其標籤                  |
 
 # 插件
   | 分類          | 插件                                                                              | 用途                                                            | 需求                                        |
@@ -223,8 +229,8 @@
   |               | [vim-ps1](https://github.com/pprovost/vim-ps1)                                    | [powershell](https://github.com/PowerShell/PowerShell) 語法高亮 |                                             |
   | 自動補全      | [vim-mucomplete](https://github.com/lifepillar/vim-mucomplete)                    | 自動補全插件，用來取代 neocomplcache                            | vim 7.2, has( insert_expand ), has( menu )  |
   |               | [neocomplcache](https://github.com/shougo/neocomplcache.vim)                      | 自動補全插件                                                    |                                             |
-  | LSP           | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)                        | 內建 LSP 客戶端設定                                             | nvim 0.5                                    |
-  |               | [vim-lsc](https://github.com/natebosch/vim-lsc)                                   | LSP 客戶端                                                      |                                             |
+  | LSP           | [vim-lsp](https://github.com/prabirshrestha/vim-lsp)                              | LSP 客戶端                                                      | vim 8.0                                     |
+  |               | [vim-lsp-settings](https://github.com/mattn/vim-lsp-settings)                     | LSP 客戶端設定                                                  | vim-lsp                                     |
   |               | [LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim)        | LSP 客戶端                                                      |                                             |
   | 版本控制      | [vim-signify](https://github.com/mhinz/vim-signify)                               | 版本控制差異插件                                                |                                             |
   | 程式碼片段    | [vim-vsnip](https://github.com/hrsh7th/vim-vsnip)                                 | 程式碼片段插件                                                  |                                             |
