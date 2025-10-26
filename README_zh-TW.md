@@ -16,19 +16,18 @@
 
 # 檔案
   - **vim** 與 **neovim** 設定檔
-    - **.vimrc**              : [vim](https://github.com/vim/vim) 設定
-    - **init.vim**            : [neovim](https://github.com/neovim/neovim) 設定
-    - **ginit.vim**           : **neovim** 圖形介面設定
-    ├── .config  
-    │   └── nvim  
-    │       ├── ginit.vim : **neovim** 圖形介面設定  
-    │       └── init.vim  : [neovim](https://github.com/neovim/neovim) 設定  
-    ├── .vim  
-    │   ├── autoload  
-    │   │   ├── ft.vim    : 可以延後讀取的輔助函數  
-    │   │   └── plug.vim  : [vim-plug](https://github.com/junegunn/vim-plug) 插件管理員  
-    │   └── localVimrc    : 本地端設定  
-    └── .vimrc            : [vim](https://github.com/vim/vim) 設定  
+    Rcs/Root/
+      ├── .config
+      │   └── nvim
+      │       ├── ginit.vim     : **neovim** 圖形介面設定
+      │       ├── init.vim      : [neovim](https://neovim.io/) 設定
+      │       └── localInit.vim : 本地端設定
+      ├── .vim
+      │   ├── autoload
+      │   │   ├── ft.vim    : 可以延後讀取的輔助函數
+      │   │   └── plug.vim  : [vim-plug](https://junegunn.github.io/vim-plug/) 插件管理員
+      │   └── localVimrc    : 本地端設定
+      └── .vimrc            : [vim](https://www.vim.org/) 設定
   - 倉庫使用設定
     - **settings.toml**       : 腳本設定檔
   - 倉庫使用腳本
@@ -52,7 +51,7 @@
 
 # 使用 vimrc
   打開 vim 輸入 `:help vimrc` 就會打開關於放置 vimrc 的說明文件。
-  如果你沒有使用 neovim 的話，可以直接忽略 "init.vim" 這個檔案。
+  如果你沒有使用 neovim 的話，可以直接忽略 `.config` 資料夾。
   當你將 vimrc 放到正確的資料夾之後，只要在 vim 中輸入 `:e $MYVIMRC`，
   它就會打開 vimrc 檔，方便以後的修改
 
@@ -68,15 +67,15 @@
   因為我在 Windows 上沒有用 vim，
   所以如果你和我一樣使用 neovim 的話，
   隨便將它放到一個資料夾，
-  然後修改 "init.vim" 中的 `source ~/.vimrc` 這一行。
-  將它改成你放 ".vimrc" 的路徑。
-  比方說你將 ".vimrc" 放在 `D:\Vim\` 這個資料夾，
+  然後修改 `init.vim` 中的 `source ~/.vimrc` 這一行。
+  將它改成你放 `.vimrc` 的路徑。
+  比方說你將 `.vimrc` 放在 `D:\Vim\` 這個資料夾，
   那麼就將 source 那一行改成如下
   ```
   source D:\Vim\.vimrc
   ```
 
-  如果你不是用 neovim 的話，就讀一下說明文件看要將 ".vimrc" 檔放在哪
+  如果你不是用 neovim 的話，就讀一下說明文件看要將 `.vimrc` 檔放在哪
 
 # 安裝
 ## 設定

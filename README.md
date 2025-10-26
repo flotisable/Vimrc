@@ -18,17 +18,18 @@
 
 # Files
   - **vim** and **neovim** setting files
-
-    ├── .config  
-    │   └── nvim  
-    │       ├── ginit.vim : settings for gui of **neovim**  
-    │       └── init.vim  : settings for [neovim](https://github.com/neovim/neovim)  
-    ├── .vim  
-    │   ├── autoload  
-    │   │   ├── ft.vim    : helper functions which can be lazy loaded  
-    │   │   └── plug.vim  : [vim-plug](https://github.com/junegunn/vim-plug) plugin manager  
-    │   └── localVimrc    : settings for local machine  
-    └── .vimrc            : settings for [vim](https://github.com/vim/vim)  
+    Rcs/Root/
+      ├── .config
+      │   └── nvim
+      │       ├── ginit.vim     : settings for gui of **neovim**
+      │       ├── init.vim      : settings for [neovim](https://neovim.io/)
+      │       └── localInit.vim : settings for local machine
+      ├── .vim
+      │   ├── autoload
+      │   │   ├── ft.vim    : helper functions which can be lazy loaded
+      │   │   └── plug.vim  : [vim-plug](https://junegunn.github.io/vim-plug/) plugin manager
+      │   └── localVimrc    : settings for local machine
+      └── .vimrc            : settings for [vim](https://www.vim.org/)
   - repository usage settings
     - **settings.toml**       : settings for scripts
   - repository usage scripts
@@ -54,7 +55,7 @@
   Open the vim and type `:help vimrc`,
   it will show the help file about where to put vimrc.
   If you don't use neovim,
-  just ignore the `init.vim` and `ginit.vim` file.
+  just ignore the `.config` directory.
   After putting vimrc in the right directory,
   you can type `:e $MYVIMRC` in vim to edit the vimrc file.
 
@@ -69,13 +70,13 @@
 
   I don't use vim on Windows,
   if you use neovim,
-  you can just place ".vimrc" to a directory and modify the `source ~/.vimrc` line in "init.vim" to that directory.
-  For example, if you put ".vimrc" at `D:\Vim\`,
+  you can just place `.vimrc` to a directory and modify the `source ~/.vimrc` line in `init.vim` to that directory.
+  For example, if you put `.vimrc` at `D:\Vim\`,
   then modify the source line as below
   ```
   source D:\Vim\.vimrc
   ```
-  else read the vim help file to know where to put the ".vimrc"
+  else read the vim help file to know where to put the `.vimrc`
 
 # Install
 ## Settings
