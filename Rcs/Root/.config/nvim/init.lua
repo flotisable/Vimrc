@@ -273,7 +273,7 @@ local localInitFile = vim.fs.joinpath( vim.fn.stdpath( 'config' ), '/localInit.l
 my.localVimrc = localInitFile
 vim.g.my      = my
 
-loadfile( localInitFile )
+loadfile( localInitFile )()
 -- end load local init file
 -- }}}
 -- vim: foldmethod=marker foldmarker={{{,}}}
