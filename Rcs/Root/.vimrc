@@ -356,14 +356,15 @@ endif
 " interactive finder plugin settings  互動式查詢插件設定{{{
 if MyPluginExistsAndInRtp( 'vim-clap' )
 "
-  let g:clap_theme  = 'material_design_dark'
-  let g:clap_layout = {
-                    \   'relative': 'editor',
-                    \   'col':      '5%',
-                    \   'row':      '10%',
-                    \   'width':    '45%',
-                    \   'height':   '80%'
-                    \ }
+  let g:clap_start_server_on_startup  = 0
+  let g:clap_theme                    = 'material_design_dark'
+  let g:clap_layout                   = {
+                                      \   'relative': 'editor',
+                                      \   'col':      '5%',
+                                      \   'row':      '10%',
+                                      \   'width':    '45%',
+                                      \   'height':   '80%'
+                                      \ }
 
   noremap <silent> <Leader>F  :Clap providers<Enter>|       " set \F key to open provider dispather  設定 \F 鍵開啟模糊搜尋選單
   noremap <silent> g/         :Clap blines<Enter>|          " set g/ key to search in file  設定 g/ 鍵在檔案中搜尋
